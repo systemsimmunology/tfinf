@@ -1,0 +1,26 @@
+
+September 23-25, 2009
+------------------
+Intiail copies from 
+ /Users/thorsson/macrophage/ArrayAnalysis/
+utilities.R
+
+~/macrophage/AffyArray/newAffy
+countSigGenes.R               readLambdas.R                 sbeamsReader.R
+generateRObjects.R            readMus.R                     sbeamsReaderFunction.R
+getRepresentativeProbes.R     readMyD88Ratios.R             sbeamsReaderWrapper.R
+newFunctions.R                readStdErrs.R                 
+readLPSratios.R               repairExpressionObjectNames.R
+
+~/macrophage/RShared/
+tallyUtilities.R matrixExtrema.R sliceListLevel2.R utilitiesMemory.R utilitiesMultiMat.R which.max.mat.R
+
+/Users/thorsson/data/TransScan/RcodeFromDan
+read.parsed.files.R find.pairs_allMouse_preamble.R find.pairs_allMouse.R
+
+/Volumes/ILYA\ LAB/Vesteinn/forRoger/macinferelator/macrophage/TFinfluence/R/
+TFcategories.R
+
+~/macrophage/TFinfluence/R
+expressedTFandMats.R metacollectionInitialize.R metacollectionWrapper.R curatedPDNAints.R createTargsAndsCands.R createBoostVec.R calcModelsWrapperFinal.R combineModelClasses.R
+
