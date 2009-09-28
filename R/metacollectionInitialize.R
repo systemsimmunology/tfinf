@@ -4,7 +4,14 @@ seq.dir <- file.path(Sys.getenv("TFINF"),"sequence_data")
 exp.dir <- file.path(Sys.getenv("TFINF"),"expression_data")
   
 load(paste(annot.dir,"annotation.objects.RData",sep="/"))
+load(paste(annot.dir,"tteMaps.RData",sep="/"))
+## Read entrezIDofEnsemblID, ensemblIDsOfEntrezIDs
+load(paste(annot.dir,"allMouseMappings.August2009.RData",sep="/"))
+
 source("./tallyUtilities.R")
+source("./utilities2.R")
+source("./utilitiesHitMat.R")
+
 
 ##commented out April/May 2008. Hope these are no longer needed
 ##load("variousObjects.RData")

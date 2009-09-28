@@ -1,7 +1,4 @@
 
-source("./utilities2.R")
-source("./utilitiesHitMat.R")
-
 source("./metacollectionInitialize.R")
 
 metampairs <- list()
@@ -28,8 +25,7 @@ counter <- 0
 ## Important : Need to set N  
 ##
 
-## Read entrezIDofEnsemblID, ensemblIDsOfEntrezIDs
-load("../../RShared/allMouseMappings.August2009.RData")
+
 N <- length(ensemblIDsOfEntrezIDs) 
 
 ##
@@ -65,7 +61,6 @@ psois.dn <- expressed.scanned.ps
 corMat <- cordistA[psois.dn,psois.dn]
 
 ## load expressedMats and expressedFamilyMats
-load("tteMaps.RData")
 
 for ( eid in eids  ) {
 
@@ -121,6 +116,6 @@ for ( eid in eids  ) {
   }
 }
 
-ofile <- ofile=file.path(Sys.getenv("TFINF"),"sequence_data/sigPairedSites.28Sep2009.RData")
+ofile <- file.path(Sys.getenv("TFINF"),"sequence_data/sigPairedSites.28Sep2009.RData")
 save(nbrs,maximumdist,metampairs,metapvals,metams,metaexpected,metamsingles,metapvals.singles,metams.singles,metaexpected.singles,file=ofile)
 
