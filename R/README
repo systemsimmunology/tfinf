@@ -22,5 +22,9 @@ read.parsed.files.R find.pairs_allMouse_preamble.R find.pairs_allMouse.R
 TFcategories.R
 
 ~/macrophage/TFinfluence/R
-expressedTFandMats.R metacollectionInitialize.R metacollectionWrapper.R curatedPDNAints.R createTargsAndsCands.R createBoostVec.R calcModelsWrapperFinal.R combineModelClasses.R
+expressedTFandMats.R metacollectionInitialize.R metacollectionWrapper.R curatedPDNAints.R createTargsAndsCands.R createBoostVec.R calcModelsWrapperFinal.R combineModelClasses.R 
+
+utilities.R was renamed to utilities2.R during the copy (conflict with same name above)
+
+utilitiesTAC.R utilitiesMods.R utilitiesBinaryClassification.R utilitiesHitMat.R utilitiesMeta.R utilitiesGenomicCoords.R utilitiesFiniteDiff3D.R utilitiesODEsolve.R utilitiesNewConds.R
 

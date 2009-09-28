@@ -1,9 +1,8 @@
 
-source("~/macrophage/TFinfluence/R/utilities.R")
-source("~/macrophage/TFinfluence/R/utilitiesHitMat.R")
+source("./utilities2.R")
+source("./utilitiesHitMat.R")
 
-source("metacollectionInitialize.R")
-
+source("./metacollectionInitialize.R")
 
 metampairs <- list()
 metapvals <- list()

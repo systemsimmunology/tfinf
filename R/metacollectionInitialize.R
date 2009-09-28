@@ -1,6 +1,10 @@
 
-load("~/macrophage/AffyArray/newAffy/annotation.objects.RData")
-source("~/macrophage/RShared/tallyUtilities.R")
+annot.dir <- file.path(Sys.getenv("TFINF"),"annotations")
+seq.dir <- file.path(Sys.getenv("TFINF"),"sequence_data")
+exp.dir <- file.path(Sys.getenv("TFINF"),"expression_data")
+  
+load(paste(annot.dir,"annotation.objects.RData",sep="/"))
+source("./tallyUtilities.R")
 
 ##commented out April/May 2008. Hope these are no longer needed
 ##load("variousObjects.RData")
@@ -12,17 +16,13 @@ source("~/macrophage/RShared/tallyUtilities.R")
 ## Load TRE.OUT
 ##
 
-load("/proj/ilyalab/Vesteinn/data/TransScan/RcodeFromDan/Parsed.Scan.eset.allMouseSeptember2009.RData")
-
-##load("../../../data/TransScan/RcodeFromDan/Parsed.Scan.eset.allMouseSeptember2009.RData")
-
-##load("../../../data/TransScan/RcodeFromDan/Parsed.Scan.eset.allMouseMarch2008.RData")
-
+load(paste(seq.dir,"Parsed.Scan.eset.allMouseSeptember2009.RData",sep="/"))
 
 TRE.OUT <- TRE.OUT.eset
 ## Sep 17, 2009: Length 4742
 expressed.scanned.egid <- unique(as.character(unlist(lapply(lapply(TRE.OUT,"[[","seq.info"),"[[","entrez.id")))) ## entrez IDs
-load("~/macrophage/AffyArray/newAffy/representativeProbes.RData")
+
+load(paste(annot.dir,"representativeProbes.RData",sep="/"))
 expressed.scanned.ps <- sort(as.character(repProbes.ncbiID[expressed.scanned.egid]))
 
 
@@ -46,33 +46,25 @@ expressed.scanned.ps <- sort(as.character(repProbes.ncbiID[expressed.scanned.egi
 ## Load m.tally,m.pair.tally,mf.tally,mdo.pair.tally,mf.pair.tally,mdof.pair.tally
 ##
 
-
-load("/proj/ilyalab/Vesteinn/data/TransScan/RcodeFromDan/hitTally.allMouse.September2009.RData")
-
-##load("../../../data/TransScan/RcodeFromDan/hitTally.allMouse.thresholdA.RData")
-
-##load("/users/thorsson/data/TransScan/RcodeFromDan/hitTally.allMouse.q9999.RData")
-
-## make sure tallyUtilities.R have been loaded are loaded 
+load(paste(seq.dir,"hitTally.allMouse.September2009.RData" ,sep="/"))
 
 ## Read all mouse matrices and lengths
-gg <-read.table("../../RShared/matrixLengths",as.is=TRUE); matrixLength <- gg$V2; names(matrixLength) <- gg$V1; rm(gg);
+gg <-read.table(paste(annot.dir,"matrixLengths" ,sep="/"),as.is=TRUE);
+matrixLength <- gg$V2; names(matrixLength) <- gg$V1; rm(gg);
 mouseMatrices <- names(matrixLength)
  
 ## load familyMap, a mapping from vector of matrix names to family strings
-load("../../RShared/familyMapVT3.RData")
+load(paste(annot.dir,"familyMapVT3.RData" ,sep="/"))
 familyMap <- familyMapVT3; rm(familyMapVT3);
 familyNames <- unique(sort(as.character(familyMap)))
 
 ## Load file of threshold for each matrix
-load("../../RShared/matrixThresholdA.RData")
+load(paste(annot.dir,"matrixThresholdA.RData" ,sep="/"))
 matrixThreshold <- matrixThresholdA; 
 
 maxsep <- 100; #the maximum allowable distance between hits to be retained
 minsep <- 1; #don't retain pairs if they are less than this distance apart
 pdist <- 1000; #don't retain hits if their average distance is more than this from the TSS
-
-## see initialize.R for expressed.scanned.ensembl, etc
 
 ## Comment in or out as needed
 ##targExpressedScans <- TRE.OUT[expressed.scanned.ensembl]
@@ -81,15 +73,11 @@ pdist <- 1000; #don't retain hits if their average distance is more than this fr
 
 ##targScans <- targExpressedScans
 
-# load lps.mus
-load("~/macrophage/AffyArray/newAffy/all.mus.objects.RData")
-setdiff(ls()[grep("mus",ls())],"lps.mus") ## remove others from memory
-
+# load lps.mu
+load(paste(exp.dir,"all.mus.objects.RData" ,sep="/"))
 # load lps.ratios
-load("~/macrophage/AffyArray/newAffy/all.ratios.objects.RData")
-setdiff(ls()[grep("ratios",ls())],"lps.ratios") ## remove others from memory
+load(paste(exp.dir,"all.ratios.objects.RData" ,sep="/"))
 
-### Memory problem here? three copies?
 ## 
 esp <- expressed.scanned.ps 
  ## 
