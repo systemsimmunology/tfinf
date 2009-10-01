@@ -3,30 +3,35 @@
 ## September 2009
 ##
 
-source("utilitiesMeta.R")
-source("utilitiesHitMat.R")
-source("utilities.R")
-load("TFcategories.RData")
-load("~/macrophage/AffyArray/newAffy/representativeProbes.RData")
-load("~/macrophage/AffyArray/newAffy/annotation.objects.RData")
-load("~/macrophage/RShared/allMouseMappings.August2009.RData")
-load("~/macrophage/TFinfluence/R/tteMaps.RData")
-load("./pdna.curated.RData")
+annot.dir <- file.path(Sys.getenv("TFINF"),"annotations")
+interact.dir <- file.path(Sys.getenv("TFINF"),"interaction_data")
+seq.dir <- file.path(Sys.getenv("TFINF"),"sequence_data")
 
-
-load("sigPairedSites.18Sep2009.RData")
-load("~/data/TransScan/RcodeFromDan/Parsed.Scan.eset.allMouseSeptember2009.RData")
-##load("/proj/ilyalab/Vesteinn/data/TransScan/RcodeFromDan/Parsed.Scan.eset.allMouseSeptember2009.RData")
+source("./utilitiesMeta.R")
+source("./utilitiesHitMat.R")
+source("./utilities2.R")
+ 
+load(paste(annot.dir,"TFcategories.RData",sep="/"))
+load(paste(annot.dir,"representativeProbes.RData",sep="/"))
+load(paste(annot.dir,"annotation.objects.RData",sep="/"))
+load(paste(annot.dir,"allMouseMappings.August2009.RData",sep="/"))
+load(paste(annot.dir,"tteMaps.RData",sep="/"))
+load(paste(annot.dir,"equalizingThresholds.RData",sep="/"))
+load(paste(annot.dir,"expressed.scanned.ensembl.RData",sep="/"))
+load(paste(annot.dir,"TFcategories.RData",sep="/"))
+load(paste(interact.dir,"pdna.curated.RData",sep="/"))
+load(paste(seq.dir,"sigPairedSites.28Sep2009.RData",sep="/"))
+load(paste(seq.dir,"Parsed.Scan.eset.allMouseSeptember2009.RData",sep="/"))
 
 targScans <- TRE.OUT.eset
 
 ### Enriched pairs
 ### Choices: enrichment p-value, tfs to use, whether to use interactome
 ##
-expressed.scanned.ensembl <- as.character(read.table("expressed.scanned.ensembl")$V1)
 ensids.sansSSS <- intersect(names(metampairs),expressed.scanned.ensembl)
 ## the last set is equal to ensemblIDs.expressed.sansSSS
 ## September 2009: Appears this is no longer necessary
+## However, the intersect removes ensids that didn't make it into metampairs
 pc1 <- list()
 pc1$metampairs <- metampairs[ensids.sansSSS]
 pc1$metapvals <- metapvals[ensids.sansSSS]
@@ -42,7 +47,8 @@ pc2.05 <- filterPCbyPval ( pc1, 0.05 )
 
 
 ##Load TF network distance
-load("NetworkDistance/TFNetDist.RData") ### this loads tf.dist.cn 
+load(paste(interact.dir,"TFNetDist.RData",sep="/"))
+           
 noConnections <- c("Egr3","Mafb","Foxj2","Zfp161") ## TFs for which we have no connection information
 noConnections <- c(noConnections,"Fosl2") ## May 2008. Can't quite figure out: Is this a "new" one?
 noConnections <- c(noConnections,"Stat2") ## Sep 2009. Can't quite figure out: Is this a "new" one? probably from ISRE
@@ -68,7 +74,7 @@ sc1$metams.singles <- metams.singles[ensids.sansSSS]
 sc2 <-  filterSCbyPval ( sc1, singles.cutoff )
 pdna.enrs.001 <- createTFsetFromSingles(sc2,tfsubset=tfsubset)
 
-load("~/macrophage/RShared/equalizingThresholds.RData")
+
 ##These may be commented out because they are time-consuming
 targScans.et.0.5 <- getScoreFilteredTE( targScans, et.0.5 )
 targScans.et.0.1 <- getScoreFilteredTE( targScans, et.0.1 )
@@ -76,11 +82,11 @@ targScans.et.0.05 <- getScoreFilteredTE( targScans, et.0.05 )
 targScans.et.0.01 <- getScoreFilteredTE( targScans, et.0.01 )
 targScans.et.0.001 <- getScoreFilteredTE( targScans, et.0.001 )
 
-save(targScans.et.0.5,file="targScans.et.0.5.RData")
-save(targScans.et.0.1,file="targScans.et.0.1.RData")
-save(targScans.et.0.05,file="targScans.et.0.05.RData")
-save(targScans.et.0.01,file="targScans.et.0.01.RData")
-save(targScans.et.0.001,file="targScans.et.0.001.RData")
+save(targScans.et.0.5,file=paste(seq.dir,"targScans.et.0.5.RData",sep="/"))
+save(targScans.et.0.1,file=paste(seq.dir,"targScans.et.0.1.RData",sep="/"))
+save(targScans.et.0.05,file=paste(seq.dir,"targScans.et.0.05.RData",sep="/"))
+save(targScans.et.0.01,file=paste(seq.dir,"targScans.et.0.01.RData",sep="/"))
+save(targScans.et.0.001,file=paste(seq.dir,"targScans.et.0.001.RData",sep="/"))
 
 baddies <- as.character(repProbes.cname[c("E2f5","Gabpa")])
 
@@ -92,4 +98,5 @@ pdna.hs.et.05 <- getTFsForTE(targScans.et.0.05,tfsubset=tfsubset)
 pdna.hs.et.01 <- getTFsForTE(targScans.et.0.01,tfsubset=tfsubset )
 pdna.hs.et.001 <- getTFsForTE(targScans.et.0.001,tfsubset=tfsubset )
 
-save(pdna.curated, pdna.enrs.001, pdna.enrp.01, pdna.enrp.05, pdna.hs.et.5,pdna.hs.et.1,pdna.hs.et.01,pdna.hs.et.05,pdna.hs.et.001, file="pdnaModels.22September2009.RData" )
+ofile <- paste(interact.dir,"pdnaModels.30September2009.RData",sep="/")
+save(pdna.curated, pdna.enrs.001, pdna.enrp.01, pdna.enrp.05, pdna.hs.et.5,pdna.hs.et.1,pdna.hs.et.01,pdna.hs.et.05,pdna.hs.et.001, file=ofile )

@@ -3,9 +3,15 @@
 ## Transfac interactions, documented
 
 
-source("~/macrophage/AffyArray/newAffy/readInteractions.R")
+source("./readInteractions.R")
+source("./selectionUtilities.R")
 
-result <- readInteractions("/users/thorsson/macrophage/DataManagement/Interactions/n28.sif")
+load( file.path(Sys.getenv("TFINF"),"annotations/annotation.objects.RData") )
+result <- readInteractions ( file.path(Sys.getenv("TFINF"),"interaction_data/n28.sif") )
+load( file.path(Sys.getenv("TFINF"),"annotations/representativeProbes.RData") )
+
+load( file.path(Sys.getenv("TFINF"),"annotations/all.ps.list.objects.RData") )
+load( file.path(Sys.getenv("TFINF"),"annotations/tteMaps.RData") )
 
 pd.indices <- which(result$interactType=="Protein-DNA")
 
@@ -53,7 +59,7 @@ tfs.exp <- tfs.exp.2 ; rm(tfs.exp.2)
 targets.exp <- targets.exp.2 ; rm(targets.exp.2)
 ## these are still paired, equal in length
 
-
+ 
 
 tfs.total.exp <- tfs.exp
 targets.total.exp <- targets.exp
@@ -83,4 +89,7 @@ for ( targ in targs.total.exp.unique ){
   pdna.curated[[targ]] <- invars.c
 }
 
+save(pdna.curated,file=file.path(Sys.getenv("TFINF"),"interaction_data/pdna.curated.RData"))
 
+
+     

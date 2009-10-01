@@ -1,6 +1,24 @@
 
 
+
+conds <-  c("min0","min20","min40","min60","min80","min120","hr4","hr6","hr8","hr18","hr24")
+
+source("utilities2.R") ## required for split1
+
 ## Rough divisions for prioritization
+
+annot.dir <- file.path(Sys.getenv("TFINF"),"annotations")
+exp.dir <- file.path(Sys.getenv("TFINF"),"expression_data")
+
+load(paste(annot.dir,"annotation.objects.RData",sep="/"))
+load(paste(annot.dir,"representativeProbes.RData",sep="/"))
+load(paste(annot.dir,"all.ps.list.objects.RData",sep="/"))
+load(paste(annot.dir,"tteMaps.RData",sep="/"))
+
+tte <- transfac.tfs.expressed
+cc <- cname.compare
+
+load(paste(exp.dir,"all.mus.objects.RData",sep="/"))
 
 ## Maximum expression level
 
@@ -145,5 +163,6 @@ rownames(bd.om) <- bigDowns
 
 ## Output
 
-save(mag,ud,halfChangeAt,extremeAt,bigUps,bigDowns,midUps,midDowns,file="TFcategories.RData")
+ofile <- paste(annot.dir,"TFcategories.RData",sep="/")
+save(mag,ud,halfChangeAt,extremeAt,bigUps,bigDowns,midUps,midDowns,file=ofile)
 

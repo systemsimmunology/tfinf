@@ -1,5 +1,5 @@
 
-September 23-25, 2009
+September, October, 2009
 ------------------
 Intiail copies from 
  /Users/thorsson/macrophage/ArrayAnalysis/
@@ -11,6 +11,8 @@ generateRObjects.R            readMus.R                     sbeamsReaderFunction
 getRepresentativeProbes.R     readMyD88Ratios.R             sbeamsReaderWrapper.R
 newFunctions.R                readStdErrs.R                 
 readLPSratios.R               repairExpressionObjectNames.R
+readInteractions.R
+utilitiesMeta.R
 
 ~/macrophage/RShared/
 tallyUtilities.R matrixExtrema.R sliceListLevel2.R utilitiesMemory.R utilitiesMultiMat.R which.max.mat.R

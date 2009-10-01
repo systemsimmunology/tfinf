@@ -7,10 +7,32 @@
 ## Runc calcModels to get OLS solutions
 ##  
 
-load("pdnaModels.22September2009.RData")
-load("boost.vec.refit.RData")
+annot.dir <- file.path(Sys.getenv("TFINF"),"annotations")
+exp.dir <- file.path(Sys.getenv("TFINF"),"expression_data")
+interact.dir <- file.path(Sys.getenv("TFINF"),"interaction_data")
+seq.dir <- file.path(Sys.getenv("TFINF"),"sequence_data")
+ddata.dir <- file.path(Sys.getenv("TFINF"),"derived_data")
 
-source("utilitiesTAC.R")
+load(paste(interact.dir,"pdnaModels.30September2009.RData",sep="/"))
+load(paste(ddata.dir,"boost.vec.refit.RData",sep="/"))
+
+
+
+load(paste(annot.dir,"representativeProbes.RData",sep="/"))
+load(paste(annot.dir,"tteMaps.RData",sep="/"))
+
+
+load(paste(annot.dir,"annotation.objects.RData",sep="/"))
+load(paste(exp.dir,"all.mus.objects.RData",sep="/"))
+
+
+source("./utilitiesTAC.R")
+source("./utilitiesFiniteDiff3D.R")
+
+max.intensity <- apply(lps.mus,1,max) 
+lps.mat.max1 <- lps.mus/max.intensity ## this one will be modified for nucloc
+lps.mat.max1.exp <- lps.mus/max.intensity ## this one will retain expression vars 
+source("./createBoostVec.R")
 
 cat ("Starting calcModels runs \n")
 
@@ -73,7 +95,7 @@ mods.enrp.dubs.01 <- result.ss.01$mods.pairs
 mods.enrp.sings.01 <- result.ss.01$mods.singles
 
 mods.preode.strings <- c("mods.curated","mods.hs.et.05","mods.hs.et.01","mods.hs.et.001","mods.enrs.001","mods.singles.fromCorTFPairs.01","mods.enrp.sings.01","mods.enrp.dubs.01")
-save(list=mods.preode.strings,file="models.preode.16Jan2009.RData")
+save(list=mods.preode.strings,file=paste(ddata.dir,"models.preode.30Sep2009.RData",sep="/"))
 
 ##
 ## Non-linear ODE fitting
@@ -96,13 +118,13 @@ mods.curated.ode <- computeODEModsAnalytic(mods.curated,n.cands=1)
 #mods.bind.ode <- computeODEModsAnalytic(mods.bind,n.cands=1)
 
 mods.ode.strings <- c("mods.curated.ode","mods.hs.et.05.ode","mods.hs.et.01.ode","mods.hs.et.001.ode","mods.enrs.001.ode","mods.singles.fromCorTFPairs.01.ode","mods.enrp.sings.01.ode","mods.enrp.dubs.01.ode")
-save(list=mods.ode.strings,file="models.ode.16Jan2009.RData")
+save(list=mods.ode.strings,file=paste(ddata.dir,"models.ode.30Sep2009.RData",sep="/"))
 
 ###
 ### RMSD filter
 ###
 
-source("randomTFs.R") ## Overall TFs, for all genes (not gene-specific)
+source("./randomTFs.R") ## Overall TFs, for all genes (not gene-specific)
 
 cat("Fitering on RMSD\n")
 
@@ -119,7 +141,7 @@ mods.enrp.sings.01.ode.rmsf <- filterModsByRMSD( mods.enrp.sings.01.ode, rmsd.th
 
 mods.rmsf.strings <- c("mods.curated.ode.rmsf","mods.hs.et.05.ode.rmsf","mods.hs.et.01.ode.rmsf","mods.hs.et.001.ode.rmsf","mods.enrs.001.ode.rmsf","mods.singles.fromCorTFPairs.01.ode.rmsf","mods.enrp.sings.01.ode.rmsf","mods.enrp.dubs.01.ode.rmsf")
 
-save(list=mods.rmsf.strings,file="models.rmsf.16Jan2009.RData")
+save(list=mods.rmsf.strings,file=paste(ddata.dir,"models.rmsf.30Sep2009.RData",sep="/"))
 
 ## This may be confusing. Fisrt 01 applies to .. , second to randomization scores
 mods.enrp.dubs.01.1.ode.rmsf <- filterModsByRMSD( mods.enrp.dubs.01.ode, rmsd.threshold=rands.2regs.0.10, rmsd.type="fullode", scale=FALSE,n.cands=2)
