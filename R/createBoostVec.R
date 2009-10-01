@@ -1,14 +1,18 @@
 
-source("./createApproxNucLoc.R")
+
+##
+## create boost vec
+## using information on induction time
+## global refits, and which TFs have nucloc data
+## 
 
 annot.dir <- file.path(Sys.getenv("TFINF"),"annotations")
-exp.dir <- file.path(Sys.getenv("TFINF"),"expression_data")
-interact.dir <- file.path(Sys.getenv("TFINF"),"interaction_data")
-seq.dir <- file.path(Sys.getenv("TFINF"),"sequence_data")
 ddata.dir <- file.path(Sys.getenv("TFINF"),"derived_data")
 
 load(paste(annot.dir,"tteMaps.RData",sep="/"))
 load(paste(annot.dir,"TFcategories.RData",sep="/"))
+load(paste(annot.dir,"representativeProbes.RData",sep="/"))
+load(paste(ddata.dir,"boost.vec.refit.RData",sep="/"))
 load("./jared.tfs.expressed.RData")
 
 ##target.pull <- 60
@@ -19,11 +23,11 @@ t.index.max <- 11
 
 input.boost.time <- 60
 
-inputs.boosted <- matrix(nrow=length(transfac.tfs.expressed),ncol=t.index.max)
-rownames(inputs.boosted) <- transfac.tfs.expressed
-for ( psoii in transfac.tfs.expressed ){
-  inputs.boosted[psoii,] <- approx(array.times,lps.mat.max1[psoii,],array.times-input.boost.time,rule=2)$y
-}
+##inputs.boosted <- matrix(nrow=length(transfac.tfs.expressed),ncol=t.index.max)
+##rownames(inputs.boosted) <- transfac.tfs.expressed
+##for ( psoii in transfac.tfs.expressed ){
+##  inputs.boosted[psoii,] <- approx(array.times,lps.mat.max1[psoii,],array.times-input.boost.time,rule=2)$y
+##}
 
 boost.vec <- rep(input.boost.time,length(transfac.tfs.expressed))
 names(boost.vec) <- transfac.tfs.expressed
@@ -36,7 +40,6 @@ boost.vec[early.tfs] <- 0
 boost.vec[mid.tfs] <- 30
 boost.vec[late.tfs] <- 60
 
-
 ##targ.exp.pulled <- approx(array.times,lps.mat.max1[targ,],array.times+target.pull,rule=2)$y
 
 ## For some input variables, use the nuclear protein
@@ -48,10 +51,10 @@ boost.vec[late.tfs] <- 60
 nucloc.input.set <- c("Rel","Atf3","Egr1","Egr2","Fos","Rela")
 for ( coi in nucloc.input.set ){
   boost.vec[repProbes.cname[coi]] <- 0
-  lps.mat.max1[repProbes.cname[coi],] <- approx(t.western,protein.nuclear.western[coi,],t.array,rule=2)$y
 }
 
 
+## insert globally fitted boost time where known
 if ( !is.null(boost.vec.refit) ){
   boost.vec[names(boost.vec.refit)] <- boost.vec.refit
 }

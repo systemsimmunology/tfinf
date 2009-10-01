@@ -1,19 +1,26 @@
 
-source("./setupMultiAssayPlot.R")
+##
+## insertNucLoc.R
+## 
+## Input scaled.mus.objects.RData
+## nuclear localization profile for selected genes
+## Output:scaled.mus.objects.RData taking into account nuclear localization
+##
+##
+## Run after scaleIntensities.R, but only once !
 
+t1 <- read.table('TFwesternScoredNuclear.tsv',as.is=TRUE,header=TRUE,row.names=1)
+colnames(t1) <- c("min0","min30","min60","min120","min240","min360")
+protein.nuclear.western <- as.matrix(t1)
+rm(t1)
+t.western <- c(0,30,60,120,240,360)
 
 annot.dir <- file.path(Sys.getenv("TFINF"),"annotations")
 exp.dir <- file.path(Sys.getenv("TFINF"),"expression_data")
-interact.dir <- file.path(Sys.getenv("TFINF"),"interaction_data")
-seq.dir <- file.path(Sys.getenv("TFINF"),"sequence_data")
-ddata.dir <- file.path(Sys.getenv("TFINF"),"derived_data")
-
+load(paste(annot.dir,"representativeProbes.RData",sep="/"))
 load(paste(exp.dir,"all.mic.RData",sep="/"))
 load(paste(exp.dir,"scaled.mus.objects.RData",sep="/"))
-
-load(paste(interact.dir,"pdnaModels.30September2009.RData",sep="/"))
-load(paste(ddata.dir,"boost.vec.refit.RData",sep="/"))
-
+load(paste(exp.dir,"all.mus.objects.RData",sep="/"))
 
 ## 27 November
 ## Approximate nucl localizaton values, and import them into max.mat1
@@ -38,165 +45,117 @@ stimslc <- c("lps","pam2","pam3","polyIC","r848","cpg")
 colnames(all.mic) <- stimslc ## needed for proper indexing
 
 ## Rel
-
 coi <- "Rel"
 Rel.nuc.profile <- protein.nuclear.western[coi,]
 psoi <- repProbes.cname[coi]
-
 scalefacs <- all.mic[psoi,]/all.mic[psoi,"lps"]
-
 appr.protein.nuclear.western  <- numeric()
 for ( i in 2:6 ){
   appr.protein.nuclear.western <- rbind(appr.protein.nuclear.western, scalefacs[i] *  Rel.nuc.profile )
 }
 rownames(appr.protein.nuclear.western) <- stimslc[2:6]
-  
 Rel.appr.protein.nuclear.western <- appr.protein.nuclear.western 
 
 
 ## Atf3
-
 Atf3.nuc.profile <- protein.nuclear.western["Atf3",]
 psoi <- repProbes.cname["Atf3"]
-
 scalefacs <- all.mic[psoi,]/all.mic[psoi,"lps"]
 scalefacs["polyIC"] <- 1.
 scalefacs["cpg"] <- 1.
 ## The later two mostly appear shifted w.r.t. lps
-
 tb <- numeric(length=5)
 names(tb) <- stimslc[2:6]
-
 tb["pam2"] <- 0.
 tb["pam3"] <- 0.
 tb["polyIC"] <- 60.
 tb["r848"] <- 0.
 tb["cpg"] <- 60.
-
-
 appr.protein.nuclear.western  <- numeric()
 for ( stim in stimslc[2:6] ){
   appr.protein.nuclear.western <- rbind(appr.protein.nuclear.western, scalefacs[stim]*timeShift(Atf3.nuc.profile,tb[stim] ))
 }
 rownames(appr.protein.nuclear.western) <- stimslc[2:6]
-
 Atf3.appr.protein.nuclear.western <- appr.protein.nuclear.western 
 
 
 ## Egr1
-
 Egr1.nuc.profile <- protein.nuclear.western["Egr1",]
 psoi <- repProbes.cname["Egr1"]
-
 scalefacs <- all.mic[psoi,]/all.mic[psoi,"lps"]
-
 tb <- numeric(length=5)
 names(tb) <- stimslc[2:6]
-
 tb["pam2"] <- 0.
 tb["pam3"] <- 0.
 tb["polyIC"] <- 60.
 tb["r848"] <- 0.
 tb["cpg"] <- 60.
-
-
 appr.protein.nuclear.western  <- numeric()
 for ( stim in stimslc[2:6] ){
   appr.protein.nuclear.western <- rbind(appr.protein.nuclear.western, scalefacs[stim]*timeShift(Egr1.nuc.profile,tb[stim] ))
 }
 rownames(appr.protein.nuclear.western) <- stimslc[2:6]
-
 Egr1.appr.protein.nuclear.western <- appr.protein.nuclear.western 
 
 
 ## Egr2
-
 Egr2.nuc.profile <- protein.nuclear.western["Egr2",]
 psoi <- repProbes.cname["Egr2"]
-
 scalefacs <- all.mic[psoi,]/all.mic[psoi,"lps"]
-
 tb <- numeric(length=5)
 names(tb) <- stimslc[2:6]
-
 tb["pam2"] <- 0.
 tb["pam3"] <- 0.
 tb["polyIC"] <- 60.
 tb["r848"] <- 0.
 tb["cpg"] <- 60.
-
-
 appr.protein.nuclear.western  <- numeric()
 for ( stim in stimslc[2:6] ){
   appr.protein.nuclear.western <- rbind(appr.protein.nuclear.western, scalefacs[stim]*timeShift(Egr2.nuc.profile,tb[stim] ))
 }
 rownames(appr.protein.nuclear.western) <- stimslc[2:6]
-
 Egr2.appr.protein.nuclear.western <- appr.protein.nuclear.western 
 
 ## Fos
-
 Fos.nuc.profile <- protein.nuclear.western["Fos",]
 psoi <- repProbes.cname["Fos"]
-
 scalefacs <- all.mic[psoi,]/all.mic[psoi,"lps"]
-
 tb <- numeric(length=5)
 names(tb) <- stimslc[2:6]
-
 tb["pam2"] <- 0.
 tb["pam3"] <- 0.
 tb["polyIC"] <- 60.
 tb["r848"] <- 0.
 tb["cpg"] <- 60.
-
-
 appr.protein.nuclear.western  <- numeric()
 for ( stim in stimslc[2:6] ){
   appr.protein.nuclear.western <- rbind(appr.protein.nuclear.western, scalefacs[stim]*timeShift(Fos.nuc.profile,tb[stim] ))
 }
 rownames(appr.protein.nuclear.western) <- stimslc[2:6]
-
 Fos.appr.protein.nuclear.western <- appr.protein.nuclear.western 
 
 ## Rela
 ### Don't know if mic levels are the right scale factor
 ### e.g. PolyIC goes really low after normalizatioin, tho intensity is on
 ## the high side. Intensity matters for beta multiplier.
-
 coi <- "Rela"
 Rela.nuc.profile <- protein.nuclear.western[coi,]
 psoi <- repProbes.cname[coi]
-
 ## mic normalization
 scalefacs <- all.mic[psoi,]/all.mic[psoi,"lps"]
 scalefacs["polyIC"] <- abs(scalefacs["polyIC"] )
-
 ## abs val normalization
 scalefacs <- c(lps.mus[psoi,"min60"],pam2.mus[psoi,"min60"],pam3.mus[psoi,"min60"],polyIC.mus[psoi,"min60"],r848.mus[psoi,"min60"],cpg.mus[psoi,"min60"])/lps.mus[psoi,"min60"]
-
 ## polyIC scalefac is negative. PolyIC mRNA hardly changes over the first two hours.
-
 appr.protein.nuclear.western  <- numeric()
 for ( i in 2:6 ){
   appr.protein.nuclear.western <- rbind(appr.protein.nuclear.western, scalefacs[i] *  Rela.nuc.profile )
 }
 rownames(appr.protein.nuclear.western) <- stimslc[2:6]
-  
 Rela.appr.protein.nuclear.western <- appr.protein.nuclear.western  
 
 
-
-
 #### Incorporate into mat max
-
-
-### This was meant to be done more cleverly, but I have not been able to figure out how to re-assign, knowning text string
-### E.g. if bb <- 3, how do I modify bb,  starting from the string "bb"
-### Idea graveyard:
-###   mat.max <- eval(parse(text=paste(stim,".mat.max1",sep="")))
-###    (eval(parse(text=paste(stim,".mat.max1",sep="")))[psoi,]) <- rhs
-
 stim <- "pam2"
 for ( coi in nucloc.input.set ){
   psoi <- repProbes.cname[coi]
@@ -236,31 +195,3 @@ for ( coi in nucloc.input.set ){
 ofile <- paste(exp.dir,"scaled.mus.objects.RData",sep="/")
 savelist <- c("max.intensity","lps.mat.max1","lps.mat.max1.exp","pam2.mat.max1","pam3.mat.max1","polyIC.mat.max1","r848.mat.max1","cpg.mat.max1" )
 save(list=savelist, file=ofile)
-
-###
-###
-###
-if ( FALSE ){
-
-coi <- "Rela"
-
-psoi <- repProbes.cname[coi]
-
-
-
-zz <- rbind(lps.mat.max1[psoi,1:6],
-      pam2.mat.max1[psoi,],
-      pam3.mat.max1[psoi,],
-      polyIC.mat.max1[psoi,],
-      r848.mat.max1[psoi,],
-      cpg.mat.max1[psoi,])
-
-x11()
-par(mfrow=c(3,1))
-paiWT(psoi)
-
-multiAssayPlot(coi,120)
-      
-pNLA(psoi)
-
-}
