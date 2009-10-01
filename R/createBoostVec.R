@@ -1,3 +1,16 @@
+
+source("./createApproxNucLoc.R")
+
+annot.dir <- file.path(Sys.getenv("TFINF"),"annotations")
+exp.dir <- file.path(Sys.getenv("TFINF"),"expression_data")
+interact.dir <- file.path(Sys.getenv("TFINF"),"interaction_data")
+seq.dir <- file.path(Sys.getenv("TFINF"),"sequence_data")
+ddata.dir <- file.path(Sys.getenv("TFINF"),"derived_data")
+
+load(paste(annot.dir,"tteMaps.RData",sep="/"))
+load(paste(annot.dir,"TFcategories.RData",sep="/"))
+load("./jared.tfs.expressed.RData")
+
 ##target.pull <- 60
 
 array.times <- c(0,20,40,60,80,120,240,360,480,1080,1440)
@@ -52,6 +65,7 @@ boost.vec.addeds <- rep(60,length=length(addeds))
 names(boost.vec.addeds) <- addeds
 boost.vec <- c(boost.vec,boost.vec.addeds)
 
+save(boost.vec,file=paste(ddata.dir,"boost.vec.RData",sep="/"))
 
 ##boost.vec.mat <- sortRows(cbind(cc[names(boost.vec)],ncbiID[names(boost.vec)],names(boost.vec),boost.vec),1)
 ##colnames(boost.vec.mat) <- c("MGNC","EntrezID","Probeset","Delay")

@@ -7,6 +7,10 @@
 ## Runc calcModels to get OLS solutions
 ##  
 
+library(lars)
+library(lasso2)
+library(odesolve)
+
 annot.dir <- file.path(Sys.getenv("TFINF"),"annotations")
 exp.dir <- file.path(Sys.getenv("TFINF"),"expression_data")
 interact.dir <- file.path(Sys.getenv("TFINF"),"interaction_data")
@@ -14,25 +18,27 @@ seq.dir <- file.path(Sys.getenv("TFINF"),"sequence_data")
 ddata.dir <- file.path(Sys.getenv("TFINF"),"derived_data")
 
 load(paste(interact.dir,"pdnaModels.30September2009.RData",sep="/"))
-load(paste(ddata.dir,"boost.vec.refit.RData",sep="/"))
-
-
+load(paste(exp.dir,"scaled.mus.objects.RData",sep="/"))
+##load(paste(ddata.dir,"boost.vec.refit.RData",sep="/"))
 
 load(paste(annot.dir,"representativeProbes.RData",sep="/"))
 load(paste(annot.dir,"tteMaps.RData",sep="/"))
 
+load(paste(ddata.dir,"boost.vec.RData",sep="/"))
+
 
 load(paste(annot.dir,"annotation.objects.RData",sep="/"))
 load(paste(exp.dir,"all.mus.objects.RData",sep="/"))
-
+load(paste(exp.dir,"scaled.mus.objects.RData",sep="/"))
 
 source("./utilitiesTAC.R")
 source("./utilitiesFiniteDiff3D.R")
+source("./selectionUtilities.R")
 
-max.intensity <- apply(lps.mus,1,max) 
-lps.mat.max1 <- lps.mus/max.intensity ## this one will be modified for nucloc
-lps.mat.max1.exp <- lps.mus/max.intensity ## this one will retain expression vars 
-source("./createBoostVec.R")
+##max.intensity <- apply(lps.mus,1,max) 
+##lps.mat.max1 <- lps.mus/max.intensity ## this one will be modified for nucloc
+##lps.mat.max1.exp <- lps.mus/max.intensity ## this one will retain expression vars 
+##source("./createBoostVec.R")
 
 cat ("Starting calcModels runs \n")
 

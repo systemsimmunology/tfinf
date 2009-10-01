@@ -38,7 +38,7 @@ calcModels <- function( targsAndCands, t.index.min, t.index.max, tau, boost.vec,
         if ( !(targ %in% ivars ) ){
 
           if ( tau.estimate ){
-            tau <- estimateBestTau2(targ,ivars,boost.vec,lps.mat.max1)
+            tau <- estimateBestTau2(targ,ivars,boost.vec,lps.mat.max1,zero.offset)
           }
 
           dataToFit <- constructDataToFit(t.index.min,t.index.max,tau,targ,ivars,boost.vec,mus.mat.maxnormed)
@@ -79,7 +79,7 @@ calcModels <- function( targsAndCands, t.index.min, t.index.max, tau, boost.vec,
         ivars <- repProbes.cname[tf.pairs[i,]]
         if ( !(targ %in% ivars ) ){          
           if ( tau.estimate ){
-            tau <- estimateBestTau2(targ,ivars,boost.vec,lps.mat.max1)
+            tau <- estimateBestTau2(targ,ivars,boost.vec,lps.mat.max1,zero.offset)
           }
           dataToFit <- constructDataToFit(t.index.min,t.index.max,tau,targ,ivars,boost.vec,mus.mat.maxnormed)
           ris <- regInfSelectD2F(dataToFit,s=1,zero.offset)

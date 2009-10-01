@@ -41,7 +41,7 @@ estimateBestTau1 <- function (targ,ivars,boost.vec,mus.mat.maxnormed){
 ## Method 2, include tau as optimized variable
 ## Followed by 'throw into allowed tau region' if outside
 ##
-estimateBestTau2 <- function (targ,ivars,boost.vec,mus.mat.maxnormed){
+estimateBestTau2 <- function (targ,ivars,boost.vec,mus.mat.maxnormed,zero.offset){
 
   dataToFit <- constructDataToFitTauOpt(t.index.min,t.index.max,targ,ivars,boost.vec,mus.mat.maxnormed)
 

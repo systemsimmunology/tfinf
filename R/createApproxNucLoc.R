@@ -9,6 +9,7 @@ seq.dir <- file.path(Sys.getenv("TFINF"),"sequence_data")
 ddata.dir <- file.path(Sys.getenv("TFINF"),"derived_data")
 
 load(paste(exp.dir,"all.mic.RData",sep="/"))
+load(paste(exp.dir,"scaled.mus.objects.RData",sep="/"))
 
 load(paste(interact.dir,"pdnaModels.30September2009.RData",sep="/"))
 load(paste(ddata.dir,"boost.vec.refit.RData",sep="/"))
@@ -19,6 +20,7 @@ load(paste(ddata.dir,"boost.vec.refit.RData",sep="/"))
 ## Find changes relative to LPS in the mRNA, and apply that to the LPS nuc loc, to get the approximated profile
 
 array.times.hr2 <- c(0,20,40,60,80,120)
+array.times.hr12 <- c(array.times.hr2,240,480,720)
 
 ## Attempt to transform nucloc profiles for consistency with array profile
 
@@ -206,22 +208,22 @@ stim <- "pam3"
 for ( coi in nucloc.input.set ){
   psoi <- repProbes.cname[coi]
   wprof <- eval(parse(text=paste(coi,".appr.protein.nuclear.western",sep="")))
-  rhs <-  approx(t.western,wprof[stim,],array.times.hr2,rule=2)$y
-  pam3.mat.max1[psoi,] <- approx(t.western,wprof[stim,],array.times.hr2,rule=2)$y
+  rhs <-  approx(t.western,wprof[stim,],array.times.hr12,rule=2)$y
+  pam3.mat.max1[psoi,] <- approx(t.western,wprof[stim,],array.times.hr12,rule=2)$y
 }
 stim <- "polyIC"
 for ( coi in nucloc.input.set ){
   psoi <- repProbes.cname[coi]
   wprof <- eval(parse(text=paste(coi,".appr.protein.nuclear.western",sep="")))
-  rhs <-  approx(t.western,wprof[stim,],array.times.hr2,rule=2)$y
-  polyIC.mat.max1[psoi,] <- approx(t.western,wprof[stim,],array.times.hr2,rule=2)$y
+  rhs <-  approx(t.western,wprof[stim,],array.times.hr12,rule=2)$y
+  polyIC.mat.max1[psoi,] <- approx(t.western,wprof[stim,],array.times.hr12,rule=2)$y
 }
 stim <- "r848"
 for ( coi in nucloc.input.set ){
   psoi <- repProbes.cname[coi]
   wprof <- eval(parse(text=paste(coi,".appr.protein.nuclear.western",sep="")))
-  rhs <-  approx(t.western,wprof[stim,],array.times.hr2,rule=2)$y
-  r848.mat.max1[psoi,] <- approx(t.western,wprof[stim,],array.times.hr2,rule=2)$y
+  rhs <-  approx(t.western,wprof[stim,],array.times.hr12,rule=2)$y
+  r848.mat.max1[psoi,] <- approx(t.western,wprof[stim,],array.times.hr12,rule=2)$y
 }
 stim <- "cpg"
 for ( coi in nucloc.input.set ){
@@ -231,12 +233,14 @@ for ( coi in nucloc.input.set ){
   cpg.mat.max1[psoi,] <- approx(t.western,wprof[stim,],array.times.hr2,rule=2)$y
 }
 
-
+ofile <- paste(exp.dir,"scaled.mus.objects.RData",sep="/")
+savelist <- c("max.intensity","lps.mat.max1","lps.mat.max1.exp","pam2.mat.max1","pam3.mat.max1","polyIC.mat.max1","r848.mat.max1","cpg.mat.max1" )
+save(list=savelist, file=ofile)
 
 ###
 ###
 ###
-
+if ( FALSE ){
 
 coi <- "Rela"
 
@@ -258,3 +262,5 @@ paiWT(psoi)
 multiAssayPlot(coi,120)
       
 pNLA(psoi)
+
+}
