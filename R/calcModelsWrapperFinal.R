@@ -25,10 +25,11 @@ load(paste(annot.dir,"representativeProbes.RData",sep="/"))
 load(paste(annot.dir,"tteMaps.RData",sep="/"))
 load(paste(ddata.dir,"boost.vec.RData",sep="/"))
 
-
 load(paste(annot.dir,"annotation.objects.RData",sep="/"))
 load(paste(exp.dir,"all.mus.objects.RData",sep="/"))
 load(paste(exp.dir,"scaled.mus.objects.RData",sep="/"))
+load(paste(interact.dir,"pdna.curated.RData",sep="/"))
+
 
 source("./utilitiesTAC.R")
 source("./utilitiesFiniteDiff3D.R")
