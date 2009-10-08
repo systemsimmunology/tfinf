@@ -43,8 +43,6 @@ boost.vec[late.tfs] <- 60
 ##targ.exp.pulled <- approx(array.times,lps.mat.max1[targ,],array.times+target.pull,rule=2)$y
 
 ## For some input variables, use the nuclear protein
-## lps.mat.max1 will be used for the new input variables
-## lps.mat.max1 will remain unboosted
 ## 
 ## For now, use no 'boost' time
 

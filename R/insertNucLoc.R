@@ -154,6 +154,14 @@ for ( i in 2:6 ){
 rownames(appr.protein.nuclear.western) <- stimslc[2:6]
 Rela.appr.protein.nuclear.western <- appr.protein.nuclear.western  
 
+## For some input variables, use the nuclear protein
+## lps.mat.max1 will be used for the new input variables
+## lps.mat.max1 will remain unboosted
+t.array <- c(0,20,40,60,80,120,240,360,480,1080,1440)
+for ( coi in nucloc.input.set ){
+  lps.mat.max1[repProbes.cname[coi],] <- approx(t.western,protein.nuclear.western[coi,],t.array,rule=2)$y
+}
+
 
 #### Incorporate into mat max
 stim <- "pam2"
