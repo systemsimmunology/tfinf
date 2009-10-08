@@ -25,25 +25,19 @@ interact.dir <- file.path(Sys.getenv("TFINF"),"interaction_data")
 seq.dir <- file.path(Sys.getenv("TFINF"),"sequence_data")
 ddata.dir <- file.path(Sys.getenv("TFINF"),"derived_data")
 
-##load(paste(interact.dir,"pdnaModels.30September2009.RData",sep="/"))
 load(paste(exp.dir,"scaled.mus.objects.RData",sep="/"))
-
 load(paste(annot.dir,"representativeProbes.RData",sep="/"))
 load(paste(annot.dir,"tteMaps.RData",sep="/"))
 tte <- transfac.tfs.expressed
 load(paste(ddata.dir,"boost.vec.RData",sep="/"))
-
 load(paste(annot.dir,"annotation.objects.RData",sep="/"))
 load(paste(exp.dir,"all.mus.objects.RData",sep="/"))
-load(paste(exp.dir,"scaled.mus.objects.RData",sep="/"))
 load(paste(interact.dir,"pdna.curated.RData",sep="/"))
+load(paste(interact.dir,"pdnaModels.16Jan2009.RData",sep="/"))
 
 cytokines.es.psois <- read.table(file="../annotations/cytokines.es.psois",as.is=TRUE)$V1
 cytokinebinding.es.psois <- read.table(file="../annotations/cytokinebinding.es.psois",as.is=TRUE)$V1
 car.psois <- c(cytokines.es.psois,cytokinebinding.es.psois)
-
-load(paste(interact.dir,"pdnaModels.16Jan2009.RData",sep="/"))
-zero.offset <- TRUE
 
 ##
 ## Filter pdnas
@@ -64,7 +58,6 @@ pdna.car.strings <- c("pdna.car.enrp.05","pdna.car.enrp.01","pdna.car.enrs.001",
                       "pdna.car.hs.et.001","pdna.car.curated")
 
 save(list=pdna.car.strings,file=paste(interact.dir,"pdna.car.16Jan2009.RData",sep="/"))
-
 ##
 ## Runc calcModels to get OLS solutions
 ##  

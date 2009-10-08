@@ -11,6 +11,14 @@ library(lars)
 library(lasso2)
 library(odesolve)
 
+source("./utilitiesTAC.R")
+source("./utilitiesFiniteDiff3D.R")
+source("./selectionUtilities.R")
+source("./utilitiesODEsolve.R")
+source("./analyticODE.R")
+source("./utilitiesMods.R")
+source("./matrixExtrema.R")
+
 annot.dir <- file.path(Sys.getenv("TFINF"),"annotations")
 exp.dir <- file.path(Sys.getenv("TFINF"),"expression_data")
 interact.dir <- file.path(Sys.getenv("TFINF"),"interaction_data")
@@ -19,21 +27,14 @@ ddata.dir <- file.path(Sys.getenv("TFINF"),"derived_data")
 
 load(paste(interact.dir,"pdnaModels.30September2009.RData",sep="/"))
 load(paste(exp.dir,"scaled.mus.objects.RData",sep="/"))
-##load(paste(ddata.dir,"boost.vec.refit.RData",sep="/"))
-
 load(paste(annot.dir,"representativeProbes.RData",sep="/"))
 load(paste(annot.dir,"tteMaps.RData",sep="/"))
+tte <- transfac.tfs.expressed
 load(paste(ddata.dir,"boost.vec.RData",sep="/"))
-
 load(paste(annot.dir,"annotation.objects.RData",sep="/"))
 load(paste(exp.dir,"all.mus.objects.RData",sep="/"))
 load(paste(exp.dir,"scaled.mus.objects.RData",sep="/"))
 load(paste(interact.dir,"pdna.curated.RData",sep="/"))
-
-
-source("./utilitiesTAC.R")
-source("./utilitiesFiniteDiff3D.R")
-source("./selectionUtilities.R")
 
 ##max.intensity <- apply(lps.mus,1,max) 
 ##lps.mat.max1 <- lps.mus/max.intensity ## this one will be modified for nucloc
@@ -55,10 +56,7 @@ mods.enrs.001 <- calcModels(pdna.enrs.001,t.index.min,t.index.max,tau,boost.vec,
 ## January 2008
 ## Not sure how this arose, but Irf8 -> Irf8 returns empty list
 mods.enrs.001 <- mods.enrs.001[which(unlist(lapply(mods.enrs.001,length))>0)]
-
-
 mods.hs.et.5 <- calcModels(pdna.hs.et.5,t.index.min,t.index.max,tau,boost.vec,lps.mat.max1,n.cands=1,zero.offset=TRUE,tau.estimate=TRUE)
-
 mods.hs.et.1 <- calcModels(pdna.hs.et.1,t.index.min,t.index.max,tau,boost.vec,lps.mat.max1,n.cands=1,zero.offset=TRUE,tau.estimate=TRUE)
 
 mods.hs.et.05 <- calcModels(pdna.hs.et.05,t.index.min,t.index.max,tau,boost.vec,lps.mat.max1,n.cands=1,zero.offset=TRUE,tau.estimate=TRUE)
