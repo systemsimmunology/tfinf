@@ -9,7 +9,6 @@ seq.dir <- file.path(Sys.getenv("TFINF"),"sequence_data")
 
 source("./utilitiesMeta.R")
 source("./utilitiesHitMat.R")
-source("./utilities2.R")
  
 load(paste(annot.dir,"TFcategories.RData",sep="/"))
 load(paste(annot.dir,"representativeProbes.RData",sep="/"))

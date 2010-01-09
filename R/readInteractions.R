@@ -6,7 +6,7 @@
 ## No special treatment of redundant interactions
 ## 18 Jan 2006. Simplify to get rid of time-consuming loop
 
-"readInteractions" <- function (filename){
+readInteractions <- function (filename){
   
   all.ints <- read.table(filename, sep=' ', header=FALSE)
   

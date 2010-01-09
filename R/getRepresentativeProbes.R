@@ -3,22 +3,21 @@
 ##  This function has been sped up with tapply
 ##
 
+source("./utilitiesExpression.R")
 
 mu.cutoff <- 100
 ##mu.cutoff <- 0
 lambda.cutoff <- 57.2
 #lambda.cutoff <- 150
 
-source("utilities.R")
 imax <- 11
 lps.full.ps.sig <- rownames(sigSlice(lambda.cutoff,lps.mus[,1:imax],lps.lambdas[,1:(imax-1)]))
 low.expressors <- names(which(apply(lps.mus[,1:imax]<mu.cutoff,1,sum)==imax))
 lps.full.ps.sig <- setdiff(lps.full.ps.sig,low.expressors)
 
-
 ## The amount of change is quantified as the sum of lambdas
 change.value <- apply(lps.lambdas,1,sum)
-"nwm" <- function(vals){names(which.max(vals))}
+nwm <- function(vals){names(which.max(vals))}
 repProbes.np <- tapply(change.value,as.factor(np),nwm) 
 repProbes.cname <- tapply(change.value,as.factor(cname.compare),nwm)
 repProbes.ncbiID <- tapply(change.value,as.factor(ncbiID),nwm) 

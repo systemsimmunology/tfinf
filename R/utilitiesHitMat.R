@@ -363,3 +363,81 @@ getTFsForHitMat <- function (hitMat, tfsubset=transfac.tfs.expressed ) {
   tfs.out <- as.character(cname.compare[intersect(tfs,allowed.tfs)])
   return(tfs.out)
 }
+
+
+## Miniminum distance between elements of a vector
+##
+## For ordered mode, think of
+## "the distance to the closest a upstream of b"
+##
+## distance returned as a positive number
+## fla, flb, Feature length associated with a and b, respectively
+minPairDistance <- function(a,b,fla,flb,keep.order=TRUE){
+  na <- length(a)
+  nb <- length(b)
+  min.dist <- NULL
+  if ( na==1 | nb== 1){
+    mm <- a - b
+    mm[which(mm>=0 & mm <= fla )] <- Inf
+    mm[which(mm<=0 & mm >= -flb )] <- -Inf
+    if ( !keep.order ){
+      min.dist <- min(abs(mm))
+    } else if ( keep.order & (TRUE %in% (mm <0) )) { # need to test that there actually is negative number
+      min.dist <- abs(max(mm[which(mm<0)]))
+    }
+  } else {
+    a.repped <- t(matrix(rep(a,nb),nrow=na,ncol=nb))
+    b.repped <- matrix(rep(b,na),nrow=nb,ncol=na)
+    mm <- a.repped - b.repped
+    mm[which(mm>=0 & mm <= fla )] <- Inf
+    mm[which(mm<=0 & mm >= -flb )] <- -Inf
+    if ( !keep.order ){
+      min.dist <- min(min(abs(mm)))
+    } else if ( keep.order & (TRUE %in% (mm <0)) ){
+      min.dist <- abs(max(mm[which(mm<0)]))
+    }
+  }
+  return(min.dist)
+}
+
+
+
+## Miniminum distance between elements of a vector
+## Same as above, but fla and flb are vectors
+##
+## For ordered mode, think of
+## "the distance to the closest a upstream of b"
+##
+## distance returned as a positive number
+## fla, flb, Feature length associated with a and b, respectively
+minPairDistanceV <- function(a,b,fla,flb,keep.order=TRUE){
+  na <- length(a)
+  nb <- length(b)
+  min.dist <- NULL
+  if ( na==1 | nb== 1){
+    mm <- a - b
+    mm[which(mm>=0 & mm <= fla )] <- Inf
+    mm[which(mm<=0 & mm >= -flb )] <- -Inf
+    if ( !keep.order ){
+      min.dist <- min(abs(mm))
+    } else if ( keep.order & (TRUE %in% (mm <0) )) { # need to test that there actually is negative number
+      min.dist <- abs(max(mm[which(mm<0)]))
+    }
+  } else {
+    a.repped <- t(matrix(rep(a,nb),nrow=na,ncol=nb))
+    b.repped <- matrix(rep(b,na),nrow=nb,ncol=na)
+    fla.repped <- t(matrix(rep(fla,nb),nrow=na,ncol=nb))
+    flb.repped <- matrix(rep(flb,na),nrow=nb,ncol=na)
+
+    mm <- a.repped - b.repped
+    mm[which(mm>=0 & mm <= fla.repped )] <- Inf
+    mm[which(mm<=0 & mm >= -flb.repped )] <- -Inf
+    if ( !keep.order ){
+      min.dist <- min(min(abs(mm)))
+    } else if ( keep.order & (TRUE %in% (mm <0)) ){
+      min.dist <- abs(max(mm[which(mm<0)]))
+    }
+  }
+  return(min.dist)
+}
+

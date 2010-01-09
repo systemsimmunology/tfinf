@@ -1,12 +1,6 @@
 
 rm(list=ls());
 
-#########################
-split1 <- function(splitme,splitchar='_'){ #parse binding site names by dropping "_" and everything behind it
- strsplit(splitme,split=splitchar,fixed=TRUE)[[1]][1];
-}
-#########################
-
 seq.dir <- file.path(Sys.getenv("TFINF"),"sequence_data")
 annot.dir <- file.path(Sys.getenv("TFINF"),"annotations")
 

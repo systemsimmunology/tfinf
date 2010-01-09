@@ -9,7 +9,7 @@
 ## mRNA.realtime ; t.realtime
 ## mRNA.array ; t.array
 
-"multiAssayPlot" <- function(tf,t.max){
+multiAssayPlot <- function(tf,t.max){
 
   colorvec = c('magenta','green','blue','turquoise','red')
   op <- par(font=2,lwd=2,font.axis=2,font.main=2,font.lab=2,font.sub=2,cex=1.5,mar=(c(5, 4, 6, 5)+ 0.1))

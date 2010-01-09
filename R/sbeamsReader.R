@@ -1,5 +1,5 @@
 
-fpe <- file.path(Sys.getenv("HOME"),"tfinf/expression_data")
+fpe <- file.path(Sys.getenv("TFINF"),"expression_data")
 
 data.mus <- read.table(paste(fpe,"sbeams.mus",sep="/"),header=TRUE,sep='\t')
 data.mus.min0 <- read.table(paste(fpe,"sbeams.minute0.mus",sep="/"),header=TRUE,sep='\t')

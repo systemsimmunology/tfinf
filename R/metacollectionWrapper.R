@@ -74,7 +74,7 @@ for ( eid in eids  ) {
   ## get expression neighbors
   psoi <- as.character(repProbes.ncbiID[eid])
   
-  psois <- getExpressionNeighbors(psoi,corMat,N=max.number.correlates,cutoff=min.correlation.dist)
+  psois <- getDistMatNeighbors(psoi,corMat,N=max.number.correlates,cutoff=min.correlation.dist)
   nbrs[[psoi]] <- psois
   if ( length(psois) >= 1 ){
     num.nbrs[psoi] <- length(psois)

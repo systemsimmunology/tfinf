@@ -121,14 +121,6 @@ countPairs <- function ( geneIDs, pwms, maxsep, minsep, pdist ){
 
 } ## close function
 
-## May 25, 2006
-
-#########################
-split1 <- function(splitme,splitchar='_'){ #parse binding site names by dropping "_" and everything behind it
- strsplit(splitme,split=splitchar,fixed=TRUE)[[1]][1];
-}
-#########################
-
 
 ## assumed globals: matrixLength
 

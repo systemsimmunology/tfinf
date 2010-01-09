@@ -9,7 +9,6 @@ load(paste(annot.dir,"tteMaps.RData",sep="/"))
 load(paste(annot.dir,"allMouseMappings.August2009.RData",sep="/"))
 
 source("./tallyUtilities.R")
-source("./utilities2.R")
 source("./utilitiesHitMat.R")
 
 

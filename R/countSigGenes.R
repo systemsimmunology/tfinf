@@ -1,4 +1,5 @@
 
+source("./utilitiesExpression.R")
 
 mu.cutoff <- 100
 ##mu.cutoff <- 0
@@ -6,8 +7,6 @@ lambda.cutoff <- 57.2
 #lambda.cutoff <- 150
 
 imax <- 6
-
-source("utilities.R")
 
 stimulus <- "LPS"
 lps.ps.sig <- rownames(sigSlice(lambda.cutoff,ratioCube[stimulus,,1:(imax-1)],lambdaCube[stimulus,,1:(imax-1)]))

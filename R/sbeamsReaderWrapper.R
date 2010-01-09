@@ -1,6 +1,6 @@
 
 
-sbeams.data.directory  <- file.path(Sys.getenv("HOME"),"tfinf/expression_data")
+sbeams.data.directory  <- file.path(Sys.getenv("TFINF"),"expression_data")
 ## Formerly
 ## sbeams.data.directory <- "/users/thorsson/macrophage/AffyArray/AllSBEAMS"
 

@@ -8,7 +8,7 @@
 ###   pc
 ###   pc$metampairs, pc$metapvals, pc$metams and TF pairs, to be named
 
-
+source("./utilitiesInteractions.R")
 
 ### For a metapair list, find which promoters have the matrix mat
 findSingleMatInPairHits <- function(mat,metampairs){

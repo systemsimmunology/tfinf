@@ -1,5 +1,5 @@
 
-muLambda.data.directory   <- file.path(Sys.getenv("HOME"),"tfinf/expression_data")
+muLambda.data.directory   <- file.path(Sys.getenv("TFINF"),"expression_data")
 ## was
 ## muLambda.data.directory <- "/users/thorsson/macrophage/AffyArray/AllLambdaMu"
 

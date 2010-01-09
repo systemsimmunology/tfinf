@@ -2,7 +2,7 @@
 
 ## Read and save all expression data 
 
-source("./newFunctions.R")
+##source("./utilitiesAnnotation.R")
 
 source("./sbeamsReaderFunction.R")
 source("./sbeamsReader.R") ## reads LPS
@@ -13,8 +13,8 @@ source("./readStdErrs.R")
 source("./readMyD88Ratios.R")
 source("./readLPSratios.R")
 
-expression.directory <- file.path(Sys.getenv("HOME"),"tfinf/expression_data")
-annotation.directory <- file.path(Sys.getenv("HOME"),"tfinf/annotations")
+expression.directory <- file.path(Sys.getenv("TFINF"),"expression_data")
+annotation.directory <- file.path(Sys.getenv("TFINF"),"annotations")
 
 ###
 affies.annotations <- read.table(paste(annotation.directory,"Mouse430_2.na25.annot_ncbi_mappings.tsv",sep="/"), header=TRUE, sep='\t', strip.white=TRUE,as.is=TRUE)

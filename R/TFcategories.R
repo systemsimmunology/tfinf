@@ -1,9 +1,5 @@
 
-
-
 conds <-  c("min0","min20","min40","min60","min80","min120","hr4","hr6","hr8","hr18","hr24")
-
-source("utilities2.R") ## required for split1
 
 ## Rough divisions for prioritization
 

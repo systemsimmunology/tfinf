@@ -121,10 +121,6 @@ expressedMats <- unique(sort(expressedMats))
 constitutiveMats <- setdiff ( unique(sort(as.character(unlist(tfps2pwm[transfac.tfs.constitutive.ps])))), expressedMats )
 
 
-split1 <- function(splitme,splitchar='_'){ #parse binding site names by dropping "_" and everything behind it
- strsplit(splitme,split=splitchar,fixed=TRUE)[[1]][1];
-}
-
 expressedMatsPrefix <- unique(sort(as.character(sapply(expressedMats,split1))))
 
 
