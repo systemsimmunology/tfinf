@@ -278,13 +278,14 @@ paiMyD88 <- function(probeID){
 
 
 ## A plotter illustrating trif dependence
-paiTRIF <- function(probeID){
+paiTRIF <- function(probeID,ymax=NULL){
 
   conds <- c("min20","min40","min60","min80","hr2","hr4","hr8","hr24")
 
-
   wtrange <- 1:6
-  ymax <- max(c(lps.mus[probeID,wtrange],myd88KOlps.mus[probeID,],trifKOlps.mus[probeID,],pam2.mus[probeID,],pam3.mus[probeID,],polyIC.mus[probeID,]))
+  if ( is.null(ymax) ){
+    ymax <- max(c(lps.mus[probeID,wtrange],myd88KOlps.mus[probeID,],trifKOlps.mus[probeID,],pam2.mus[probeID,],pam3.mus[probeID,],polyIC.mus[probeID,]))
+  }
   ymin <- 0
   
   main <- paste(cname.compare[probeID],", Probe ID:",probeID,sep="")
