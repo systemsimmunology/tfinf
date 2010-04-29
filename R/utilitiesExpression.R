@@ -38,3 +38,22 @@ sigPattern <- function( lambdaCutoff , boole.pattern, ratioMatrix, lambdaMatrix)
   collection
   
 }
+
+readVERAandSAMfiles <- function(label,folder,niceheaders=NULL){  
+  mus <- read.matrix(paste(c(folder,"/",label,".mus"),collapse=""))
+  ratios <- read.matrix(paste(c(folder,"/",label,".log10_ratios"),collapse=""))
+  lambdas <- read.matrix(paste(c(folder,"/",label,".lambdas"),collapse=""))
+  stderrs <- read.matrix(paste(c(folder,"/",label,".muStandardErrors"),collapse=""))
+  if ( !is.null(niceheaders ) ){
+    if ( length(niceheaders) != ncol(mus) ){ stop("Column counts don't match")}
+    colnames(mus) <- niceheaders
+    colnames(ratios) <- niceheaders[-1]
+    colnames(lambdas) <- niceheaders[-1]
+    colnames(stderrs) <- niceheaders[-1]
+  }
+  out <- list(mus,ratios,lambdas,stderrs)
+  names(out) <- c("mus","ratios","lambdas","muStdErrs")
+  out
+}  
+  
+  
