@@ -1,4 +1,5 @@
-
+ 
+source("./utilitiesExpression.R")
 expression.directory <- file.path(Sys.getenv("AA"),"data/20100426.curated.3prime")
 
 conds <- c("min0","min20","min40","min60","min80","min120")
@@ -73,6 +74,18 @@ myd88KOpolyIC.ratios <- res$ratios
 myd88KOpolyIC.lambdas <- res$ratios
 myd88KOpolyIC.muStdErrs <- res$muStdErrs
 
+conds <- c("min0","min20","min60","min120")
+myd88KOpam3.mus <- read.matrix(paste(c(expression.directory,"/","MyD88-PAM3.mus"),collapse=""))
+colnames(myd88KOpam3.mus) <- conds
+
+conds <- c("min0","min60","min120")
+trifKOpam2.mus <- read.matrix(paste(c(expression.directory,"/","TRIF-PAM2.mus"),collapse=""))
+colnames(trifKOpam2.mus) <- conds
+
+conds <- c("min0","min60","min120")
+trifKOlps.mus <- read.matrix(paste(c(expression.directory,"/","TRIF-LPS.mus"),collapse=""))
+colnames(trifKOlps.mus) <- conds
+
 all.ratios.objects <- ls()[grep("ratios$",ls(),extended=TRUE)]
 save ( list=all.ratios.objects, file=paste(expression.directory,"all.ratios.objects.RData",sep="/"))
 all.mus.objects <- ls()[grep("mus$",ls(),extended=TRUE)]
@@ -82,32 +95,48 @@ save ( list=all.lambdas.objects, file=paste(expression.directory,"all.lambdas.ob
 all.muStdErrs.objects <- ls()[grep("muStdErrs$",ls(),extended=TRUE)]
 save ( list=all.muStdErrs.objects, file=paste(expression.directory,"all.muStdErrs.objects.RData",sep="/"))
 
+annotation.directory <- file.path(Sys.getenv("AA"),"annotation")
 
+rt <- read.table(file.path(Sys.getenv("AA"),"annotation/MoGene4302_Mm_ENTREZG_mapfile"),sep="\t",as.is=TRUE,header=TRUE)
+probeset <- rt$ProbesetID
+ncbiID <- as.character(rt$EntrezID)
+names(ncbiID) <- probeset
+cname.compare <- rt$GeneSymbol
+names(cname.compare) <- probeset
+## aliases
+gene.names.all <- cname.compare
+commonName <- cname.compare
+gene.ids.all <- probeset
 
+load("~/data/ncbi/np.RData")
+names(np) <- paste(names(np),"_at",sep="")
 
+annotation.objects <- c("probeset",
+                        "gene.ids.all",
+                        "commonName",
+                        "np",
+                        "ncbiID",
+                        "gene.names.all",
+                        "cname.compare")
 
+# identical: commonName, gene.names.all
+# identical: probeset, gene.ids.all
+# keep both, as functions may rely on them
 
-annotation.directory <- file.path(Sys.getenv("TFINF"),"annotations")
+save (list=annotation.objects, file=paste(annotation.directory,"annotation.objects.RData",sep="/"))
 
-###
-affies.annotations <- read.table(paste(annotation.directory,"Mouse430_2.na25.annot_ncbi_mappings.tsv",sep="/"), header=TRUE, sep='\t', strip.white=TRUE,as.is=TRUE)
-##affies.annotations <- read.table(paste(annotation.directory,"Mouse430_2.na29.annot_ncbi_mappings.tsv",sep="/"), header=TRUE, sep='\t', strip.white=TRUE,as.is=TRUE)
-probeset <- affies.annotations[["Probe.Set.ID"]][1:45037]
-cname.compare <- affies.annotations[["Gene.Symbol"]][1:45037]
-names(cname.compare) <- probeset[1:45037]
-ncbiID <- affies.annotations[["Entrez.Gene"]][1:45037]
-names(ncbiID) <- probeset[1:45037]
+repProbes.cname <- probeset
+names(repProbes.cname) <- cname.compare
+repProbes.ncbiID <- probeset
+names(repProbes.ncbiID) <- ncbiID
+repProbes.np <- names(np)
+names(repProbes.np) <- np
 
-##source("repairBadMaps.R")
-##August 2009: Skip this, as for earlier cases, not needed or not helpful.
-
-source("repairExpressionObjectNames.R") ## removes the .2 extension
-
-source("getRepresentativeProbes.R")
+save(list=c("repProbes.cname","repProbes.np","repProbes.ncbiID"),file=paste(annotation.directory,"representativeProbes.RData",sep="/"))
 
 source("countSigGenes.R")
 
-## Save everything
+## Save everythingq
 
 ##save.image(file="allExpression.RData")
 
