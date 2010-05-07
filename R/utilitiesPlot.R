@@ -126,9 +126,11 @@ paiWT <- function(probeID){
 
   lines( c(1:9,11:12), lps.mus[probeID,], col='blue', lwd=3 )
   lines( pam2.mus[probeID,], col='green',lwd=3)
-  lines(  c(1:7,9:10), pam3.mus[probeID,], col='red',lwd=3)
+  ##lines(  c(1:7,9:10), pam3.mus[probeID,], col='red',lwd=3)
+  lines( pam3.mus[probeID,], col='red',lwd=3)
   lines( c(1:7,9:10), polyIC.mus[probeID,], col='magenta',lwd=3)
-  lines( c(1:7,9:10), r848.mus[probeID,], col='purple',lwd=3)
+  ##lines( c(1:7,9:10), r848.mus[probeID,], col='purple',lwd=3)
+  lines( r848.mus[probeID,], col='purple',lwd=3)
   lines( cpg.mus[probeID,], col='yellow',lwd=3)
 
   op <- par(font=1,lwd=2,font.axis=2,font.main=1,font.lab=1,font.sub=1,cex=1.5)

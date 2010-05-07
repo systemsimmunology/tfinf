@@ -120,9 +120,7 @@ expressedMats <- unique(sort(expressedMats))
 
 constitutiveMats <- setdiff ( unique(sort(as.character(unlist(tfps2pwm[transfac.tfs.constitutive.ps])))), expressedMats )
 
-
 expressedMatsPrefix <- unique(sort(as.character(sapply(expressedMats,split1))))
-
 
 ## Derive mappings for families from the above
 

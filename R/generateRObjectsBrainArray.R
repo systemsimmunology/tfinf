@@ -1,31 +1,20 @@
  
 source("./utilitiesExpression.R")
-expression.directory <- file.path(Sys.getenv("AA"),"data/20100426.curated.3prime")
-
-conds <- c("min0","min20","min40","min60","min80","min120")
-
-## handy utility function - depends on globals, so don't move
-miniRead <- function(filelabel,internallabel,conds){
-  res <- readVERAandSAMfiles("PAM2",expression.directory,niceheaders=conds)
-  assign(paste(c(internallabel,".mus"),collapse=""),res$mus)
-  assign(paste(c(internallabel,".ratios"),collapse=""),res$ratios)
-  assign(paste(c(internallabel,".lambdas"),collapse=""),res$lambdas)
-  assign(paste(c(internallabel,".muStdErrs"),collapse=""),res$muStdErrs)
-## ugh can't pass these out without creating another structure
-}  
+expression.directory <- file.path(Sys.getenv("TFINF"),"expression_data")
+annotation.directory <- file.path(Sys.getenv("TFINF"),"annotations")
 
 conds <- c("min0","min20","min40","min60","min80","min120","hr4","hr6","hr8","hr18","hr24")
 res <- readVERAandSAMfiles("LPS",expression.directory,niceheaders=conds)
 lps.mus <- res$mus
 lps.ratios <- res$ratios
-lps.lambdas <- res$ratios
+lps.lambdas <- res$lambdas
 lps.muStdErrs <- res$muStdErrs
 
 conds <- c("min0","min20","min40","min60","min80","min120")
 res <- readVERAandSAMfiles("PAM2",expression.directory,niceheaders=conds)
 pam2.mus <- res$mus
 pam2.ratios <- res$ratios
-pam2.lambdas <- res$ratios
+pam2.lambdas <- res$lambdas
 pam2.muStdErrs <- res$muStdErrs
 
 conds <- c("min0","min20","min40","min60","min80","min120")
@@ -34,7 +23,7 @@ conds <- c("min0","min20","min40","min60","min80","min120")
 res <- readVERAandSAMfiles("PAM3",expression.directory,niceheaders=conds)
 pam3.mus <- res$mus
 pam3.ratios <- res$ratios
-pam3.lambdas <- res$ratios
+pam3.lambdas <- res$lambdas
 pam3.muStdErrs <- res$muStdErrs
 
 conds <- c("min0","min20","min40","min60","min80","min120")
@@ -43,35 +32,35 @@ conds <- c("min0","min20","min40","min60","min80","min120")
 res <- readVERAandSAMfiles("R848",expression.directory,niceheaders=conds)
 r848.mus <- res$mus
 r848.ratios <- res$ratios
-r848.lambdas <- res$ratios
+r848.lambdas <- res$lambdas
 r848.muStdErrs <- res$muStdErrs
 
 conds <- c("min0","min20","min40","min60","min80","min120")
 res <- readVERAandSAMfiles("CpG",expression.directory,niceheaders=conds)
 cpg.mus <- res$mus
 cpg.ratios <- res$ratios
-cpg.lambdas <- res$ratios
+cpg.lambdas <- res$lambdas
 cpg.muStdErrs <- res$muStdErrs
 
 conds <- c("min0","min20","min40","min60","min80","min120","hr4","hr8","hr12")
 res <- readVERAandSAMfiles("Poly-IC",expression.directory,niceheaders=conds)
 polyIC.mus <- res$mus
 polyIC.ratios <- res$ratios
-polyIC.lambdas <- res$ratios
+polyIC.lambdas <- res$lambdas
 polyIC.muStdErrs <- res$muStdErrs
 
 conds <- c("min0","min20","min60","min120")
 res <- readVERAandSAMfiles("MyD88-LPS",expression.directory,niceheaders=conds)
 myd88KOlps.mus <- res$mus
 myd88KOlps.ratios <- res$ratios
-myd88KOlps.lambdas <- res$ratios
+myd88KOlps.lambdas <- res$lambdas
 myd88KOlps.muStdErrs <- res$muStdErrs
 
 conds <- c("min0","min20","min60","min120")
 res <- readVERAandSAMfiles("MyD88-PolyIC",expression.directory,niceheaders=conds)
 myd88KOpolyIC.mus <- res$mus
 myd88KOpolyIC.ratios <- res$ratios
-myd88KOpolyIC.lambdas <- res$ratios
+myd88KOpolyIC.lambdas <- res$lambdas
 myd88KOpolyIC.muStdErrs <- res$muStdErrs
 
 conds <- c("min0","min20","min60","min120")
@@ -95,7 +84,48 @@ save ( list=all.lambdas.objects, file=paste(expression.directory,"all.lambdas.ob
 all.muStdErrs.objects <- ls()[grep("muStdErrs$",ls(),extended=TRUE)]
 save ( list=all.muStdErrs.objects, file=paste(expression.directory,"all.muStdErrs.objects.RData",sep="/"))
 
-annotation.directory <- file.path(Sys.getenv("AA"),"annotation")
+probeset <- rownames(lps.mus)
+nps <- nrow(lps.mus)
+lambdaCube <- rep(NA,6*nps*5)
+dim(lambdaCube) <- c(6,nps,5)
+dimnames(lambdaCube)[[3]] <- c("min20","min40","min60","min80","min120")
+dimnames(lambdaCube)[[2]] <- probeset[1:nps]
+dimnames(lambdaCube)[[1]] <- c("LPS","PAM2","PAM3","PolyIC","R848","CpG")
+lambdaCube["LPS",,] <- lps.lambdas[1:nps,1:5]
+lambdaCube["PAM2",,] <- pam2.lambdas[1:nps,1:5]
+lambdaCube["PAM3",,] <- pam3.lambdas[1:nps,1:5]
+lambdaCube["PolyIC",,] <- polyIC.lambdas[1:nps,1:5]
+lambdaCube["R848",,] <- r848.lambdas[1:nps,1:5]
+lambdaCube["CpG",,] <- cpg.lambdas[1:nps,1:5]
+
+ratioCube <- rep(NA,6*nps*5)
+dim(ratioCube) <- c(6,nps,5)
+dimnames(ratioCube)[[3]] <- c("min20","min40","min60","min80","min120")
+dimnames(ratioCube)[[2]] <- probeset[1:nps]
+dimnames(ratioCube)[[1]] <- c("LPS","PAM2","PAM3","PolyIC","R848","CpG")
+
+ratioCube["LPS",,] <- lps.ratios[1:nps,1:5]
+ratioCube["PAM2",,] <- pam2.ratios[1:nps,1:5]
+ratioCube["PAM3",,] <- pam3.ratios[1:nps,1:5]
+ratioCube["PolyIC",,] <- polyIC.ratios[1:nps,1:5]
+ratioCube["R848",,] <- r848.ratios[1:nps,1:5]
+ratioCube["CpG",,] <- cpg.ratios[1:nps,1:5]
+
+muCube <- rep(NA,6*nps*6)
+dim(muCube) <- c(6,nps,6)
+dimnames(muCube)[[3]] <- c("min0","min20","min40","min60","min80","min120")
+dimnames(muCube)[[2]] <- probeset[1:nps]
+dimnames(muCube)[[1]] <- c("LPS","PAM2","PAM3","PolyIC","R848","CpG")
+
+muCube["LPS",,] <- lps.mus[1:nps,1:6]
+muCube["PAM2",,] <- pam2.mus[1:nps,1:6]
+muCube["PAM3",,] <- pam3.mus[1:nps,1:6]
+muCube["PolyIC",,] <- polyIC.mus[1:nps,1:6]
+muCube["R848",,] <- r848.mus[1:nps,1:6]
+muCube["CpG",,] <- cpg.mus[1:nps,1:6]
+
+all.Cube.objects <- ls()[grep("Cube$",ls(),extended=TRUE)]
+save( list=all.Cube.objects, file=paste(expression.directory,"all.Cube.objects.RData",sep="/"))
 
 rt <- read.table(file.path(Sys.getenv("AA"),"annotation/MoGene4302_Mm_ENTREZG_mapfile"),sep="\t",as.is=TRUE,header=TRUE)
 probeset <- rt$ProbesetID
@@ -136,40 +166,9 @@ save(list=c("repProbes.cname","repProbes.np","repProbes.ncbiID"),file=paste(anno
 
 source("countSigGenes.R")
 
-## Save everythingq
-
-##save.image(file="allExpression.RData")
-
-## Extract relevant portions and save 
-
-all.Cube.objects <- ls()[grep("Cube$",ls(),extended=TRUE)]
-save( list=all.Cube.objects, file=paste(expression.directory,"all.Cube.objects.RData",sep="/"))
-
-save(list=c("repProbes.cname","repProbes.np","repProbes.ncbiID"),file=paste(annotation.directory,"representativeProbes.RData",sep="/"))
-
-##save(list=c("representativeProbes","repProbes.cname","repProbes.np","repProbes.ncbiID","repProbes.lfps.np","repProbes.lfps.cname","repProbes.lfps.ncbiID"),file="representativeProbes.RData")
-
-## Older verson of GO analysis. Pull it out.
-##source("compileGoListAll.R")
-##save(list=c("goListAll.bp5","goListAll.mf5"),file="goListAll.RData")
-
 save(all.mic,file=paste(expression.directory,"all.mic.RData",sep="/"))
 
 all.ps.lists <- ls()[grep("ps.sig$",ls(),extended=TRUE)]
 all.ps.lists <- c(all.ps.lists,"lps.full.ps.sig.rep")
 save( list=all.ps.lists, file=paste(annotation.directory,"all.ps.list.objects.RData",sep="/"))
-
-annotation.objects <- c("probeset",
-                        "gene.ids.all",
-                        "commonName",
-                        "np",
-                        "ncbiID",
-                        "gene.names.all",
-                        "cname.compare")
-
-# identical: commonName, gene.names.all
-# identical: probeset, gene.ids.all
-# keep both, as functions may rely on them
-
-save (list=annotation.objects, file=paste(annotation.directory,"annotation.objects.RData",sep="/"))
 

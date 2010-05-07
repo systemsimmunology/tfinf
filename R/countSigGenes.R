@@ -6,6 +6,9 @@ mu.cutoff <- 100
 lambda.cutoff <- 57.2
 #lambda.cutoff <- 150
 
+## May 2010
+lambda.cutoff <- 26.61275
+
 imax <- 6
 
 stimulus <- "LPS"
