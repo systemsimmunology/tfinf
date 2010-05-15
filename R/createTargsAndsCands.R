@@ -51,11 +51,12 @@ load(paste(interact.dir,"TFNetDist.RData",sep="/"))
 noConnections <- c("Egr3","Mafb","Foxj2","Zfp161") ## TFs for which we have no connection information
 noConnections <- c(noConnections,"Fosl2") ## May 2008. Can't quite figure out: Is this a "new" one?
 noConnections <- c(noConnections,"Stat2") ## Sep 2009. Can't quite figure out: Is this a "new" one? probably from ISRE
+noConnections <- c(noConnections,"Atf1") ## May 2010
 
 ## May 2008. Repairs needed, as we indexed by gene symbol and not entrez ID
 
 tf.names.old <- rownames(tf.dist.cn)
-tf.names.new <- replace(tf.names.old,match(c("Isgf3g","Tgif","Zfpn1a1"),tf.names.old),c("Irf9","Tgif1","Ikzf1"))
+tf.names.new <- replace(tf.names.old,match(c("Isgf3g","Tgif","Zfpn1a1","Tcfe3"),tf.names.old),c("Irf9","Tgif1","Ikzf1","Tcf3"))
 rownames(tf.dist.cn) <- tf.names.new
 colnames(tf.dist.cn) <- tf.names.new
 
@@ -97,5 +98,5 @@ pdna.hs.et.05 <- getTFsForTE(targScans.et.0.05,tfsubset=tfsubset)
 pdna.hs.et.01 <- getTFsForTE(targScans.et.0.01,tfsubset=tfsubset )
 pdna.hs.et.001 <- getTFsForTE(targScans.et.0.001,tfsubset=tfsubset )
 
-ofile <- paste(interact.dir,"pdnaModels.30September2009.RData",sep="/")
+ofile <- paste(interact.dir,"pdnaModels.10May2010.RData",sep="/")
 save(pdna.curated, pdna.enrs.001, pdna.enrp.01, pdna.enrp.05, pdna.hs.et.5,pdna.hs.et.1,pdna.hs.et.01,pdna.hs.et.05,pdna.hs.et.001, file=ofile )

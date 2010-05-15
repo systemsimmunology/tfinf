@@ -1,4 +1,21 @@
 
+##
+## Remove models with self-interactions
+
+filterSelfInteractions <- function ( targsAndCands, zero.offset=FALSE ){
+
+  returnList <- list()
+  targsToPredict <- names( targsAndCands )
+  for ( targ in targsToPredict ){
+    if ( n.cands==1 ){
+      tfs <- targsAndCands[[targ]]
+      n.tfs <- length(tfs) 
+      for ( i in 1:n.tfs ) {
+        ivars <- as.character(repProbes.cname[tfs[i]])
+   
+    
+}
+  
 ## n.cands=1 we consider single TF candidates
 ## n.cands=2 we consider double TF candidates
 
@@ -67,6 +84,7 @@ calcModels <- function( targsAndCands, t.index.min, t.index.max, tau, boost.vec,
           returnList[[targ]]$rmsds.unrolled <- c(returnList[[targ]]$rmsds.unrolled, rmsd.unrolled)
           returnList[[targ]]$cors.unrolled <- c(returnList[[targ]]$cors.unrolled, cor.unrolled)
         }
+        
       } ## complete loop over pairs
 
     }## close cands=1 section
@@ -106,7 +124,10 @@ calcModels <- function( targsAndCands, t.index.min, t.index.max, tau, boost.vec,
           returnList[[targ]]$cors <- c(returnList[[targ]]$cors, cor)
           returnList[[targ]]$rmsds.unrolled <- c(returnList[[targ]]$rmsds.unrolled, rmsd.unrolled)
           returnList[[targ]]$cors.unrolled <- c(returnList[[targ]]$cors.unrolled, cor.unrolled)
+        } else { ## if targ was found in ivars, do not report
+          returnList[[targ]] <- NULL
         }
+         
       } ## complete loop over pairs
 
       ## remove spurious names

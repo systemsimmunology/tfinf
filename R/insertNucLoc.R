@@ -175,8 +175,8 @@ stim <- "pam3"
 for ( coi in nucloc.input.set ){
   psoi <- repProbes.cname[coi]
   wprof <- eval(parse(text=paste(coi,".appr.protein.nuclear.western",sep="")))
-  rhs <-  approx(t.western,wprof[stim,],array.times.hr12,rule=2)$y
-  pam3.mat.max1[psoi,] <- approx(t.western,wprof[stim,],array.times.hr12,rule=2)$y
+  rhs <-  approx(t.western,wprof[stim,],array.times.hr2,rule=2)$y
+  pam3.mat.max1[psoi,] <- approx(t.western,wprof[stim,],array.times.hr2,rule=2)$y
 }
 stim <- "polyIC"
 for ( coi in nucloc.input.set ){
@@ -189,8 +189,8 @@ stim <- "r848"
 for ( coi in nucloc.input.set ){
   psoi <- repProbes.cname[coi]
   wprof <- eval(parse(text=paste(coi,".appr.protein.nuclear.western",sep="")))
-  rhs <-  approx(t.western,wprof[stim,],array.times.hr12,rule=2)$y
-  r848.mat.max1[psoi,] <- approx(t.western,wprof[stim,],array.times.hr12,rule=2)$y
+  rhs <-  approx(t.western,wprof[stim,],array.times.hr2,rule=2)$y
+  r848.mat.max1[psoi,] <- approx(t.western,wprof[stim,],array.times.hr2,rule=2)$y
 }
 stim <- "cpg"
 for ( coi in nucloc.input.set ){
