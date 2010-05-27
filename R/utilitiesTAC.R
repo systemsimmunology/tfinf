@@ -1,21 +1,3 @@
-
-##
-## Remove models with self-interactions
-
-filterSelfInteractions <- function ( targsAndCands, zero.offset=FALSE ){
-
-  returnList <- list()
-  targsToPredict <- names( targsAndCands )
-  for ( targ in targsToPredict ){
-    if ( n.cands==1 ){
-      tfs <- targsAndCands[[targ]]
-      n.tfs <- length(tfs) 
-      for ( i in 1:n.tfs ) {
-        ivars <- as.character(repProbes.cname[tfs[i]])
-   
-    
-}
-  
 ## n.cands=1 we consider single TF candidates
 ## n.cands=2 we consider double TF candidates
 
@@ -85,7 +67,7 @@ calcModels <- function( targsAndCands, t.index.min, t.index.max, tau, boost.vec,
           returnList[[targ]]$cors.unrolled <- c(returnList[[targ]]$cors.unrolled, cor.unrolled)
         }
         
-      } ## complete loop over pairs
+      } ## complete loop over tfs
 
     }## close cands=1 section
     
@@ -139,7 +121,13 @@ calcModels <- function( targsAndCands, t.index.min, t.index.max, tau, boost.vec,
       colnames(returnList[[targ]]$tfs.cname) <- NULL 
 
     }## close cands=2 section
-  } ## close loop over cands to predict
+
+    ##It can happen (1 regulator only) if there is an excluded self-loop that returnList[[targs]] is an empty list
+    ## remove the entry in this case
+    if ( length(returnList[[targ]]) == 0 ){
+      returnList[[targ]] = NULL
+    }
+  } ## close loop over cands to predict for specific targ
   
   returnList
 

@@ -17,7 +17,7 @@ source("./selectionUtilities.R")
 source("./utilitiesODEsolve.R")
 source("./analyticODE.R")
 source("./utilitiesMods.R")
-source("./matrixExtrema.R")
+source("./matrixExtrema.R") ## should be subsumed by version in general utilities?
 
 annot.dir <- file.path(Sys.getenv("TFINF"),"annotations")
 exp.dir <- file.path(Sys.getenv("TFINF"),"expression_data")
@@ -48,7 +48,6 @@ t.index.max <- 11
 tau <- 600./log(2.)
 
 mods.enrp.05 <- calcModels(pdna.enrp.05,t.index.min,t.index.max,tau,boost.vec,lps.mat.max1,n.cands=2,zero.offset=TRUE,tau.estimate=TRUE)
-
 mods.enrp.01 <- calcModels(pdna.enrp.01,t.index.min,t.index.max,tau,boost.vec,lps.mat.max1,n.cands=2,zero.offset=TRUE,tau.estimate=TRUE)
 mods.enrs.001 <- calcModels(pdna.enrs.001,t.index.min,t.index.max,tau,boost.vec,lps.mat.max1,n.cands=1,zero.offset=TRUE,tau.estimate=TRUE)
 

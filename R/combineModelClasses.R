@@ -1,22 +1,20 @@
-## Feb 2009
 
-load("models.rmsf.16Jan2009.RData")
+source("./utilitiesMods.R")
+
+##annot.dir <- file.path(Sys.getenv("TFINF"),"annotations")
+ddata.dir <- file.path(Sys.getenv("TFINF"),"derived_data")
+
+##load(paste(annot.dir,"representativeProbes.RData",sep="/"))
+load(paste(ddata.dir,"models.rmsf.10May2010.RData",sep="/"))
+
 
 ## Contains c("mods.curated.ode.rmsf","mods.hs.et.05.ode.rmsf","mods.hs.et.01.ode.rmsf","mods.hs.et.001.ode.rmsf","mods.enrs.001.ode.rmsf","mods.singles.fromCorTFPairs.01.ode.rmsf","mods.enrp.sings.01.ode.rmsf","mods.enrp.dubs.01.ode.rmsf")
-
-
-###
-### June 2008
-### 
 
 singles.tags <- c("mods.curated","mods.hs.et.05","mods.enrs.001","mods.singles.fromCorTFPairs.01","mods.enrp.sings.01")
 doubles.tags <- "mods.enrp.dubs.01"
 model.tags <- c(singles.tags,doubles.tags)
 modnames <- paste(model.tags,".ode.rmsf",sep="")
 
-sto  <- function(inString){
- return (eval(parse(text=inString)))
-}
 modvec.1 <- createModVecFromMultMod ( modnames[1], sto(modnames[1]), n.cands=1)
 modvec.2 <- createModVecFromMultMod ( modnames[2], sto(modnames[2]), n.cands=1)
 modvec.3 <- createModVecFromMultMod ( modnames[3], sto(modnames[3]), n.cands=1)
@@ -29,8 +27,7 @@ modvec.now <- mergeModVecs(modvec.now,modvec.3)
 modvec.now <- mergeModVecs(modvec.now,modvec.4)
 modvec.now <- mergeModVecs(modvec.now,modvec.5)
 modvec.now <- mergeModVecs(modvec.now,modvec.6)
-modvec.now <- mergeModVecs(modvec.now,modvec.7)
 modvec.e  <- modvec.now
 rm(modvec.now)
 
-save(modvec.e,file="modvec.e.RData")
+save(modvec.e,file=paste(ddata.dir,"modvec.e.RData",sep="/"))
