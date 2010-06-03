@@ -1839,3 +1839,70 @@ getModelIndexByRegsMV <- function( regs, modvec,exact.match=FALSE){
   return( index.vec.return )
 }
 
+
+##
+## Create file containing names/locations of model-specific files
+##
+## filename: name of file to be written
+## modfiledir: the directory containing model-specific files (no trailing slash)
+## filextension: e.g. "png"
+createModfileLookupFileMV <- function ( modvec, filename, modfiledir, filextension ){
+  zz <- file(filename, "w")  # open an output file connection
+  cat("File","\n",sep="",file=zz)
+  for ( mod in modvec ) {
+    targ <- mod$targ
+    regs <- mod$tfs
+    modlabel <- paste(cname.compare[c(targ,regs)],collapse="-")
+    outstring <- paste(modfiledir,"/",modlabel,".",filextension,sep="")
+    cat(outstring,"\n",sep="",file=zz)
+  }
+  close(zz)
+}
+
+##
+## Write file of model-specific properties, excluding edge-specific attributes
+## 
+createModPropFileMV <- function( modvec, filename ) {
+  # Header
+  zz <- file(filename, "w")  # open an output file connection
+  outstring <- paste(c("Model","Target Symbol","Target EntrezID","RMSD","T-half","evidence"),collapse="\t")
+  cat(outstring,"\n",sep="",file=zz)
+
+  for ( mod in modvec ) {
+    targ <- mod$targ
+    regs <- mod$tfs
+    modlabel <- paste(cname.compare[c(targ,regs)],collapse="-")
+    outstring <- paste(c(modlabel,cname.compare[targ],ncbiID[targ],round(mod$rmsd.ode,3),round(log(2.)*mod$tau.ode,1),mod$evidence),collapse="\t")
+    cat(outstring,"\n",sep="",file=zz)
+  }
+  close(zz)
+}
+
+##
+## Create File of Edge-specific information from modvec
+##
+createEdgeFileMV <- function( modvec, filename){  
+  # Header
+  zz <- file(filename, "w")  # open an output file connection
+  outstring <- paste(c("Model","Target Symbol","Target EntrezID","Regulator Symbol","Regulator EntrezID","Weight"),collapse="\t")
+  cat(outstring,"\n",sep="",file=zz)
+
+  for ( mod in modvec ) {
+    regs <- mod$tfs
+    targ <- mod$targ
+    betas <- mod$betas.ode
+    modlabel <- paste(cname.compare[c(targ,regs)],collapse="-")
+ 
+    if ( length(regs) > 1 ){
+      for ( i in 1:length(regs) ){
+        outstring <- paste(c(modlabel,cname.compare[targ],ncbiID[targ],cname.compare[regs[i]],ncbiID[regs[i]],round(betas[i],3)),collapse="\t")
+        cat(outstring,"\n",sep="",file=zz)
+      }
+    } else if ( length(regs)==1 ) {
+      outstring <- paste(c(modlabel,cname.compare[targ],ncbiID[targ],cname.compare[regs],ncbiID[regs],round(mod$betas.ode,3)),collapse="\t")
+      cat(outstring,"\n",sep="",file=zz)
+    }
+  } ## end loop over models
+  close(zz)
+  
+}

@@ -31,3 +31,32 @@ modvec.e  <- modvec.now
 rm(modvec.now)
 
 save(modvec.e,file=paste(ddata.dir,"modvec.e.RData",sep="/"))
+
+osx.path.public <- "/Volumes/isb-2/Vesteinn/MacTransNet/RegulationHypotheses/"
+linux.path.public <- "/net/public/Vesteinn/MacTransNet/RegulationHypotheses/"
+windows.path.public <- "\\\\Isb-2\\PUBLIC\\Vesteinn\\MacTransNet\\RegulationHypotheses\\"
+
+osx.path.local <- "/Users/thorsson/macrophage/TFinfluence/R/Networks/"
+linux.path.local <- "/users/thorsson/macrophage/TFinfluence/R/Networks/"
+windows.path.local <- "\\\\Isb-1\\thorsson\\macrophage\\TFinfluence\\R\\Networks\\"
+
+prefix <- "All"
+
+dir.osx.local <- paste(osx.path.local,prefix,"/",sep="")
+dir.linux.local <- paste(linux.path.local,prefix,"/",sep="")
+dir.win.local <- paste(windows.path.local,prefix,"\\",sep="")
+
+dir.osx.public <- paste(osx.path.public,prefix,"/",sep="")
+dir.linux.public <- paste(linux.path.public,prefix,"/",sep="")
+dir.win.public <- paste(windows.path.public,prefix,"\\",sep="")
+
+createCytoscapeFilesMV(subnet.cytokines,prefix,outputdir=dir.osx.local,linuxdir=dir.linux.public,windir=dir.win.public,osxdir=dir.osx.public,ppints=FALSE ) 
+ 
+predPlotWrapperModVec(  subnet.cytokines.best ,savedir=dir.osx.local )
+
+createBioTapestryFilesMV(subnet.cytokines,prefix="Cytokines",outputdir=dir.osx.local,regionvec=regionvec)
+
+createBioTapestryFilesMV(subnet.cytokines.best,prefix="Cytokines",outputdir=dir.osx.local,regionvec=regionvec) 
+
+createBioTapestryFilesMV(subnet.cytokines,prefix="Cytokines",outputdir=dir.osx.local,regionvec=regionvec)
+
