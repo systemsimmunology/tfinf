@@ -1,0 +1,45 @@
+annot.dir <- file.path(Sys.getenv("TFINF"),"annotations")
+seq.dir <- file.path(Sys.getenv("TFINF"),"sequence_data")
+exp.dir <- file.path(Sys.getenv("TFINF"),"expression_data")
+r.dir <- file.path(Sys.getenv("TFINF"),"R")
+
+load(paste(annot.dir,"annotation.objects.RData",sep="/"))
+load(paste(annot.dir,"tteMaps.RData",sep="/"))
+## Read entrezIDofEnsemblID, ensemblIDsOfEntrezIDs
+load(paste(annot.dir,"allMouseMappings.August2009.RData",sep="/"))
+
+source(paste(r.dir,"tallyUtilities.R",sep="/"))
+##source(paste(r.dir,"utilitiesHitMat.R",sep="/")) Needed or not?
+
+load(paste(seq.dir,"Parsed.Scan.eset.allMouseSeptember2009.RData",sep="/"))
+TRE.OUT <- TRE.OUT.eset
+ensids <- names(TRE.OUT)
+entrezIDs <- unique(unlist(entrezIDofEnsemblID[ensids]))
+## otherwise known as expressed.scanned.egid ( no hyphens) 
+
+## Read all mouse matrices and lengths
+gg <-read.table(paste(annot.dir,"matrixLengths" ,sep="/"),as.is=TRUE);
+matrixLength <- gg$V2; names(matrixLength) <- gg$V1; rm(gg);
+mouseMatrices <- names(matrixLength)
+
+ 
+## load familyMap, a mapping from vector of matrix names to family strings
+load(paste(annot.dir,"familyMapVT3.RData" ,sep="/"))
+familyMap <- familyMapVT3; rm(familyMapVT3);
+familyNames <- unique(sort(as.character(familyMap)))
+
+## Load file of threshold for each matrix
+load(paste(annot.dir,"matrixThresholdA.RData" ,sep="/"))
+matrixThreshold <- matrixThresholdA; 
+
+
+redundancy <- unlist(lapply(ensemblIDsOfEntrezIDs[entrezIDs],length))
+good.eids <- names(which(redundancy==1)) ## Gene IDs with non-redundant ensembl IDs
+good.ensids <- as.character(unlist(ensemblIDsOfEntrezIDs[good.eids])) 
+
+ensids <- good.ensids 
+eids <- good.eids
+entrezIDs <- eids
+
+## Use this if runnin command line version
+##save.image()
