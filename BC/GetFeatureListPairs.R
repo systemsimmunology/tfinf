@@ -15,7 +15,6 @@ load("featureMatrix.RData")
 load("ESmaxcubeMgrid.RData")
 load("nbrs.RData")
 
-
 Mpair <- apply(featureMatrix,1,sum)
 allMs <- Mpair
 fampairs <- names(Mpair)
