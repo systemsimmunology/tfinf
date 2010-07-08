@@ -3,13 +3,13 @@
 ## n.pairs, N, Mpair, fampairs, Msteps
 ## ESmaxcubeMgrid
 
-load("../../AffyArray/newAffy/representativeProbes.RData")
-load("../../AffyArray/newAffy/annotation.objects.RData")
-## Read Ensembl-Entrez Mappings 
+annot.dir <- file.path(Sys.getenv("TFINF"),"annotations")
+r.dir <- file.path(Sys.getenv("TFINF"),"R")
+load(paste(annot.dir,"representativeProbes.RData",sep="/"))
+load(paste(annot.dir,"annotation.objects.RData",sep="/"))
 ## Read entrezIDofEnsemblID, ensemblIDsOfEntrezIDs
-load("../../RShared/allMouseMappings.RData")
-
-source("utilitiesBinaryClassification.R")
+load(paste(annot.dir,"allMouseMappings.August2009.RData",sep="/"))
+source("./utilitiesBinaryClassification.R")
 
 load("featureMatrix.RData")
 load("ESmaxcubeMgrid.RData")
