@@ -11,8 +11,8 @@ load(paste(annot.dir,"annotation.objects.RData",sep="/"))
 load(paste(annot.dir,"allMouseMappings.August2009.RData",sep="/"))
 source("./utilitiesBinaryClassification.R")
 
-load("./featureMatrix.mf.RData")
-##load("ESmaxcubeMgridNew.RData") July 2010 temp comment out
+load(paste(seq.dir,"featureMatrix.mf.RData",sep="/"))
+##load("ESmaxcubeMgridNew.RData") July 2010 temp comment out Is this used ??
 ##load("nbrs.RData") ditto
 
 Msingles <- apply(featureMatrix.mf,1,sum)

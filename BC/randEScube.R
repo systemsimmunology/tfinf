@@ -1,8 +1,11 @@
-  
-##N <- length(eids.univ)
-N <- 4577
 
-Msteps <- seq(20,4520,20)
+source("./initializeBC.R")
+
+## N should be obtained by preamble code (currently initializeBC.R )
+## number of ensemblIDs for which we have scans, for which there are unique entrezIDs
+## and which are in the expressed set
+
+Msteps <- seq(20,20*round(N/20),20)
 numMsteps <- length(Msteps)
 
 nearestMpoint <- function ( Mval ){
@@ -47,7 +50,7 @@ ESmaxcubeMgrid <- apply(EScube,c(3,1),cummax)
 ESmaxcubeMgrid <- aperm(ESmaxcubeMgrid,c(3,1,2))
 rm(EScube) 
 
-save(ESmaxcubeMgrid,file="ESmaxcubeMgrid.RData")
+save(ESmaxcubeMgrid,file="../sequence_data/ESmaxcubeMgrid.RData")
 
 
 

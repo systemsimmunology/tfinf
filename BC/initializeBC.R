@@ -17,6 +17,18 @@ ensids <- names(TRE.OUT)
 entrezIDs <- unique(unlist(entrezIDofEnsemblID[ensids]))
 ## otherwise known as expressed.scanned.egid ( no hyphens) 
 
+
+redundancy <- unlist(lapply(ensemblIDsOfEntrezIDs[entrezIDs],length))
+good.eids <- names(which(redundancy==1)) ## Gene IDs with non-redundant ensembl IDs
+good.ensids <- as.character(unlist(ensemblIDsOfEntrezIDs[good.eids]))
+
+ensids <- good.ensids 
+eids <- good.eids
+entrezIDs <- eids
+N <- length(entrezIDs) ## Universe size
+
+
+
 ## Read all mouse matrices and lengths
 gg <-read.table(paste(annot.dir,"matrixLengths" ,sep="/"),as.is=TRUE);
 matrixLength <- gg$V2; names(matrixLength) <- gg$V1; rm(gg);
@@ -32,14 +44,6 @@ familyNames <- unique(sort(as.character(familyMap)))
 load(paste(annot.dir,"matrixThresholdA.RData" ,sep="/"))
 matrixThreshold <- matrixThresholdA; 
 
-
-redundancy <- unlist(lapply(ensemblIDsOfEntrezIDs[entrezIDs],length))
-good.eids <- names(which(redundancy==1)) ## Gene IDs with non-redundant ensembl IDs
-good.ensids <- as.character(unlist(ensemblIDsOfEntrezIDs[good.eids])) 
-
-ensids <- good.ensids 
-eids <- good.eids
-entrezIDs <- eids
 
 ## Use this if runnin command line version
 ##save.image()

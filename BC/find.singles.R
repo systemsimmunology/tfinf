@@ -91,7 +91,7 @@ colnames(featureMatrix.mf) <- efmats
 
 featureMatrix.mf <- t(featureMatrix.mf)
 
-save(featureMatrix.mf,file="featureMatrix.mf.RData")
+save(featureMatrix.mf,file=paste(seq.dir,"featureMatrix.mf.RData",sep="/"))
 
 ##save(m.tally,m.pair.tally,mf.tally,mdo.pair.tally,mf.pair.tally,mdof.pair.tally,file="hitTally.RData",compress=TRUE)
 proc.time() - ptm
