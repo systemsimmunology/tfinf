@@ -4,7 +4,7 @@ rm(list=ls());
 seq.dir <- file.path(Sys.getenv("TFINF"),"sequence_data")
 annot.dir <- file.path(Sys.getenv("TFINF"),"annotations")
 
-load(paste(seq.dir,"Parsed.Scan.Results.allMouseSeptember2009.dat",sep="/"))
+load(paste(seq.dir,"Parsed.Scan.Results.allMouseMay2010.dat",sep="/"))
 load(paste(annot.dir,"tteMaps.RData",sep="/"))
 
 ## Read all mouse matrices and lengths

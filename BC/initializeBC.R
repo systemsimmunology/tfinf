@@ -11,7 +11,7 @@ load(paste(annot.dir,"allMouseMappings.August2009.RData",sep="/"))
 source(paste(r.dir,"tallyUtilities.R",sep="/"))
 ##source(paste(r.dir,"utilitiesHitMat.R",sep="/")) Needed or not?
 
-load(paste(seq.dir,"Parsed.Scan.eset.allMouseSeptember2009.RData",sep="/"))
+load(paste(seq.dir,"Parsed.Scan.eset.allMouseMay2010.RData",sep="/"))
 TRE.OUT <- TRE.OUT.eset
 ensids <- names(TRE.OUT)
 entrezIDs <- unique(unlist(entrezIDofEnsemblID[ensids]))
@@ -43,6 +43,22 @@ familyNames <- unique(sort(as.character(familyMap)))
 ## Load file of threshold for each matrix
 load(paste(annot.dir,"matrixThresholdA.RData" ,sep="/"))
 matrixThreshold <- matrixThresholdA; 
+
+
+
+## Expression neighbors
+
+eids.all <- entrezIDofEnsemblID[good.ensids]
+psois.all <- paste(eids.all,"_at",sep="")  ## improve this
+
+load(paste(exp.dir,"all.mus.objects.RData",sep="/"))
+t.index.min <- 1
+t.index.max <- 11
+cordistH <- 1-cor(t(lps.mus[psois.all,t.index.min:t.index.max]))
+
+maxn <-  600 
+mincor <- 0.1
+system.time( nbrs <- getNbrs(psois=psois.all,cloud=rownames(cordistH), distmat=cordistH, threshold=mincor))
 
 
 ## Use this if runnin command line version

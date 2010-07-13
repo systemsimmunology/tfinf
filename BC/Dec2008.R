@@ -200,7 +200,6 @@ proc.time() - ptm
 ### Calculate ESvalues for all neighbors and matrices
 ### Maximize over neighbor direction
 
-
 maxn <-  600 
 mincor <- 0.1
 system.time( nbrs <- getNbrs(psois=psois.all,cloud=rownames(cordistH), distmat=cordistH, threshold=mincor))

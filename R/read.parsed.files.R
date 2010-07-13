@@ -69,7 +69,8 @@ load(paste(annot.dir,"expressed.scanned.ensembl.RData",sep="/"))
 
 TRE.OUT.eset <- TRE.OUT[expressed.scanned.ensembl]
 
-save(TRE.OUT.eset,file=paste(seq.dir,"Parsed.Scan.eset.allMouseSeptember2009.RData",sep="/"))
+save(TRE.OUT.eset,file=paste(seq.dir,"Parsed.Scan.eset.allMouseMay2010.RData",sep="/"))
+#save(TRE.OUT.eset,file=paste(seq.dir,"Parsed.Scan.eset.allMouseSeptember2009.RData",sep="/"))
 #save(TRE.OUT.eset,file="Parsed.Scan.eset.allMouseSeptember2009.RData")
 
 if (FALSE ) { ## comment out for now 
