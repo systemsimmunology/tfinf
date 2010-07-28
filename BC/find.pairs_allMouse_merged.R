@@ -1,5 +1,5 @@
 
-source("./find.pairs_allMouse_preamble.R")
+##source("./initializeBC.R"), or load pregenerated data file
 
 ##
 ## Initialize tally matrices
@@ -155,9 +155,8 @@ for (entrezID in entrezIDs ){
 
     mm <- ( efm.pair.logical | t(efm.pair.logical) )
     mm <- mm[efm,efm] ## restrict to expressed matrix families
-    ##outfile <- paste("outfiles/",ensmusg,".fv",sep="")
-    outfile <- paste(file.path(Sys.getenv("TFINF"),"sequence_data/outfiles/"),ensmusg,".fv",sep="")
-    write.feature.vector( mm, outfile )
+    ##outfile <- paste(file.path(Sys.getenv("TFINF"),"sequence_data/outfiles/"),ensmusg,".fv",sep="")
+    ###write.feature.vector( mm, outfile )
 
     mdof[[ensmusg]] <- mm
     

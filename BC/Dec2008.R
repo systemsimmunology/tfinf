@@ -1,19 +1,6 @@
-  
-expressed.scanned.egid <- entrezIDs
-redundancy <- unlist(lapply(ensemblIDsOfEntrezIDs[expressed.scanned.egid],length))
-good.eids <- names(which(redundancy==1)) ## Gene IDs with non-redundant ensembl IDs
-good.ensids <- as.character(unlist(ensemblIDsOfEntrezIDs[good.eids])) 
-
-eids.all <- entrezIDofEnsemblID[good.ensids]
-psois.all <- paste(eids.all,"_at",sep="")  ## improve this
-
+## Initialize with initializeBC.R
 ##
-## Features in a single matrix.
-## row indeces "fam1-fam2" where fam1 < fam2 alphabetically
-##
-
-##
-## load mdof.RData here
+load(paste(seq.dir,"mdof.RData",sep="/"))
 
 expressedFamilies <- names(expressedFamilyMats)
 n.fams <- length(expressedFamilies)

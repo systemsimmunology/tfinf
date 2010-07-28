@@ -8,8 +8,11 @@ load(paste(annot.dir,"tteMaps.RData",sep="/"))
 ## Read entrezIDofEnsemblID, ensemblIDsOfEntrezIDs
 load(paste(annot.dir,"allMouseMappings.August2009.RData",sep="/"))
 
+load(paste(seq.dir,"mdof.RData",sep="/"))
+
 source(paste(r.dir,"tallyUtilities.R",sep="/"))
 ##source(paste(r.dir,"utilitiesHitMat.R",sep="/")) Needed or not?
+source("./utilitiesBinaryClassification.R")
 
 load(paste(seq.dir,"Parsed.Scan.eset.allMouseMay2010.RData",sep="/"))
 TRE.OUT <- TRE.OUT.eset
@@ -27,8 +30,6 @@ eids <- good.eids
 entrezIDs <- eids
 N <- length(entrezIDs) ## Universe size
 
-
-
 ## Read all mouse matrices and lengths
 gg <-read.table(paste(annot.dir,"matrixLengths" ,sep="/"),as.is=TRUE);
 matrixLength <- gg$V2; names(matrixLength) <- gg$V1; rm(gg);
@@ -44,12 +45,13 @@ familyNames <- unique(sort(as.character(familyMap)))
 load(paste(annot.dir,"matrixThresholdA.RData" ,sep="/"))
 matrixThreshold <- matrixThresholdA; 
 
-
-
 ## Expression neighbors
-
 eids.all <- entrezIDofEnsemblID[good.ensids]
-psois.all <- paste(eids.all,"_at",sep="")  ## improve this
+
+load(paste(annot.dir,"representativeProbes.RData",sep="/"))
+psois.all  <- as.character(repProbes.ncbiID[eids.all])
+## The simpler version below also is identical (July2010)
+##psois.all <- paste(eids.all,"_at",sep="")  ## improve this
 
 load(paste(exp.dir,"all.mus.objects.RData",sep="/"))
 t.index.min <- 1
@@ -59,7 +61,6 @@ cordistH <- 1-cor(t(lps.mus[psois.all,t.index.min:t.index.max]))
 maxn <-  600 
 mincor <- 0.1
 system.time( nbrs <- getNbrs(psois=psois.all,cloud=rownames(cordistH), distmat=cordistH, threshold=mincor))
-
 
 ## Use this if runnin command line version
 ##save.image()
