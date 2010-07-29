@@ -14,21 +14,20 @@
 load("SingleFeatures.RData") ## single.features
 load("PairedFeatures.RData") ## paired.features
 
+load("featureMatrix.RData")
+Mpair <- apply(featureMatrix,1,sum)
+load("../sequence_data/featureMatrix.mf.RData")
+Msingles <- apply(featureMatrix.mf,1,sum)
+
 psois.have.single <- names(single.features)
 psois.have.paired <- names(paired.features)
 psois.all <- union(psois.have.single,psois.have.single)
-
 
 ensids.paired <- unlist(ensemblIDsOfEntrezIDs[ncbiID[psois.have.paired]])
 
 split2 <- function(splitme,splitchar='_'){ #parse binding site names by dropping "_" and everything behind it
  strsplit(splitme,split=splitchar,fixed=TRUE)[[1]];
 }
-
-## Need this to construct the expected
-N <- 4577
-load("Mpair.RData")
-load("Msingles.RData")
 
 ##
 ## Pairs 

@@ -8,8 +8,6 @@ load(paste(annot.dir,"tteMaps.RData",sep="/"))
 ## Read entrezIDofEnsemblID, ensemblIDsOfEntrezIDs
 load(paste(annot.dir,"allMouseMappings.August2009.RData",sep="/"))
 
-load(paste(seq.dir,"mdof.RData",sep="/"))
-
 source(paste(r.dir,"tallyUtilities.R",sep="/"))
 ##source(paste(r.dir,"utilitiesHitMat.R",sep="/")) Needed or not?
 source("./utilitiesBinaryClassification.R")

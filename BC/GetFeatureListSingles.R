@@ -12,7 +12,7 @@ load(paste(annot.dir,"allMouseMappings.August2009.RData",sep="/"))
 source("./utilitiesBinaryClassification.R")
 
 load(paste(seq.dir,"featureMatrix.mf.RData",sep="/"))
-##load("ESmaxcubeMgridNew.RData") July 2010 temp comment out Is this used ??
+load("ESmaxcubeMgrid.RData") 
 ##load("nbrs.RData") ditto
 
 Msingles <- apply(featureMatrix.mf,1,sum)
@@ -20,8 +20,8 @@ allMs <- Msingles
 famsingles <- names(Msingles)
 n.singles <- length(famsingles)
 
-Msteps <- seq(20,4520,20)
-N <- 4577 
+Msteps <- seq(20,20*round(N/20),20)
+numMsteps <- length(Msteps)
 
 psois.all <- names(nbrs)
 
@@ -74,7 +74,7 @@ for ( psoi in psois.all   ){
     ns.keep <- integer()
     
     for ( i in 1:n.singles ){
-      pval <- ESmaxPval(Esmax[i],allMs[i],nn,ESmaxcubeMgridNew)
+      pval <- ESmaxPval(Esmax[i],allMs[i],nn,ESmaxcubeMgrid)
       if ( pval <= 0.05 ){
         singles.keep <- c(singles.keep,famsingles[i])
         score.keep <- c(score.keep,Esmax[i])
