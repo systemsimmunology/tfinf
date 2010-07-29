@@ -5,15 +5,15 @@
 
 annot.dir <- file.path(Sys.getenv("TFINF"),"annotations")
 r.dir <- file.path(Sys.getenv("TFINF"),"R")
+seq.dir <- file.path(Sys.getenv("TFINF"),"sequence_data")
 load(paste(annot.dir,"representativeProbes.RData",sep="/"))
 load(paste(annot.dir,"annotation.objects.RData",sep="/"))
 ## Read entrezIDofEnsemblID, ensemblIDsOfEntrezIDs
 load(paste(annot.dir,"allMouseMappings.August2009.RData",sep="/"))
 source("./utilitiesBinaryClassification.R")
 
-load("featureMatrix.RData") 
-load("../sequence_data/ESmaxcubeMgrid.RData")
-##load("nbrs.RData") Now comes with initializeBC.R
+load(paste(seq.dir,"featureMatrix.RData",sep="/"))
+load("ESmaxcubeMgrid.RData")
 
 Mpair <- apply(featureMatrix,1,sum)
 allMs <- Mpair
@@ -90,7 +90,7 @@ for ( psoi in psois.all   ){
   
 } ## end loop over psois
 
-save(paired.features,file="PairedFeatures.RData")
+save(paired.features,file=paste(seq.dir,"PairedFeatures.RData",sep="/"))
 
 cat(proc.time() - ptm,"\n")
 

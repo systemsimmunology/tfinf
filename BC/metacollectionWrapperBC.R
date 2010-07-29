@@ -1,22 +1,15 @@
-
-
 ##
 ## Use precomputed single.features and paired.features
 ## to populate objects in sigPairedSites.RData
 ##
-## Jan 2009
 
-##source("~/macrophage/TFinfluence/R/utilities.R")
-
-## single. and paired. features indexed by psoi
-## need to index by ensemblID
-
-load("SingleFeatures.RData") ## single.features
-load("PairedFeatures.RData") ## paired.features
-
-load("featureMatrix.RData")
+seq.dir <- file.path(Sys.getenv("TFINF"),"sequence_data")
+load(paste(seq.dir,"SingleFeatures.RData",sep="/"))
+load(paste(seq.dir,"PairedFeatures.RData",sep="/"))
+load(paste(seq.dir,"featureMatrix.RData",sep="/"))
+load(paste(seq.dir,"featureMatrix.mf.RData",sep="/"))
+load(paste(seq.dir," ",sep="/"))
 Mpair <- apply(featureMatrix,1,sum)
-load("../sequence_data/featureMatrix.mf.RData")
 Msingles <- apply(featureMatrix.mf,1,sum)
 
 psois.have.single <- names(single.features)
@@ -24,10 +17,6 @@ psois.have.paired <- names(paired.features)
 psois.all <- union(psois.have.single,psois.have.single)
 
 ensids.paired <- unlist(ensemblIDsOfEntrezIDs[ncbiID[psois.have.paired]])
-
-split2 <- function(splitme,splitchar='_'){ #parse binding site names by dropping "_" and everything behind it
- strsplit(splitme,split=splitchar,fixed=TRUE)[[1]];
-}
 
 ##
 ## Pairs 
@@ -44,7 +33,7 @@ for ( psoi in psois.have.paired ){
 
   ## Pairs
   pairs.hyphenated <- colnames(matricks)
-  pair.matrix <- t(sapply(pairs.hyphenated,split2,"-"))
+  pair.matrix <- t(sapply(pairs.hyphenated,tokens,"-"))
   rownames(pair.matrix) <- NULL 
   metampairs.bc[[ensid]] <- pair.matrix  
 
@@ -112,8 +101,5 @@ for ( psoi in psois.have.single ){
   
 }
 
-save(metampairs.bc,metapvals.bc,metams.bc,metaexpected.bc,metamsingles.bc,metapvals.singles.bc,metams.singles.bc,metaexpected.singles.bc,file="sigPairedSitesBC.RData")
-
-## nbrs is the ***Set** of neighbours in psois. Named list. Names are also psoi.
-#save(nbrs,maximumdist,metampairs,metapvals,metams,metaexpected,metamsingles,metapvals.singles,metams.singles,metaexpected.singles,file="sigPairedSites.RData")
-
+ofile <- paste(seq.dir,"sigPairedSitesBC.RData",sep="/"))
+save(metampairs.bc,metapvals.bc,metams.bc,metaexpected.bc,metamsingles.bc,metapvals.singles.bc,metams.singles.bc,metaexpected.singles.bc,file=ofile)

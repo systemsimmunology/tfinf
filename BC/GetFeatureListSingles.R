@@ -5,6 +5,7 @@
 
 annot.dir <- file.path(Sys.getenv("TFINF"),"annotations")
 r.dir <- file.path(Sys.getenv("TFINF"),"R")
+seq.dir <- file.path(Sys.getenv("TFINF"),"sequence_data")
 load(paste(annot.dir,"representativeProbes.RData",sep="/"))
 load(paste(annot.dir,"annotation.objects.RData",sep="/"))
 ## Read entrezIDofEnsemblID, ensemblIDsOfEntrezIDs
@@ -13,7 +14,6 @@ source("./utilitiesBinaryClassification.R")
 
 load(paste(seq.dir,"featureMatrix.mf.RData",sep="/"))
 load("ESmaxcubeMgrid.RData") 
-##load("nbrs.RData") ditto
 
 Msingles <- apply(featureMatrix.mf,1,sum)
 allMs <- Msingles
@@ -91,7 +91,7 @@ for ( psoi in psois.all   ){
   
 } ## end loop over psois
 
-save(single.features,file="SingleFeatures.RData")
+save(single.features,file=paste(seq.dir,"SingleFeatures.RData",sep="/")
 
 cat(proc.time() - ptm,"\n")
 
