@@ -378,3 +378,23 @@ nearestMpoint <- function ( Mval ){ ## helper function for the ESmaxPval. Needs 
   return(index)
 }
 
+write.feature.vector <- function ( mm, filename ){
+  matdim <- nrow(mm)
+  linelength <- 80
+  total.counter <- 0
+  completed.line.counter <- 0
+   
+  for ( i in 1:(matdim-1)){
+    for ( j in (i+1):matdim ){
+      bitval <- mm[i,j]+0
+      cat(as.character(bitval),file=filename,append=TRUE)
+      total.counter <- total.counter + 1
+      if ( total.counter/linelength==round(total.counter/linelength)){
+        completed.line.counter <- completed.line.counter + 1
+        cat( "\n",file=filename,append=TRUE)
+      }
+    }
+  }
+  cat("\n",file=filename,append=TRUE)
+}
+

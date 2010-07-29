@@ -1,11 +1,20 @@
 
+##source("./initializeBC.R"), or load pregenerated .RData file
+
+## 
+## Similar to the orginal find.pairs_allMouse.R
 ##
-## Initialize tally matrices
-## Retaining order of pair
-##
+## Except
+## Works only with expressed matrix families
+## Also Produces
+## mdof: list, per ensmusg, features as a matrix
+## featureMatrix: same information as a single matrix (row=ensmusg)
+## featureMatrix.mf: single family matrix features
+## Can also output feature vector to disk ( see outfiles )
+
+efm <-  sort(unique(as.character(familyMap[expressedMats])))
 
 ## Singles
-
 nm <- length(mouseMatrices)
 m.tally <- integer(length=nm)
 names(m.tally) <- mouseMatrices
@@ -15,7 +24,6 @@ mf.tally <- integer(length=nmf)
 names(mf.tally) <- familyNames
 
 ### Pairs, retaining order
-
 m.pair.tally <- matrix(0,nrow = nm,ncol = nm)
 colnames(m.pair.tally) <- mouseMatrices
 rownames(m.pair.tally) <- mouseMatrices
@@ -36,16 +44,21 @@ mdof.pair.tally <- matrix(0,nrow = nmf,ncol = nmf)
 colnames(mdof.pair.tally) <- familyNames
 rownames(mdof.pair.tally) <- familyNames
 
+mdof <- list() ## list storage of pairs
+
 #define input arguments
 maxsep <- 100; #the maximum allowable distance between hits to be retained
 minsep <- 1; #don't retain pairs if they are less than this distance apart
 pdist <- 1000; #don't retain hits if their average distance is more than this from the TSS
 
 NG <- length(TRE.OUT); #the number of genes with data
+counter <- 0
+ptm <- proc.time()
 
-counter <- 0 
+featureMatrix.mf <- logical()
+eids.keepers <- character()
+  
 for (entrezID in entrezIDs ){
-##for(ss in 1:3){#loop over all genes
 
   counter <- counter + 1
   ensmusgs <- ensemblIDsOfEntrezIDs[[entrezID]]
@@ -62,21 +75,31 @@ for (entrezID in entrezIDs ){
   mf.pair.logical <- matrix(FALSE,nrow = nmf,ncol = nmf)
   rownames(mf.pair.logical) <- familyNames
   colnames(mf.pair.logical) <- familyNames
-  
+
   for ( ensmusg in ensmusgs ){
+  
+    efm.pair.logical <- matrix(FALSE,nrow = nmf,ncol = nmf)
+    rownames(efm.pair.logical) <- familyNames
+    colnames(efm.pair.logical) <- familyNames
   
     gene.info <- TRE.OUT[[ensmusg]]$seq.info
     tre <- TRE.OUT[[ensmusg]]$tre.hits; #select the particular tf binding site info for a specific gen
     
     keep.indices <-  which(tre$score > matrixThreshold[tre$tre]) ## which hits are above threshold
     tre <- tre[keep.indices,] ## keep only those
- 
+    ## AUGUST 2008. Restrict to expressed matrices
+    keep.indices <- which(tre$tre %in% expressedMats )
+    tre <- tre[keep.indices,] ## keep only those
+    
     NT <- nrow(tre); #the number of hits for this gene
     if(length(NT)!=0 ){ #check to make sure there actually are hits before processing further
       if(NT > 0  ){ #check to make sure there actually are hits before processing further
         
         tre[,'tre.original'] <- tre[,'tre']; #save the original names for later
         tre[,'tre'] <- apply(as.data.frame(tre[,'tre']),1,split1); #just use the prefix for the matrix
+        ##
+        ## July 2008. The above seems like the wrong thing to. On the other hand, this column is not used!
+        ##
         tre.P <- tre[,'tre']; #we'll store the individual occurrences along with the pairs
         
         found.mats <- unique(sort(tre[,'tre.original']))
@@ -84,6 +107,8 @@ for (entrezID in entrezIDs ){
         
         m.tally.logical <- m.tally.logical | ( mouseMatrices %in% found.mats )## logical will flip from FALSE to TRUE the first time, then remain on
         mf.tally.logical <- mf.tally.logical | ( familyNames %in% found.families )
+        mf.logical <- efm %in% found.families
+        featureMatrix.mf <- rbind(featureMatrix.mf,mf.logical)
         
         ##we will start closest to the TSS and work backwards
         
@@ -103,14 +128,22 @@ for (entrezID in entrezIDs ){
             m.pair.logical[moi,] <-  m.pair.logical[moi,] | (mouseMatrices %in% partners) ## logical will flip from FALSE to TRUE the first time, then remain on
          
             moif <- as.character(familyMap[moi])
-            partners <- unique(sort(as.character(familyMap[tre.p$tre.original])))    
+            partners <- unique(sort(as.character(familyMap[tre.p$tre.original])))
             mf.pair.logical[moif,] <-  mf.pair.logical[moif,] | (familyNames %in% partners) ## logical will flip from FALSE to TRUE the first time, then remain on
+            efm.pair.logical[moif,] <-  efm.pair.logical[moif,] | (familyNames %in% partners)
+
            };  #close test on np
         } ## close loop over NT
 
       } ## close test for NT > 1
     } ## close test for nonzero NT
 
+    mm <- ( efm.pair.logical | t(efm.pair.logical) )
+    mm <- mm[efm,efm] ## restrict to expressed matrix families
+    ##outfile <- paste(file.path(Sys.getenv("TFINF"),"sequence_data/outfiles/"),ensmusg,".fv",sep="")
+    ###write.feature.vector( mm, outfile )
+    mdof[[ensmusg]] <- mm
+    
   } ## close loop over ensembl IDs for the specific entrez ID
 
   m.tally <- m.tally + m.tally.logical # increment single tally, utilizing integer + logical = integer
@@ -120,10 +153,53 @@ for (entrezID in entrezIDs ){
   mdo.pair.tally <- mdo.pair.tally + (m.pair.logical | t(m.pair.logical) ) ## disregard order 
   
   mf.pair.tally <- mf.pair.tally + mf.pair.logical ## increment pair tally, utilizing integer + logical = integer
+  
   mdof.pair.tally <- mdof.pair.tally + ( mf.pair.logical | t(mf.pair.logical) ) ## disregard order
   
   write(c(counter,counter/length(entrezIDs)),file='status.txt'); #report status
-
+  eids.keepers <- c(eids.keepers,entrezID)
+  
 }; rm(counter);  #close loop over entrez IDs
 
-save(m.tally,m.pair.tally,mf.tally,mdo.pair.tally,mf.pair.tally,mdof.pair.tally,file="hitTally.allMouse.RData",compress=TRUE)
+## Save feature 
+save(mdof,file="mdof.RData")
+
+ofile=file.path(Sys.getenv("TFINF"),"sequence_data/hitTally.allMouse.July2010.RData")
+save(m.tally,m.pair.tally,mf.tally,mdo.pair.tally,mf.pair.tally,mdof.pair.tally,file=ofile,compress=TRUE)
+
+rownames(featureMatrix.mf) <- entrezIDs
+colnames(featureMatrix.mf) <- efm
+featureMatrix.mf <- t(featureMatrix.mf)
+save(featureMatrix.mf,file=paste(seq.dir,"featureMatrix.mf.RData",sep="/"))
+
+proc.time() - ptm
+
+##Matrix pairs as a vector (exclude self-self)
+##First construct string labels
+n.fams <- length(efm)
+n.pairs <- n.fams*(n.fams-1)/2
+fampairs <- c()
+for ( i in 1:(n.fams-1)){
+  for ( j in (i+1):n.fams ){
+    streeng <- paste(efm[i],efm[j],sep="-")
+    fampairs <- c(fampairs,streeng)
+  }
+}
+
+## Now fill in featureMatrix
+featureMatrix <- array(FALSE,dim=c(n.pairs,length(eids.all)))
+rownames(featureMatrix) <- fampairs
+colnames(featureMatrix) <- eids.all
+
+for ( i in 1:(n.fams-1)){
+  for ( j in (i+1):n.fams ){
+    fam1 <- efm[i]
+    fam2 <- efm[j]
+    streeng <- paste(fam1,fam2,sep="-")
+    featureMatrix[streeng,] <- unlist(lapply(mdof[good.ensids],"[[",fam1,fam2))
+  }
+}
+
+Mpair <- apply(featureMatrix,1,sum)
+save(featureMatrix,file="featureMatrix.RData")
+

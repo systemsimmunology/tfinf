@@ -1,36 +1,17 @@
 
 ##source("./initializeBC.R"), or load pregenerated data file
 
+## 
+## Similar to the orginal find.pairs_allMouse.R
 ##
-## Initialize tally matrices
-## Retaining order of pair
-##
+## Except
+## Works only with expressed matrix families
+## Also Produces
+## mdof: list, per ensmusg, features as a matrix
+## featureMatrix: same information as a single matrix (row=ensmusg)
+## Can also output feature vector to disk ( see outfiles )
 
-efm <-  unique(as.character(familyMap[expressedMats]))
-
-write.feature.vector <- function ( mm, filename ){
-
-  matdim <- nrow(mm)
-  linelength <- 80
-  total.counter <- 0
-  completed.line.counter <- 0
-   
-  for ( i in 1:(matdim-1)){
-    for ( j in (i+1):matdim ){
-      bitval <- mm[i,j]+0
-      cat(as.character(bitval),file=filename,append=TRUE)
-      total.counter <- total.counter + 1
-      if ( total.counter/linelength==round(total.counter/linelength)){
-        completed.line.counter <- completed.line.counter + 1
-        cat( "\n",file=filename,append=TRUE)
-      }
-    }
-  }
-  cat("\n",file=filename,append=TRUE)
-}
-
-  
-
+efm <-  unique(as.character(familyMap[expressedMats]))  
 ## Singles
 
 nm <- length(mouseMatrices)
@@ -157,9 +138,7 @@ for (entrezID in entrezIDs ){
     mm <- mm[efm,efm] ## restrict to expressed matrix families
     ##outfile <- paste(file.path(Sys.getenv("TFINF"),"sequence_data/outfiles/"),ensmusg,".fv",sep="")
     ###write.feature.vector( mm, outfile )
-
     mdof[[ensmusg]] <- mm
-    
     
   } ## close loop over ensembl IDs for the specific entrez ID
 
@@ -170,7 +149,6 @@ for (entrezID in entrezIDs ){
   mdo.pair.tally <- mdo.pair.tally + (m.pair.logical | t(m.pair.logical) ) ## disregard order 
   
   mf.pair.tally <- mf.pair.tally + mf.pair.logical ## increment pair tally, utilizing integer + logical = integer
-
   
   mdof.pair.tally <- mdof.pair.tally + ( mf.pair.logical | t(mf.pair.logical) ) ## disregard order
   
@@ -178,8 +156,41 @@ for (entrezID in entrezIDs ){
 
 }; rm(counter);  #close loop over entrez IDs
 
+## Save feature 
 save(mdof,file="mdof.RData")
 
 ofile=file.path(Sys.getenv("TFINF"),"sequence_data/hitTally.allMouse.July2010.RData")
 save(m.tally,m.pair.tally,mf.tally,mdo.pair.tally,mf.pair.tally,mdof.pair.tally,file=ofile,compress=TRUE)
 proc.time() - ptm
+
+##load(paste(seq.dir,"mdof.RData",sep="/")) 
+
+##Matrix pairs as a vector (exclude self-self)
+##First construct string labels
+n.fams <- length(efm)
+n.pairs <- n.fams*(n.fams-1)/2
+fampairs <- c()
+for ( i in 1:(n.fams-1)){
+  for ( j in (i+1):n.fams ){
+    streeng <- paste(efm[i],efm[j],sep="-")
+    fampairs <- c(fampairs,streeng)
+  }
+}
+
+## Now fill in featureMatrix
+featureMatrix <- array(FALSE,dim=c(n.pairs,length(eids.all)))
+rownames(featureMatrix) <- fampairs
+colnames(featureMatrix) <- eids.all
+
+for ( i in 1:(n.fams-1)){
+  for ( j in (i+1):n.fams ){
+    fam1 <- efm[i]
+    fam2 <- efm[j]
+    streeng <- paste(fam1,fam2,sep="-")
+    featureMatrix[streeng,] <- unlist(lapply(mdof[good.ensids],"[[",fam1,fam2))
+  }
+}
+
+Mpair <- apply(featureMatrix,1,sum)
+save(featureMatrix,file="featureMatrix.RData")
+
