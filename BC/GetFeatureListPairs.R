@@ -11,18 +11,17 @@ load(paste(annot.dir,"annotation.objects.RData",sep="/"))
 load(paste(annot.dir,"allMouseMappings.August2009.RData",sep="/"))
 source("./utilitiesBinaryClassification.R")
 
-load("featureMatrix.RData")
-load("ESmaxcubeMgrid.RData")
-load("nbrs.RData")
+load("featureMatrix.RData") 
+load("../sequence_data/ESmaxcubeMgrid.RData")
+##load("nbrs.RData") Now comes with initializeBC.R
 
 Mpair <- apply(featureMatrix,1,sum)
 allMs <- Mpair
 fampairs <- names(Mpair)
 n.pairs <- length(fampairs)
 
-
-Msteps <- seq(20,4000,20)
-N <- 4577
+Msteps <- seq(20,20*round(N/20),20)
+numMsteps <- length(Msteps)
 
 psois.all <- names(nbrs)
 
