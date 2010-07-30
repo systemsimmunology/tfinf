@@ -100,5 +100,5 @@ for ( psoi in psois.have.single ){
   
 }
 
-ofile <- paste(seq.dir,"sigPairedSitesBC.RData",sep="/"))
+ofile <- paste(seq.dir,"sigPairedSitesBC.RData",sep="/")
 save(metampairs.bc,metapvals.bc,metams.bc,metaexpected.bc,metamsingles.bc,metapvals.singles.bc,metams.singles.bc,metaexpected.singles.bc,file=ofile)
