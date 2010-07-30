@@ -61,4 +61,4 @@ mincor <- 0.1
 system.time( nbrs <- getNbrs(psois=psois.all,cloud=rownames(cordistH), distmat=cordistH, threshold=mincor))
 
 ## Use this if runnin command line version
-##save.image()
+save.image()
