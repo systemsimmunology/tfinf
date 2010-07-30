@@ -13,7 +13,7 @@ load(paste(annot.dir,"allMouseMappings.August2009.RData",sep="/"))
 source("./utilitiesBinaryClassification.R")
 
 load(paste(seq.dir,"featureMatrix.RData",sep="/"))
-load("ESmaxcubeMgrid.RData")
+load(paste(seq.dir,"ESmaxcubeMgrid.RData",sep="/"))
 
 Mpair <- apply(featureMatrix,1,sum)
 allMs <- Mpair

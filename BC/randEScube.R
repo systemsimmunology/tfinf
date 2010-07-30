@@ -6,6 +6,8 @@
 ## number of ensemblIDs for which we have scans, for which there are unique entrezIDs
 ## and which are in the expressed set
 
+seq.dir <- file.path(Sys.getenv("TFINF"),"sequence_data")
+
 Msteps <- seq(20,20*round(N/20),20)
 numMsteps <- length(Msteps)
 
@@ -51,7 +53,7 @@ ESmaxcubeMgrid <- apply(EScube,c(3,1),cummax)
 ESmaxcubeMgrid <- aperm(ESmaxcubeMgrid,c(3,1,2))
 rm(EScube) 
 
-save(ESmaxcubeMgrid,file="../sequence_data/ESmaxcubeMgrid.RData")
+save(ESmaxcubeMgrid,file=paste(seq.dir,"ESmaxcubeMgrid.RData",sep="/"))
 
 
 

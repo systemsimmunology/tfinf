@@ -201,5 +201,5 @@ for ( i in 1:(n.fams-1)){
 }
 
 Mpair <- apply(featureMatrix,1,sum)
-save(featureMatrix,file="featureMatrix.RData")
+save(featureMatrix.mf,file=paste(seq.dir,"featureMatrix.RData",sep="/"))
 
