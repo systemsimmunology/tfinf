@@ -8,7 +8,6 @@ load(paste(seq.dir,"SingleFeatures.RData",sep="/"))
 load(paste(seq.dir,"PairedFeatures.RData",sep="/"))
 load(paste(seq.dir,"featureMatrix.RData",sep="/"))
 load(paste(seq.dir,"featureMatrix.mf.RData",sep="/"))
-load(paste(seq.dir," ",sep="/"))
 Mpair <- apply(featureMatrix,1,sum)
 Msingles <- apply(featureMatrix.mf,1,sum)
 
