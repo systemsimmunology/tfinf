@@ -91,7 +91,7 @@ for ( psoi in psois.all   ){
   
 } ## end loop over psois
 
-save(single.features,file=paste(seq.dir,"SingleFeatures.RData",sep="/")
+save(single.features,file=paste(seq.dir,"SingleFeatures.RData",sep="/"))
 
 cat(proc.time() - ptm,"\n")
 
