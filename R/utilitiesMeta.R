@@ -380,8 +380,8 @@ createTFsetFromSingles <- function ( sc, tfsubset=transfac.tfs.expressed ){
   for ( ensid  in ensids  ) {
 
     msingles <- metamsingles[[ensid]]
-    ppvals <- metapvals[[ensid]]
-    ms <- metams[[ensid]]
+    ppvals <- metapvals.singles[[ensid]]
+    ms <- metams.singles[[ensid]]
 
     psoi  <- as.character(repProbes.ncbiID[entrezIDofEnsemblID[ensid]])
     if ( length(psoi) > 1 ) {
