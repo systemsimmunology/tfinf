@@ -8,6 +8,7 @@ interact.dir <- file.path(Sys.getenv("TFINF"),"interaction_data")
 seq.dir <- file.path(Sys.getenv("TFINF"),"sequence_data")
 
 source("./utilitiesMeta.R")
+source("./utilitiesInteractions.R")
 source("./utilitiesHitMat.R")
  
 load(paste(annot.dir,"TFcategories.RData",sep="/"))
