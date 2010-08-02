@@ -25,7 +25,7 @@ interact.dir <- file.path(Sys.getenv("TFINF"),"interaction_data")
 seq.dir <- file.path(Sys.getenv("TFINF"),"sequence_data")
 ddata.dir <- file.path(Sys.getenv("TFINF"),"derived_data")
 
-load(paste(interact.dir,"pdnaModels.10May2010.RData",sep="/"))
+load(paste(interact.dir,"pdnaModels.2Aug2010.RData",sep="/"))
 load(paste(exp.dir,"scaled.mus.objects.RData",sep="/"))
 load(paste(annot.dir,"representativeProbes.RData",sep="/"))
 load(paste(annot.dir,"tteMaps.RData",sep="/"))
@@ -98,7 +98,7 @@ mods.enrp.dubs.01 <- result.ss.01$mods.pairs
 mods.enrp.sings.01 <- result.ss.01$mods.singles
 
 mods.preode.strings <- c("mods.curated","mods.hs.et.05","mods.hs.et.01","mods.hs.et.001","mods.enrs.001","mods.singles.fromCorTFPairs.01","mods.enrp.sings.01","mods.enrp.dubs.01")
-save(list=mods.preode.strings,file=paste(ddata.dir,"models.preode.10May2010.RData",sep="/"))
+save(list=mods.preode.strings,file=paste(ddata.dir,"models.preode.2Aug2010.RData",sep="/"))
 
 ##
 ## Non-linear ODE fitting
@@ -121,7 +121,7 @@ mods.curated.ode <- computeODEModsAnalytic(mods.curated,n.cands=1)
 #mods.bind.ode <- computeODEModsAnalytic(mods.bind,n.cands=1)
 
 mods.ode.strings <- c("mods.curated.ode","mods.hs.et.05.ode","mods.hs.et.01.ode","mods.hs.et.001.ode","mods.enrs.001.ode","mods.singles.fromCorTFPairs.01.ode","mods.enrp.sings.01.ode","mods.enrp.dubs.01.ode")
-save(list=mods.ode.strings,file=paste(ddata.dir,"models.ode.10May2010.RData",sep="/"))
+save(list=mods.ode.strings,file=paste(ddata.dir,"models.ode.2Aug2010.RData",sep="/"))
 
 ###
 ### RMSD filter
@@ -144,7 +144,7 @@ mods.enrp.sings.01.ode.rmsf <- filterModsByRMSD( mods.enrp.sings.01.ode, rmsd.th
 
 mods.rmsf.strings <- c("mods.curated.ode.rmsf","mods.hs.et.05.ode.rmsf","mods.hs.et.01.ode.rmsf","mods.hs.et.001.ode.rmsf","mods.enrs.001.ode.rmsf","mods.singles.fromCorTFPairs.01.ode.rmsf","mods.enrp.sings.01.ode.rmsf","mods.enrp.dubs.01.ode.rmsf")
 
-save(list=mods.rmsf.strings,file=paste(ddata.dir,"models.rmsf.10May2010.RData",sep="/"))
+save(list=mods.rmsf.strings,file=paste(ddata.dir,"models.rmsf.2Aug2010.RData",sep="/"))
 
 ## This may be confusing. Fisrt 01 applies to .. , second to randomization scores
 mods.enrp.dubs.01.1.ode.rmsf <- filterModsByRMSD( mods.enrp.dubs.01.ode, rmsd.threshold=rands.2regs.0.10, rmsd.type="fullode", scale=FALSE,n.cands=2)
