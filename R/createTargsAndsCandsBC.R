@@ -23,10 +23,10 @@ source(paste(r.dir,"utilitiesInteractions.R",sep="/"))
 load(paste(annot.dir,"TFcategories.RData",sep="/"))
 load(paste(annot.dir,"representativeProbes.RData",sep="/"))
 load(paste(annot.dir,"annotation.objects.RData",sep="/"))
-load(paste(annot.dir,"allMouseMappings.August2009.RData",sep="/"))
+load(paste(annot.dir,"allMouseMappings.August2010.RData",sep="/"))
 load(paste(annot.dir,"tteMaps.RData",sep="/"))
 
-load(paste(interact.dir,"pdnaModels.10May2010.RData",sep="/"))
+load(paste(interact.dir,"pdnaModels.10Aug2010.RData",sep="/"))
 load(paste(seq.dir,"sigPairedSitesBC.RData",sep="/"))
 
 ### Enriched pairs

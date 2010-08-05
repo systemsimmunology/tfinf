@@ -2,7 +2,7 @@
 seq.dir <- file.path(Sys.getenv("TFINF"),"sequence_data")
 annot.dir <- file.path(Sys.getenv("TFINF"),"annotations")
 
-load(paste(seq.dir,"Parsed.Scan.Results.allMouseSeptember2009.dat",sep="/"))
+load(paste(seq.dir,"Parsed.Scan.Results.allMouseAug2010.dat",sep="/"))
 load(paste(annot.dir,"tteMaps.RData",sep="/"))
 
 ## Read all mouse matrices and lengths
@@ -19,5 +19,5 @@ familyMap <- familyMapVT3; rm(familyMapVT3);
 familyNames <- unique(sort(as.character(familyMap)))
 
 # load entrezIDs,ensemblIDsOfEntrezIDs
-load(paste(annot.dir,"allMouseMappings.August2009.RData",sep="/"))
+load(paste(annot.dir,"allMouseMappings.August2010.RData",sep="/"))
 entrezIDs <- names(ensemblIDsOfEntrezIDs)

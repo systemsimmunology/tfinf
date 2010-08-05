@@ -1,3 +1,6 @@
+
+## Create .RData file for runnnig multiple scripts in BC directory
+
 annot.dir <- file.path(Sys.getenv("TFINF"),"annotations")
 seq.dir <- file.path(Sys.getenv("TFINF"),"sequence_data")
 exp.dir <- file.path(Sys.getenv("TFINF"),"expression_data")
@@ -6,13 +9,13 @@ r.dir <- file.path(Sys.getenv("TFINF"),"R")
 load(paste(annot.dir,"annotation.objects.RData",sep="/"))
 load(paste(annot.dir,"tteMaps.RData",sep="/"))
 ## Read entrezIDofEnsemblID, ensemblIDsOfEntrezIDs
-load(paste(annot.dir,"allMouseMappings.August2009.RData",sep="/"))
+load(paste(annot.dir,"allMouseMappings.August2010.RData",sep="/"))
 
 source(paste(r.dir,"tallyUtilities.R",sep="/"))
 ##source(paste(r.dir,"utilitiesHitMat.R",sep="/")) Needed or not?
 source("./utilitiesBinaryClassification.R")
 
-load(paste(seq.dir,"Parsed.Scan.eset.allMouseMay2010.RData",sep="/"))
+load(paste(seq.dir,"Parsed.Scan.eset.allMouseAug2010.RData",sep="/"))
 TRE.OUT <- TRE.OUT.eset
 ensids <- names(TRE.OUT)
 entrezIDs <- unique(unlist(entrezIDofEnsemblID[ensids]))
@@ -60,5 +63,5 @@ maxn <-  600
 mincor <- 0.1
 system.time( nbrs <- getNbrs(psois=psois.all,cloud=rownames(cordistH), distmat=cordistH, threshold=mincor))
 
-## Use this if runnin command line version
+## Use this if running command line version
 save.image()

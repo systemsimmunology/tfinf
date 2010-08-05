@@ -2,8 +2,8 @@
 #/local/thorsson/data/TransScan/allMatrix01ParsedFiles
 rm(list=ls()); #start fresh
 
-data.dir <- file.path(Sys.getenv("DATA_DIR"),"TransScan/allMouseUpstreamAugust2009/allMouseUpstreamParsedGFF/")
-#data.dir <- '/Users/thorsson/data/TransScan/allMouseUpstreamAugust2009/allMouseUpstreamParsedGFF/'
+data.dir <- file.path(Sys.getenv("DATA_DIR"),"TransScan/allMouseUpstreamAugust2010/allMouseUpstreamParsedGFF/")
+#data.dir <- '/Users/thorsson/data/TransScan/allMouseUpstreamAugust2010/allMouseUpstreamParsedGFF/'
  
 file.set <- dir(data.dir);
 
@@ -56,7 +56,7 @@ for(ff in 1:length(file.set)){
 }; #rm(ff);
 
 seq.dir <- file.path(Sys.getenv("TFINF"),"sequence_data")
-save(TRE.OUT,file=paste(seq.dir,'Parsed.Scan.Results.allMouseSeptember2009.dat',sep="/"))
+save(TRE.OUT,file=paste(seq.dir,'Parsed.Scan.Results.allMouseAug2010.dat',sep="/"))
 
 annot.dir <- file.path(Sys.getenv("TFINF"),"annotations")
 load(paste(annot.dir,"expressed.scanned.ensembl.RData",sep="/"))
@@ -69,28 +69,4 @@ load(paste(annot.dir,"expressed.scanned.ensembl.RData",sep="/"))
 
 TRE.OUT.eset <- TRE.OUT[expressed.scanned.ensembl]
 
-save(TRE.OUT.eset,file=paste(seq.dir,"Parsed.Scan.eset.allMouseMay2010.RData",sep="/"))
-#save(TRE.OUT.eset,file=paste(seq.dir,"Parsed.Scan.eset.allMouseSeptember2009.RData",sep="/"))
-#save(TRE.OUT.eset,file="Parsed.Scan.eset.allMouseSeptember2009.RData")
-
-if (FALSE ) { ## comment out for now 
-
-## Cytokines only
-go.cytokines.ensids <- as.character(read.table("go.cytokines.ensids")$V1)
- 
-load("Parsed.Scan.Results.allMouseMarch2008.dat") ## gives TRE.OUT
-##load("Parsed.Scan.eset.allMouseMarch2008.RData") ## gives TRE.OUT.eset
-
-## I checked that they're all in there
-
-## Cytokine binding
-go.cytokinebinding.ensids <- as.character(read.table("go.cytokinebinding.ensids")$V1)
-
-## cytokines and receptors, diffexp
-
-TRE.OUT.car.diffexp <- TRE.OUT[c(go.cytokines.ensids, go.cytokinebinding.ensids)]
-
-save(TRE.OUT.car.diffexp,file="Parsed.Scan.car.allMouseSeptember2009.RData")
-##save(TRE.OUT.car.diffexp,file="Parsed.Scan.car.allMouseMarch2008.RData")
-
-}
+save(TRE.OUT.eset,file=paste(seq.dir,"Parsed.Scan.eset.allMouseAug2010.RData",sep="/"))

@@ -127,5 +127,5 @@ for (entrezID in entrezIDs ){
 }; rm(counter);  #close loop over entrez IDs
 
 
-ofile=file.path(Sys.getenv("TFINF"),"sequence_data/hitTally.allMouse.September2009.RData")
+ofile=file.path(Sys.getenv("TFINF"),"sequence_data/hitTally.allMouse.Aug2010.RData")
 save(m.tally,m.pair.tally,mf.tally,mdo.pair.tally,mf.pair.tally,mdof.pair.tally,file=ofile,compress=TRUE)
