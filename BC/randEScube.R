@@ -8,7 +8,7 @@
 
 seq.dir <- file.path(Sys.getenv("TFINF"),"sequence_data")
 
-Msteps <- seq(20,20*round(N/20),20)
+Msteps <- seq(20,20*floor(N/20),20)
 numMsteps <- length(Msteps)
 
 nearestMpoint <- function ( Mval ){

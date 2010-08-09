@@ -178,8 +178,7 @@ closestPairDistance <- function(mat1,mat2,hm,pwm.string="full",keep.order=TRUE,m
   
 }
 
-
-
+ 
 ## tell me which target scans have a certain matrix 
 whichScansHaveMatHit <- function(mat, treoutSubset ){
   returnVec <- character()
@@ -193,8 +192,12 @@ whichScansHaveMatHit <- function(mat, treoutSubset ){
 }
 
 
-
-
+# filter scans with no hits  
+removeNULLscans <- function(treoutSubset ){
+  baddies <- which(unlist(lapply(lapply(treoutSubset,"[[","tre.hits"),is.null)))
+  goodies <- setdiff(1:length(treoutSubset),baddies)
+  treoutSubset[goodies]
+}
 
 
 ##
