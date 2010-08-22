@@ -78,5 +78,5 @@ sc2 <-  filterSCbyPval ( sc1, singles.cutoff )
 pdna.enrs.001 <- createTFsetFromSingles(sc2,tfsubset=tfsubset)
 ##save(pdna.enrs.001,file="pdna.enrs.001.RData")
 
-ofile <- paste(interact.dir,"pdnaModels.2Aug2010.RData",sep="/")
+ofile <- paste(interact.dir,"pdnaModels.10Aug2010.RData",sep="/")
 save(pdna.curated, pdna.enrs.001, pdna.enrp.01, pdna.enrp.05, pdna.hs.et.5,pdna.hs.et.1,pdna.hs.et.01,pdna.hs.et.05,pdna.hs.et.001, file=ofile)

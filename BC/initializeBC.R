@@ -12,7 +12,6 @@ load(paste(annot.dir,"tteMaps.RData",sep="/"))
 load(paste(annot.dir,"allMouseMappings.August2010.RData",sep="/"))
 
 source(paste(r.dir,"tallyUtilities.R",sep="/"))
-##source(paste(r.dir,"utilitiesHitMat.R",sep="/")) Needed or not?
 source("./utilitiesBinaryClassification.R")
 
 load(paste(seq.dir,"Parsed.Scan.eset.allMouseAug2010.RData",sep="/"))
@@ -20,7 +19,6 @@ TRE.OUT <- TRE.OUT.eset
 ensids <- names(TRE.OUT)
 entrezIDs <- unique(unlist(entrezIDofEnsemblID[ensids]))
 ## otherwise known as expressed.scanned.egid ( no hyphens) 
-
 
 redundancy <- unlist(lapply(ensemblIDsOfEntrezIDs[entrezIDs],length))
 good.eids <- names(which(redundancy==1)) ## Gene IDs with non-redundant ensembl IDs

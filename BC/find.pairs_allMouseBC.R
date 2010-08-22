@@ -109,6 +109,7 @@ for (entrezID in entrezIDs ){
         mf.tally.logical <- mf.tally.logical | ( familyNames %in% found.families )
         mf.logical <- efm %in% found.families
         featureMatrix.mf <- rbind(featureMatrix.mf,mf.logical)
+        eids.keepers <- c(eids.keepers,entrezID)
         
         ##we will start closest to the TSS and work backwards
         
@@ -157,7 +158,6 @@ for (entrezID in entrezIDs ){
   mdof.pair.tally <- mdof.pair.tally + ( mf.pair.logical | t(mf.pair.logical) ) ## disregard order
   
   write(c(counter,counter/length(entrezIDs)),file='status.txt'); #report status
-  eids.keepers <- c(eids.keepers,entrezID)
   
 }; rm(counter);  #close loop over entrez IDs
 
