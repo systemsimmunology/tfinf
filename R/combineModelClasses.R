@@ -5,7 +5,7 @@ source("./utilitiesMods.R")
 ddata.dir <- file.path(Sys.getenv("TFINF"),"derived_data")
 
 ##load(paste(annot.dir,"representativeProbes.RData",sep="/"))
-load(paste(ddata.dir,"models.rmsf.2Aug2010.RData",sep="/"))
+load(paste(ddata.dir,"models.rmsf.19Aug2010.RData",sep="/"))
 
 ## Contains c("mods.curated.ode.rmsf","mods.hs.et.05.ode.rmsf","mods.hs.et.01.ode.rmsf","mods.hs.et.001.ode.rmsf","mods.enrs.001.ode.rmsf","mods.singles.fromCorTFPairs.01.ode.rmsf","mods.enrp.sings.01.ode.rmsf","mods.enrp.dubs.01.ode.rmsf")
 

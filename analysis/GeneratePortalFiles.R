@@ -25,5 +25,5 @@ createModfileLookupFileMV(modvec,"ProfileImages.txt","/proj/ilyalab/Vesteinn/for
 modvec <- modvec.e
 createModPropFileMV(modvec,"ModelAttributes.tsv")
 createEdgeFileMV(modvec,"EdgeAttributes.tsv")
-createModfileLookupFileMV(modvec,"ProfileImages.txt","/proj/ilyalab/Vesteinn/forAndreaAndDick/ProfilePlots","png")
+createModfileLookupFileMV(modvec,"ProfileImages.txt","ProfilePlots","png")
 predPlotWrapperModVec(modvec,savedir="ProfilePlots")
