@@ -151,7 +151,7 @@ plotPrediction.ode <- function(target.pid,coefs,taufit,pred.out,xvals.dense,pred
   ymax <- max(c(profile.true,pred.out))
 
   thalf <- round(taufit*log(2))
-  main=paste(gid2gname(target.pid),":",target.pid,":T=",thalf,sep="")
+  main=paste(gid2gname(target.pid),", Probeset: ",target.pid,", T-half=",thalf," min",sep="")
 
   op <- par(font=2,lwd=2,font.axis=2,font.main=2,font.lab=2,font.sub=2,cex=1.5)
 
