@@ -57,10 +57,3 @@ for(ff in 1:length(file.set)){
 
 seq.dir <- file.path(Sys.getenv("TFINF"),"sequence_data")
 save(TRE.OUT,file=paste(seq.dir,'Parsed.Scan.Results.allMouseAug2010.dat',sep="/"))
-
-annot.dir <- file.path(Sys.getenv("TFINF"),"annotations")
-load(paste(annot.dir,"expressed.scanned.ensembl.RData",sep="/"))
-
-TRE.OUT.eset <- TRE.OUT[expressed.scanned.ensembl]
-
-save(TRE.OUT.eset,file=paste(seq.dir,"Parsed.Scan.eset.RData",sep="/"))
