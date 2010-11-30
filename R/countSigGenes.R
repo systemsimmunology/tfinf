@@ -3,11 +3,12 @@ source("./utilitiesExpression.R")
 
 mu.cutoff <- 100
 ##mu.cutoff <- 0
-lambda.cutoff <- 57.2
+##lambda.cutoff <- 57.2 ## earlier cutoff - leads to 3372 genes for full time-course
 #lambda.cutoff <- 150
 
 ## May 2010
-lambda.cutoff <- 26.61275
+lambda.cutoff <- 26.61275 ## 0.05% cutoff - leads to 4913 genes for full time-course
+##lambda.cutoff <- 66.31579 ## 0.01% cutoff - leads to 3069 genes for full time-course
 
 imax <- 6
 
@@ -102,14 +103,6 @@ outMat[upper.tri(outMat)] <- m1[upper.tri(m1)]
 outMat[lower.tri(outMat)] <- m2[lower.tri(m2)]
 
 ## write.table(100*outMat,file="sigCompCube.tsv",sep="\t",row.names=TRUE,col.names=TRUE,quote=FALSE)
-
-
-
-mu.cutoff <- 100
-##mu.cutoff <- 0
-lambda.cutoff <- 57.2
-#lambda.cutoff <- 150
-
 
 imax <- 11
 lps.full.ps.sig <- rownames(sigSlice(lambda.cutoff,lps.mus[,1:imax],lps.lambdas[,1:(imax-1)]))

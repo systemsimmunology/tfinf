@@ -75,13 +75,13 @@ conds <- c("min0","min60","min120")
 trifKOlps.mus <- read.matrix(paste(c(expression.directory,"/","TRIF-LPS.mus"),collapse=""))
 colnames(trifKOlps.mus) <- conds
 
-all.ratios.objects <- ls()[grep("ratios$",ls(),extended=TRUE)]
+all.ratios.objects <- ls()[grep("ratios$",ls())]
 save ( list=all.ratios.objects, file=paste(expression.directory,"all.ratios.objects.RData",sep="/"))
-all.mus.objects <- ls()[grep("mus$",ls(),extended=TRUE)]
+all.mus.objects <- ls()[grep("mus$",ls())]
 save ( list=all.mus.objects, file=paste(expression.directory,"all.mus.objects.RData",sep="/"))
-all.lambdas.objects <- ls()[grep("lambdas$",ls(),extended=TRUE)]
+all.lambdas.objects <- ls()[grep("lambdas$",ls())]
 save ( list=all.lambdas.objects, file=paste(expression.directory,"all.lambdas.objects.RData",sep="/"))
-all.muStdErrs.objects <- ls()[grep("muStdErrs$",ls(),extended=TRUE)]
+all.muStdErrs.objects <- ls()[grep("muStdErrs$",ls())]
 save ( list=all.muStdErrs.objects, file=paste(expression.directory,"all.muStdErrs.objects.RData",sep="/"))
 
 probeset <- rownames(lps.mus)
@@ -124,7 +124,7 @@ muCube["PolyIC",,] <- polyIC.mus[1:nps,1:6]
 muCube["R848",,] <- r848.mus[1:nps,1:6]
 muCube["CpG",,] <- cpg.mus[1:nps,1:6]
 
-all.Cube.objects <- ls()[grep("Cube$",ls(),extended=TRUE)]
+all.Cube.objects <- ls()[grep("Cube$",ls())]
 save( list=all.Cube.objects, file=paste(expression.directory,"all.Cube.objects.RData",sep="/"))
 
 rt <- read.table(file.path(Sys.getenv("AA"),"annotation/MoGene4302_Mm_ENTREZG_mapfile"),sep="\t",as.is=TRUE,header=TRUE)
@@ -168,7 +168,7 @@ source("countSigGenes.R")
 
 save(all.mic,file=paste(expression.directory,"all.mic.RData",sep="/"))
 
-all.ps.lists <- ls()[grep("ps.sig$",ls(),extended=TRUE)]
+all.ps.lists <- ls()[grep("ps.sig$",ls())]
 all.ps.lists <- c(all.ps.lists,"lps.full.ps.sig.rep")
 save( list=all.ps.lists, file=paste(annotation.directory,"all.ps.list.objects.RData",sep="/"))
 

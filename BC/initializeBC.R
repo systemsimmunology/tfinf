@@ -14,7 +14,7 @@ load(paste(annot.dir,"allMouseMappings.August2010.RData",sep="/"))
 source(paste(r.dir,"tallyUtilities.R",sep="/"))
 source("./utilitiesBinaryClassification.R")
 
-load(paste(seq.dir,"Parsed.Scan.eset.allMouseAug2010.RData",sep="/"))
+load(paste(seq.dir,"Parsed.Scan.eset.RData",sep="/"))
 TRE.OUT <- TRE.OUT.eset
 ensids <- names(TRE.OUT)
 entrezIDs <- unique(unlist(entrezIDofEnsemblID[ensids]))

@@ -49,12 +49,13 @@ ud[names(which(lps.mic[transfac.tfs.expressed]<0))] <- "Decreasing"
 ## Repair by hand (mic score may look unnatural  up when ups and downs compete )
 ## Perhaps <= hr4-6 should carry most weight
 
-ud[repProbes.cname["Ahr"]] <- "Increasing"
-ud[repProbes.cname["Atf2"]] <- "Increasing"
+## Nov 2010. Commented out Ahr, Atf2, Nfe2l2 as they are no longer in tte
+##ud[repProbes.cname["Ahr"]] <- "Increasing"
+##ud[repProbes.cname["Atf2"]] <- "Increasing"
 ud[repProbes.cname["Elk3"]] <- "Decreasing"
 ud[repProbes.cname["Mafg"]] <- "Decreasing"
 ud[repProbes.cname["Myc"]] <- "Increasing"
-ud[repProbes.cname["Nfe2l2"]] <- "Increasing"
+##ud[repProbes.cname["Nfe2l2"]] <- "Increasing"
 ud[repProbes.cname["Nfyb"]] <- "Increasing"
 
 
@@ -88,14 +89,16 @@ names(halfChangeAt) <- transfac.tfs.expressed ## (was lost by the conds operatio
 ## Repair by hand (max min construct really only works for unimodal )
 ## These will do better with an 'initial baseline' estimate
 
-halfChangeAt[repProbes.cname["Atf2"]] <- "hr4"
-halfChangeAt[repProbes.cname["Bhlhb2"]] <- "hr2"
-halfChangeAt[repProbes.cname["Crem"]] <- "hr2"
+##halfChangeAt[repProbes.cname["Atf2"]] <- "hr4"
+##halfChangeAt[repProbes.cname["Bhlhb2"]] <- "hr2"
+## Now (Nov2010) called Bhlhe40 but is not in tte
+
+##halfChangeAt[repProbes.cname["Crem"]] <- "hr2"
 halfChangeAt[repProbes.cname["E2f1"]] <- "hr4"
 halfChangeAt[repProbes.cname["Elk3"]] <- "hr4"
 halfChangeAt[repProbes.cname["Mafg"]] <- "hr4"
 halfChangeAt[repProbes.cname["Myc"]] <- "min60"
-halfChangeAt[repProbes.cname["Nfe2l2"]] <- "min40"
+##halfChangeAt[repProbes.cname["Nfe2l2"]] <- "min40"
 halfChangeAt[repProbes.cname["Nfyb"]] <- "hr4"
 
 

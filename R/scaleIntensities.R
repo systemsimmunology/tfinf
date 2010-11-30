@@ -1,6 +1,7 @@
 
-exp.dir <- file.path(Sys.getenv("AA"),"data/20100426.curated.3prime")
 exp.dir <- file.path(Sys.getenv("TFINF"),"expression_data")
+
+load(paste(exp.dir,"all.mus.objects.RData",sep="/"))
 
 max.intensity <- apply(lps.mus,1,max) 
 lps.mat.max1 <- lps.mus/max.intensity ## this one will be modified for nucloc

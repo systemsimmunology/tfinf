@@ -61,12 +61,6 @@ save(TRE.OUT,file=paste(seq.dir,'Parsed.Scan.Results.allMouseAug2010.dat',sep="/
 annot.dir <- file.path(Sys.getenv("TFINF"),"annotations")
 load(paste(annot.dir,"expressed.scanned.ensembl.RData",sep="/"))
 
-## September 2009. These steps are not needed
-## ese.today <- intersect(names(TRE.OUT),expressed.scanned.ensembl) ## Some ensembl IDs have been lost over the two
-## years. Sampled some and they are Riken clones etc.
-## TRE.OUT.eset <- TRE.OUT[ese.today]
-## write.table(ese.today,file="eset",quote=FALSE,row.name=FALSE)
-
 TRE.OUT.eset <- TRE.OUT[expressed.scanned.ensembl]
 
-save(TRE.OUT.eset,file=paste(seq.dir,"Parsed.Scan.eset.allMouseAug2010.RData",sep="/"))
+save(TRE.OUT.eset,file=paste(seq.dir,"Parsed.Scan.eset.RData",sep="/"))
