@@ -34,6 +34,7 @@ calcModels <- function( targsAndCands, t.index.min, t.index.max, tau, boost.vec,
       n.tfs <- length(tfs) 
       for ( i in 1:n.tfs ) {
         ivars <- as.character(repProbes.cname[tfs[i]])
+        if( !(ivars %in% names(boost.vec) ) ){stop(paste(c("Error:",cname.compare[ivars],"not in boost.vec"),collapse=" "))}
         if ( !(targ %in% ivars ) ){
 
           if ( tau.estimate ){
@@ -77,6 +78,8 @@ calcModels <- function( targsAndCands, t.index.min, t.index.max, tau, boost.vec,
       n.pairs <- nrow(tf.pairs) ## This does seem to work for '1 row' case
       for ( i in 1:n.pairs ) {
         ivars <- repProbes.cname[tf.pairs[i,]]
+        if( !(ivars[1] %in% names(boost.vec) ) ){stop(paste(c("Error:",cname.compare[ivars[1]],"not in boost.vec"),collapse=" "))}
+        if( !(ivars[2] %in% names(boost.vec) ) ){stop(paste(c("Error:",cname.compare[ivars[2]],"not in boost.vec"),collapse=" "))}
         if ( !(targ %in% ivars ) ){          
           if ( tau.estimate ){
             tau <- estimateBestTau2(targ,ivars,boost.vec,lps.mat.max1,zero.offset)

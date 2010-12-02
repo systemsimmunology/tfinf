@@ -251,9 +251,7 @@ expandPairs <- function(set1,set2){
 ## tf.subset.both=FALSE if only one is required ( Not yet implemented )
 ## 2. interactome
 
-createTFsetFromPairs <- function ( pc, interactome=TRUE, tfsubset=transfac.tfs.expressed, tfsubset.both=TRUE ){
-
-  ##noConnections <- c("Egr3","Mafb","Zfp161","Foxj2")
+createTFsetFromPairs <- function ( pc, interactome=TRUE, tfsubset=transfac.tfs.expressed, tfsubset.both=TRUE, noConnections=NULL ){
   
   allowed.tfs <- setdiff(as.character(cname.compare[tfsubset]),noConnections)
   
