@@ -9,7 +9,7 @@ r.dir <- file.path(Sys.getenv("TFINF"),"R")
 load(paste(annot.dir,"annotation.objects.RData",sep="/"))
 load(paste(annot.dir,"tteMaps.RData",sep="/"))
 ## Read entrezIDofEnsemblID, ensemblIDsOfEntrezIDs
-load(paste(annot.dir,"allMouseMappings.August2010.RData",sep="/"))
+load(paste(annot.dir,"allMouseMappings.Nov2011.RData",sep="/"))
 
 source(paste(r.dir,"tallyUtilities.R",sep="/"))
 source("./utilitiesBinaryClassification.R")

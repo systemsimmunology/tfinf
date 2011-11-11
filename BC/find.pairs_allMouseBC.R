@@ -1,5 +1,5 @@
 
-##source("./initializeBC.R"), or load pregenerated .RData file
+source("./initializeBC.R")
 
 ## 
 ## Similar to the orginal find.pairs_allMouse.R
@@ -164,7 +164,7 @@ for (entrezID in entrezIDs ){
 ## Save feature 
 save(mdof,file="mdof.RData")
 
-ofile=file.path(Sys.getenv("TFINF"),"sequence_data/hitTally.allMouse.July2010.RData")
+ofile=file.path(Sys.getenv("TFINF"),"sequence_data/hitTally.allMouse.Nov2011.RData")
 save(m.tally,m.pair.tally,mf.tally,mdo.pair.tally,mf.pair.tally,mdof.pair.tally,file=ofile,compress=TRUE)
 
 rownames(featureMatrix.mf) <- entrezIDs

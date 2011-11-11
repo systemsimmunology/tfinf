@@ -11,7 +11,7 @@ load(paste(annot.dir,"annotation.objects.RData",sep="/"))
 load(paste(annot.dir,"all.ps.list.objects.RData",sep="/"))
 ## Read Ensembl-Entrez Mappings 
 ## Read entrezIDofEnsemblID, ensemblIDsOfEntrezIDs
-load(paste(annot.dir,"allMouseMappings.August2010.RData",sep="/"))
+load(paste(annot.dir,"allMouseMappings.Nov2011.RData",sep="/"))
 
 ## Some of the scanned genes are not on the array. Remove those.
 eids.on.array <- names(repProbes.ncbiID)

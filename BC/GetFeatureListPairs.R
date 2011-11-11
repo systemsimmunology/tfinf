@@ -9,7 +9,7 @@ seq.dir <- file.path(Sys.getenv("TFINF"),"sequence_data")
 load(paste(annot.dir,"representativeProbes.RData",sep="/"))
 load(paste(annot.dir,"annotation.objects.RData",sep="/"))
 ## Read entrezIDofEnsemblID, ensemblIDsOfEntrezIDs
-load(paste(annot.dir,"allMouseMappings.August2010.RData",sep="/"))
+load(paste(annot.dir,"allMouseMappings.Nov2011.RData",sep="/"))
 source("./utilitiesBinaryClassification.R")
 
 load(paste(seq.dir,"featureMatrix.RData",sep="/"))

@@ -20,8 +20,8 @@ load(paste(annot.dir,"equalizingThresholds.RData",sep="/"))
 load(paste(annot.dir,"expressed.scanned.ensembl.RData",sep="/"))
 load(paste(annot.dir,"TFcategories.RData",sep="/"))
 load(paste(interact.dir,"pdna.curated.RData",sep="/"))
-load(paste(seq.dir,"sigPairedSites.Aug2010.RData",sep="/"))
-load(paste(seq.dir,"Parsed.Scan.eset.allMouseAug2010.RData",sep="/"))
+load(paste(seq.dir,"sigPairedSites.Nov2011.RData",sep="/"))
+load(paste(seq.dir,"Parsed.Scan.eset.RData",sep="/"))
 
 targScans <- TRE.OUT.eset
 
@@ -99,5 +99,5 @@ pdna.hs.et.05 <- getTFsForTE(targScans.et.0.05,tfsubset=tfsubset)
 pdna.hs.et.01 <- getTFsForTE(targScans.et.0.01,tfsubset=tfsubset )
 pdna.hs.et.001 <- getTFsForTE(targScans.et.0.001,tfsubset=tfsubset )
 
-ofile <- paste(interact.dir,"pdnaModels.Aug2010.RData",sep="/")
+ofile <- paste(interact.dir,"pdnaModels.Nov2011.RData",sep="/")
 save(pdna.curated, pdna.enrs.001, pdna.enrp.01, pdna.enrp.05, pdna.hs.et.5,pdna.hs.et.1,pdna.hs.et.01,pdna.hs.et.05,pdna.hs.et.001, file=ofile )

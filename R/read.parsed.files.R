@@ -2,7 +2,7 @@
 #/local/thorsson/data/TransScan/allMatrix01ParsedFiles
 rm(list=ls()); #start fresh
 
-data.dir <- file.path(Sys.getenv("DATA_DIR"),"TransScan/allMouseUpstreamAugust2010/allMouseUpstreamParsedGFF/")
+data.dir <- file.path(Sys.getenv("CR9"),"TransScan/allMouseUpstreamNov2011/allMouseUpstreamParsedGFF/")
 #data.dir <- '/Users/thorsson/data/TransScan/allMouseUpstreamAugust2010/allMouseUpstreamParsedGFF/'
  
 file.set <- dir(data.dir);
@@ -20,9 +20,9 @@ for(ff in 1:length(file.set)){
  ## Sep 2009: Some gene names contain a single hyphen and must be treated separately
  if ( length(toks)==3  ){ ## standard case
    seq.info <- toks[1:3];
- } else if (length(toks)==4){ ## gene name has hyphen
-   gname <- paste(toks[1:2],collapse="-")
-   seq.info <- c(gname,toks[3:4])
+ } else if (length(toks)>3){ ## gene name has hyphen
+   gname <- paste(toks[1:(length(toks)-2)],collapse="-")
+   seq.info <- c(gname,toks[(length(toks)-1):length(toks)])
  }
  names(seq.info) <- c('name','entrez.id','ensembl.id');
  seq.info["ensembl.id"] <- strsplit(seq.info["ensembl.id"],split=".",fixed=TRUE)[[1]][1]
@@ -56,4 +56,4 @@ for(ff in 1:length(file.set)){
 }; #rm(ff);
 
 seq.dir <- file.path(Sys.getenv("TFINF"),"sequence_data")
-save(TRE.OUT,file=paste(seq.dir,'Parsed.Scan.Results.allMouseAug2010.dat',sep="/"))
+save(TRE.OUT,file=paste(seq.dir,'Parsed.Scan.Results.allMouseNov2011.dat',sep="/"))

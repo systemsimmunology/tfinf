@@ -1,6 +1,6 @@
 
 ## If not prepared in an .RData file
-##source("./initializeBC.R")
+source("./initializeBC.R")
 
 ## N should be obtained by preamble code (currently initializeBC.R )
 ## number of ensemblIDs for which we have scans, for which there are unique entrezIDs

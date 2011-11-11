@@ -6,7 +6,7 @@ exp.dir <- file.path(Sys.getenv("TFINF"),"expression_data")
 load(paste(annot.dir,"annotation.objects.RData",sep="/"))
 load(paste(annot.dir,"tteMaps.RData",sep="/"))
 ## Read entrezIDofEnsemblID, ensemblIDsOfEntrezIDs
-load(paste(annot.dir,"allMouseMappings.August2010.RData",sep="/"))
+load(paste(annot.dir,"allMouseMappings.Nov2011.RData",sep="/"))
 
 source("./tallyUtilities.R")
 source("./utilitiesHitMat.R")
@@ -22,7 +22,7 @@ source("./utilitiesHitMat.R")
 ## Load TRE.OUT
 ##
 
-load(paste(seq.dir,"Parsed.Scan.eset.allMouseAug2010.RData",sep="/"))
+load(paste(seq.dir,"Parsed.Scan.eset.RData",sep="/"))
 
 TRE.OUT <- TRE.OUT.eset
 expressed.scanned.egid <- unique(as.character(unlist(lapply(lapply(TRE.OUT,"[[","seq.info"),"[[","entrez.id")))) ## entrez IDs
@@ -51,7 +51,7 @@ expressed.scanned.ps <- sort(as.character(repProbes.ncbiID[expressed.scanned.egi
 ## Load m.tally,m.pair.tally,mf.tally,mdo.pair.tally,mf.pair.tally,mdof.pair.tally
 ##
 
-load(paste(seq.dir,"hitTally.allMouse.Aug2010.RData" ,sep="/"))
+load(paste(seq.dir,"hitTally.allMouse.Nov2011.RData" ,sep="/"))
 
 ## Read all mouse matrices and lengths
 gg <-read.table(paste(annot.dir,"matrixLengths" ,sep="/"),as.is=TRUE);
