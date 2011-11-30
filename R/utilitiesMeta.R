@@ -277,8 +277,8 @@ createTFsetFromPairs <- function ( pc, interactome=TRUE, tfsubset=transfac.tfs.e
     if ( length(psoi) > 1 ) {
       cat ("Trouble ahead. Multiple psois for this ensid,",ensid,"\n" )
     }
-    if ( length(psoi) > 1 ) {
-      cat ("Trouble ahead. Multiple psois for this ensid:",ensid,"\n" )
+    if ( is.na(psoi) ) {
+      cat ("Trouble:Could not map to psoi and/or eid for this ensid:",ensid,"\n" )
     }
         
     ##

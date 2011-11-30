@@ -24,7 +24,7 @@ source("./utilitiesHitMat.R")
 load(paste(annot.dir,"TFcategories.RData",sep="/"))
 load(paste(annot.dir,"representativeProbes.RData",sep="/"))
 load(paste(annot.dir,"annotation.objects.RData",sep="/"))
-load(paste(annot.dir,"allMouseMappings.August2010.RData",sep="/"))
+load(paste(annot.dir,"allMouseMappings.Nov2011.RData",sep="/"))
 load(paste(annot.dir,"tteMaps.RData",sep="/"))
 load(paste(annot.dir,"equalizingThresholds.RData",sep="/"))
 
@@ -81,7 +81,7 @@ rownames(tf.dist.cn) <- tf.names.new
 colnames(tf.dist.cn) <- tf.names.new
 
 ## January 2008
-pdna.enrp.01 <- createTFsetFromPairs(pc2.01,tfsubset=tfsubset,noConnections=noConnections)
+pdna.enrp.01 <- createTFsetFromPairs(pc2.01[1:3],tfsubset=tfsubset,noConnections=noConnections)
 pdna.enrp.05 <- createTFsetFromPairs(pc2.05,tfsubset=tfsubset,noConnections=noConnections)
 
 ##save(pdna.enrp.01,file="pdna.enrp.01.RData")

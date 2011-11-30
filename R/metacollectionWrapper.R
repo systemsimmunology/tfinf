@@ -116,6 +116,6 @@ for ( eid in eids  ) {
   }
 }
 
-ofile <- file.path(Sys.getenv("TFINF"),"sequence_data/sigPairedSites.Aug2010.RData")
+ofile <- file.path(Sys.getenv("TFINF"),"sequence_data/sigPairedSites.Nov2011.RData")
 save(nbrs,maximumdist,metampairs,metapvals,metams,metaexpected,metamsingles,metapvals.singles,metams.singles,metaexpected.singles,file=ofile)
 
