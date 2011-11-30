@@ -33,7 +33,7 @@ load(paste(ddata.dir,"boost.vec.RData",sep="/"))
 load(paste(annot.dir,"annotation.objects.RData",sep="/"))
 load(paste(exp.dir,"all.mus.objects.RData",sep="/"))
 load(paste(interact.dir,"pdna.curated.RData",sep="/"))
-load(paste(interact.dir,"pdnaModels.16Jan2009.RData",sep="/"))
+load(paste(interact.dir,"pdnaModels.RData",sep="/"))
 
 cytokines.es.psois <- read.table(file="../annotations/cytokines.es.psois",as.is=TRUE)$V1
 cytokinebinding.es.psois <- read.table(file="../annotations/cytokinebinding.es.psois",as.is=TRUE)$V1
@@ -57,7 +57,7 @@ pdna.car.strings <- c("pdna.car.enrp.05","pdna.car.enrp.01","pdna.car.enrs.001",
                       "pdna.car.hs.et.5","pdna.car.hs.et.1","pdna.car.hs.et.05","pdna.car.hs.et.01",
                       "pdna.car.hs.et.001","pdna.car.curated")
 
-save(list=pdna.car.strings,file=paste(interact.dir,"pdna.car.16Jan2009.RData",sep="/"))
+save(list=pdna.car.strings,file=paste(interact.dir,"pdna.car.RData",sep="/"))
 ##
 ## Runc calcModels to get OLS solutions
 ##  
@@ -82,7 +82,7 @@ mods.car.strings <- c("mods.car.enrp.05","mods.car.enrp.01","mods.car.enrs.001",
                       "mods.car.hs.et.5","mods.car.hs.et.1","mods.car.hs.et.05","mods.car.hs.et.01",
                       "mods.car.hs.et.001","mods.car.curated")
 
-save(list=mods.car.strings,file=paste(ddata.dir,"models.car.precor.16Jan2009.RData",sep="/"))
+save(list=mods.car.strings,file=paste(ddata.dir,"models.car.precor.RData",sep="/"))
 
 ##
 ## For two-input cases, treat correlated inputs
@@ -113,9 +113,9 @@ mods.car.strings <- c("mods.car.enrp.sansCorTFPairs.05","mods.car.singles.fromCo
                       "mods.car.hs.et.5","mods.car.hs.et.1","mods.car.hs.et.05","mods.car.hs.et.01",
                       "mods.car.hs.et.001","mods.car.curated")
 
-save(list=mods.car.strings,file=paste(ddata.dir,"models.car.preshrinkage.16Jan2009.RData",sep="/"))
+save(list=mods.car.strings,file=paste(ddata.dir,"models.car.preshrinkage.RData",sep="/"))
 
-##load("models.car.preshrinkage.16Jan2009.RData")
+##load("models.car.preshrinkage.RData")
 
 
 
@@ -140,7 +140,7 @@ mods.car.strings <- c("mods.car.enrp.dubs.05","mods.car.enrp.sings.05","mods.car
                       "mods.car.hs.et.5","mods.car.hs.et.1","mods.car.hs.et.05","mods.car.hs.et.01",
                       "mods.car.hs.et.001","mods.car.curated")
 
-save(list=mods.car.strings,file=paste(ddata.dir,"models.car.preode.16Jan2009.RData",sep="/"))
+save(list=mods.car.strings,file=paste(ddata.dir,"models.car.preode.RData",sep="/"))
 
 ##
 ## Non-linear ODE fitting
@@ -167,4 +167,4 @@ mods.car.hs.et.001.ode <- computeODEModsAnalytic(mods.car.hs.et.001,n.cands=1)
 mods.car.curated.ode <- computeODEModsAnalytic(mods.car.curated,n.cands=1)
 
 mods.car.strings.ode <- paste(mods.car.strings,".ode",sep="")
-save(list=mods.car.strings.ode,file=paste(ddata.dir,"models.car.ode.16Jan2009.RData",sep="/"))
+save(list=mods.car.strings.ode,file=paste(ddata.dir,"models.car.ode.RData",sep="/"))
