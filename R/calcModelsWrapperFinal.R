@@ -126,7 +126,9 @@ save(list=mods.ode.strings,file=paste(ddata.dir,"models.ode.RData",sep="/"))
 ### RMSD filter
 ###
 
-source("./randomTFs.R") ## Overall TFs, for all genes (not gene-specific)
+source("./randomTFs.R") ## Processes rmsd distributions from randomly selected TFs for each target
+## input collection.1reg.RData, collection.2regs.RData
+## produces rmsd thresholds like rands.1reg.0.05 and rands.2regs.0.05
 
 cat("Fitering on RMSD\n")
 

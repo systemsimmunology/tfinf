@@ -35,15 +35,17 @@ load(paste(exp.dir,"all.mus.objects.RData",sep="/"))
 load(paste(interact.dir,"pdna.curated.RData",sep="/"))
 load(paste(interact.dir,"pdnaModels.RData",sep="/"))
 
-cytokines.es.psois <- read.table(file="../annotations/cytokines.es.psois",as.is=TRUE)$V1
-cytokinebinding.es.psois <- read.table(file="../annotations/cytokinebinding.es.psois",as.is=TRUE)$V1
-car.psois <- c(cytokines.es.psois,cytokinebinding.es.psois)
+
+cytokines.eids <- read.table(file="~/data/GeneOntology/CytokineActivity.tsv",as.is=TRUE)$V1
+cytokines.psois <- paste(cytokines.eids,"_at",sep="")
+cytokinebinding.eids <- read.table(file="~/data/GeneOntology/CytokineBinding.tsv",as.is=TRUE)$V1
+cytokinebinding.psois <- paste(cytokinebinding.eids,"_at",sep="")
+car.psois <- c(cytokines.psois,cytokinebinding.psois)
 
 ##
 ## Filter pdnas
 ##
 pdna.car.enrp.05 <- pdna.enrp.05[intersect(car.psois,names(pdna.enrp.05))]
-
 pdna.car.enrp.01 <- pdna.enrp.01[intersect(car.psois,names(pdna.enrp.01))]
 pdna.car.enrs.001 <- pdna.enrs.001[intersect(car.psois,names(pdna.enrs.001))]
 pdna.car.hs.et.5 <- pdna.hs.et.5[intersect(car.psois,names(pdna.hs.et.5))]
@@ -168,3 +170,35 @@ mods.car.curated.ode <- computeODEModsAnalytic(mods.car.curated,n.cands=1)
 
 mods.car.strings.ode <- paste(mods.car.strings,".ode",sep="")
 save(list=mods.car.strings.ode,file=paste(ddata.dir,"models.car.ode.RData",sep="/"))
+
+###
+### RMSD filter
+###
+
+source("./randomTFs.R") ## Processes rmsd distributions from randomly selected TFs for each target
+## input collection.1reg.RData, collection.2regs.RData
+## produces rmsd thresholds like rands.1reg.0.05 and rands.2regs.0.05
+
+cat("Fitering on RMSD\n")
+
+mods.car.enrp.dubs.01.ode.rmsf <- filterModsByRMSD( mods.car.enrp.dubs.01.ode, rmsd.threshold=rands.2regs.0.05, rmsd.type="fullode", scale=FALSE,n.cands=2)
+mods.car.curated.ode.rmsf <- filterModsByRMSD( mods.car.curated.ode, rmsd.threshold=rands.1reg.0.05, rmsd.type="fullode", scale=FALSE,n.cands=1)
+mods.car.hs.et.05.ode.rmsf <- filterModsByRMSD( mods.car.hs.et.05.ode, rmsd.threshold=rands.1reg.0.05, rmsd.type="fullode", scale=FALSE,n.cands=1)
+mods.car.hs.et.01.ode.rmsf <- filterModsByRMSD( mods.car.hs.et.01.ode, rmsd.threshold=rands.1reg.0.05, rmsd.type="fullode", scale=FALSE,n.cands=1)
+mods.car.hs.et.001.ode.rmsf <- filterModsByRMSD( mods.car.hs.et.001.ode, rmsd.threshold=rands.1reg.0.05, rmsd.type="fullode", scale=FALSE,n.cands=1)
+mods.car.enrs.001.ode.rmsf <- filterModsByRMSD( mods.car.enrs.001.ode, rmsd.threshold=rands.1reg.0.05, rmsd.type="fullode", scale=FALSE,n.cands=1)
+mods.car.singles.fromCorTFPairs.01.ode.rmsf <- filterModsByRMSD( mods.car.singles.fromCorTFPairs.01.ode, rmsd.threshold=rands.1reg.0.05, rmsd.type="fullode", scale=FALSE,n.cands=1)
+mods.car.enrp.sings.01.ode.rmsf <- filterModsByRMSD( mods.car.enrp.sings.01.ode, rmsd.threshold=rands.1reg.0.05, rmsd.type="fullode", scale=FALSE,n.cands=1)
+
+##mods.car.bind.ode.rmsf <- filterModsByRMSD( mods.car.bind.ode, rmsd.threshold=rands.1reg.0.05, rmsd.type="fullode", scale=FALSE,n.cands=1)
+
+mods.car.rmsf.strings <- c("mods.car.curated.ode.rmsf","mods.car.hs.et.05.ode.rmsf","mods.car.hs.et.01.ode.rmsf","mods.car.hs.et.001.ode.rmsf","mods.car.enrs.001.ode.rmsf","mods.car.singles.fromCorTFPairs.01.ode.rmsf","mods.car.enrp.sings.01.ode.rmsf","mods.car.enrp.dubs.01.ode.rmsf")
+
+save(list=mods.car.rmsf.strings,file=paste(ddata.dir,"models.car.rmsf.RData",sep="/"))
+
+## This may be confusing. Fisrt 01 applies to .. , second to randomization scores
+##mods.car.enrp.dubs.01.1.ode.rmsf <- filterModsByRMSD( mods.car.enrp.dubs.01.ode, rmsd.threshold=rands.2regs.0.10, rmsd.type="fullode", scale=FALSE,n.cands=2)
+##mods.car.enrp.dubs.01.2.ode.rmsf <- filterModsByRMSD( mods.car.enrp.dubs.01.ode, rmsd.threshold=rands.2regs.0.20, rmsd.type="fullode", scale=FALSE,n.cands=2)
+##mods.car.enrp.dubs.01.5.ode.rmsf <- filterModsByRMSD( mods.car.enrp.dubs.01.ode, rmsd.threshold=rands.2regs.0.50, rmsd.type="fullode", scale=FALSE,n.cands=2)
+
+
