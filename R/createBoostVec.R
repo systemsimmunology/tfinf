@@ -13,7 +13,7 @@ load(paste(annot.dir,"tteMaps.RData",sep="/"))
 load(paste(annot.dir,"TFcategories.RData",sep="/"))
 load(paste(annot.dir,"representativeProbes.RData",sep="/"))
 load(paste(ddata.dir,"boost.vec.refit.RData",sep="/"))
-load("./jared.tfs.expressed.RData")
+##load("./jared.tfs.expressed.RData")
 
 ##target.pull <- 60
 
@@ -61,10 +61,10 @@ if ( !is.null(boost.vec.refit) ){
 
 ## For randomization trials,  create a boost.vec for other TFS
 
-addeds <- setdiff(jared.tfs.expressed,transfac.tfs.expressed )
-boost.vec.addeds <- rep(60,length=length(addeds))
-names(boost.vec.addeds) <- addeds
-boost.vec <- c(boost.vec,boost.vec.addeds)
+#addeds <- setdiff(jared.tfs.expressed,transfac.tfs.expressed )
+#boost.vec.addeds <- rep(60,length=length(addeds))
+#names(boost.vec.addeds) <- addeds
+#boost.vec <- c(boost.vec,boost.vec.addeds)
 
 save(boost.vec,file=paste(ddata.dir,"boost.vec.RData",sep="/"))
 
