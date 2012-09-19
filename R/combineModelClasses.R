@@ -14,15 +14,17 @@ doubles.tags <- "mods.enrp.dubs.01"
 model.tags <- c(singles.tags,doubles.tags)
 modnames <- paste(model.tags,".ode.rmsf",sep="")
 
-modvec.1 <- createModVecFromMultMod ( modnames[1], sto(modnames[1]), n.cands=1)
+
+#modvec.1 <- createModVecFromMultMod ( modnames[1], sto(modnames[1]), n.cands=1)
 modvec.2 <- createModVecFromMultMod ( modnames[2], sto(modnames[2]), n.cands=1)
 modvec.3 <- createModVecFromMultMod ( modnames[3], sto(modnames[3]), n.cands=1)
 modvec.4 <- createModVecFromMultMod ( modnames[4], sto(modnames[4]), n.cands=1)
 modvec.5 <- createModVecFromMultMod ( modnames[5], sto(modnames[5]), n.cands=1)
 modvec.6 <- createModVecFromMultMod ( modnames[6], sto(modnames[6]), n.cands=2)
 
-modvec.now <- mergeModVecs(modvec.1,modvec.2)
-modvec.now <- mergeModVecs(modvec.now,modvec.3)
+#modvec.now <- mergeModVecs(modvec.1,modvec.2)
+modvec.now <- mergeModVecs(modvec.2,modvec.3)
+#modvec.now <- mergeModVecs(modvec.now,modvec.3)
 modvec.now <- mergeModVecs(modvec.now,modvec.4)
 modvec.now <- mergeModVecs(modvec.now,modvec.5)
 modvec.now <- mergeModVecs(modvec.now,modvec.6)
