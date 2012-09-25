@@ -3,24 +3,21 @@
 ## n.pairs, N, Mpair, fampairs, Msteps
 ## ESmaxcubeMgrid
 
-annot.dir <- file.path(Sys.getenv("TFINF"),"annotations")
-r.dir <- file.path(Sys.getenv("TFINF"),"R")
-seq.dir <- file.path(Sys.getenv("TFINF"),"sequence_data")
-load(paste(annot.dir,"representativeProbes.RData",sep="/"))
-load(paste(annot.dir,"annotation.objects.RData",sep="/"))
-## Read entrezIDofEnsemblID, ensemblIDsOfEntrezIDs
-load(paste(annot.dir,"allMouseMappings.Nov2011.RData",sep="/"))
-source("./utilitiesBinaryClassification.R")
+## If not prepared in an .RData file
+source("./initializeBC.R")
 
 load(paste(seq.dir,"featureMatrix.mf.RData",sep="/"))
 load(paste(seq.dir,"ESmaxcubeMgrid.RData",sep="/"))
 
-Msingles <- apply(featureMatrix.mf,1,sum)
+maxn <-  600 ## The maximum N that we will consider
+mst <- 20 # the stepsize on the M grid used in the randomization
+
+Msingles <- apply(featureMatrix.mf,1,sum) ## For each matrix, the number of occurences (over all psois)
 allMs <- Msingles
 famsingles <- names(Msingles)
 n.singles <- length(famsingles)
 
-Msteps <- seq(20,20*round(N/20),20)
+Msteps <- seq(mst,mst*round(N/mst),mst) ## steps used in randomization
 numMsteps <- length(Msteps)
 
 psois.all <- names(nbrs)
@@ -29,19 +26,20 @@ ptm <- proc.time()
 single.features <- list()
 
 for ( psoi in psois.all   ){
-##for ( psoi in repProbes.cname["Il12b"] ){
-  nbs <- nbrs[[psoi]]
-  nn <- length(nbs)
+  nbs <- nbrs[[psoi]] ## set of neighbors of the psoi
+  nn <- length(nbs) ## number of neigbhors
 
-  if ( nn > 600 ){
-    nbs <- nbs[1:600]
-    nn <- 600
+  if ( nn > maxn ){
+    nbs <- nbs[1:maxn]
+    nn <- maxn
   }
-  
-  if ( nn>5 ){
 
+  ##
+  ## Matrices have n.singles rows and nn columns
+  ##
+  if ( nn>5 ){
     nbs.eid <- as.character(ncbiID[nbs])
-    fm.sub <- featureMatrix.mf[,nbs.eid]
+    fm.sub <- featureMatrix.mf[,nbs.eid] ## feature matrix for neighbor set
     mmat <- t(apply(fm.sub,1,cumsum))
     matn <- t(matrix(rep(1:nn,n.singles),ncol=n.singles))
     TPmat <- mmat
@@ -51,9 +49,9 @@ for ( psoi in psois.all   ){
     FPRmat <- FPmat/(FPmat+TNmat) ## False Positive Rate
     TPRmat <- TPmat/(TPmat+FNmat) ## True Positive Rate = Recall = Sensitivity ! 
     ESmat <- TPRmat - FPRmat 
-    ES <- ESmat
-    Esmax <- apply(ES,1,max)
-    indsatmax <- apply(ES,1,which.max)
+    ES <- ESmat ## ES curves for each matrix 
+    Esmax <- apply(ES,1,max) ## maximum ES value of the curve
+    indsatmax <- apply(ES,1,which.max) ## index at maximum
 
     ## Need to index mmat, and matn by these
     ## Only non-loop way I could find is to index the matrices

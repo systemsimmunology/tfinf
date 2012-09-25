@@ -3,24 +3,21 @@
 ## n.pairs, N, Mpair, fampairs, Msteps
 ## ESmaxcubeMgrid
 
-annot.dir <- file.path(Sys.getenv("TFINF"),"annotations")
-r.dir <- file.path(Sys.getenv("TFINF"),"R")
-seq.dir <- file.path(Sys.getenv("TFINF"),"sequence_data")
-load(paste(annot.dir,"representativeProbes.RData",sep="/"))
-load(paste(annot.dir,"annotation.objects.RData",sep="/"))
-## Read entrezIDofEnsemblID, ensemblIDsOfEntrezIDs
-load(paste(annot.dir,"allMouseMappings.Nov2011.RData",sep="/"))
-source("./utilitiesBinaryClassification.R")
+## If not prepared in an .RData file
+source("./initializeBC.R")
 
 load(paste(seq.dir,"featureMatrix.RData",sep="/"))
 load(paste(seq.dir,"ESmaxcubeMgrid.RData",sep="/"))
+
+maxn <-  600 ## The maximum N that we will consider
+mst <- 20 # the stepsize on the M grid used in the randomization
 
 Mpair <- apply(featureMatrix,1,sum)
 allMs <- Mpair
 fampairs <- names(Mpair)
 n.pairs <- length(fampairs)
 
-Msteps <- seq(20,20*round(N/20),20)
+Msteps <- seq(mst,mst*round(N/mst),mst) ## steps used in randomization
 numMsteps <- length(Msteps)
 
 psois.all <- names(nbrs)
@@ -32,9 +29,9 @@ for ( psoi in psois.all   ){
   nbs <- nbrs[[psoi]]
   nn <- length(nbs)
 
-  if ( nn > 600 ){
-    nbs <- nbs[1:600]
-    nn <- 600
+  if ( nn > maxn ){
+    nbs <- nbs[1:maxn]
+    nn <- maxn
   }
   
   if ( nn>5 ){

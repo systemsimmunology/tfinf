@@ -1,5 +1,6 @@
 
 ## From a tag in as subset of  extract hm meeting threshold and containing expressedMats
+## required externally: expressedMats
 getFilteredHitMat <- function ( ensid, treoutSubset, matrixThreshold ) {
   hitMat <- treoutSubset[[ensid]]$tre.hits
   keepers <- which(hitMat[,"tre"] %in% expressedMats)
@@ -84,9 +85,6 @@ getMatrixFilteredTE <- function ( TEin, matrixSet ){
   return(returnList)
 }
     
-    
-    
-  
   
 getMatrixFilteredHitMat <- function (hitMat, matrixSet ) {
   keepers <- which(hitMat$tre %in% matrixSet)
