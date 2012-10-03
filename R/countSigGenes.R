@@ -7,8 +7,11 @@ mu.cutoff <- 100
 #lambda.cutoff <- 150
 
 ## May 2010
-lambda.cutoff <- 26.61275 ## 0.05% cutoff - leads to 4913 genes for full time-course
+##lambda.cutoff <- 26.61275 ## 0.05% cutoff - leads to 4913 genes for full time-course
 ##lambda.cutoff <- 66.31579 ## 0.01% cutoff - leads to 3069 genes for full time-course
+
+## September 2012
+lambda.cutoff <- 26.44526
 
 imax <- 6
 
@@ -52,18 +55,14 @@ all.ps.sig <- union(lps.ps.sig,union(pam2.ps.sig,union(pam3.ps.sig,union(polyIC.
 all.cname.sig <- sort(unique(cname.compare[all.ps.sig]))
 n.all.ps.sig <- length(all.ps.sig)
 
-## Subtract one for the dash dash dash gene name
-cat("No. LPS genes: ",length(lps.cname.sig)-1,"\n")
-cat("No. PAM2 genes: ",length(pam2.cname.sig)-1,"\n")
-cat("No. PAM3 genes: ",length(pam3.cname.sig)-1,"\n")
-cat("No. PolyIC genes: ",length(polyIC.cname.sig)-1,"\n")
-cat("No. R848 genes: ",length(r848.cname.sig)-1,"\n")
-cat("No. CpG genes: ",length(cpg.cname.sig)-1,"\n")
-cat("No. All genes: ",length(all.cname.sig)-1,"\n")
-
-
-#compareSets(lps.cname.sig,pam2.cname.sig)
-
+cat("Gene counts up to and including 2 hrs\n")
+cat("No. LPS genes: ",length(lps.ps.sig),"\n")
+cat("No. PAM2 genes: ",length(pam2.ps.sig),"\n")
+cat("No. PAM3 genes: ",length(pam3.ps.sig),"\n")
+cat("No. PolyIC genes: ",length(polyIC.ps.sig),"\n")
+cat("No. R848 genes: ",length(r848.ps.sig),"\n")
+cat("No. CpG genes: ",length(cpg.ps.sig),"\n")
+cat("No. All genes: ",length(all.ps.sig),"\n")
 
 sigCompCube <- rep(NA,6*6*6)
 dim(sigCompCube) <- c(6,6,6)
@@ -108,12 +107,13 @@ imax <- 11
 lps.full.ps.sig <- rownames(sigSlice(lambda.cutoff,lps.mus[,1:imax],lps.lambdas[,1:(imax-1)]))
 low.expressors <- names(which(apply(lps.mus[,1:imax]<mu.cutoff,1,sum)==imax))
 lps.full.ps.sig <- setdiff(lps.full.ps.sig,low.expressors)
+cat("No. LPS genes up to 24 hrs: ",length(lps.full.ps.sig),"\n")
 
 imax <- 6
 lps.ps.sig <- rownames(sigSlice(lambda.cutoff,lps.mus[,1:imax],lps.lambdas[,1:(imax-1)]))
 low.expressors <- names(which(apply(lps.mus[,1:imax]<mu.cutoff,1,sum)==imax))
 lps.ps.sig <- setdiff(lps.ps.sig,low.expressors)
-
+#seems identical to computation above
 lps.full.ps.sig.rep <- sort(repProbes.cname[unique(sort(cname.compare[lps.full.ps.sig]))])
 
 outMat1 <- cbind(lps.full.ps.sig.rep,cname.compare[lps.full.ps.sig.rep],ncbiID[lps.full.ps.sig.rep],lps.ratios[lps.full.ps.sig.rep,])
