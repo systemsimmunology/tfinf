@@ -1,0 +1,6 @@
+PROC_DIR=~/tfinf/process
+AUX_DIR=~/tfinf/aux
+UTILS_DIR=~/tfinf/utils
+PO_DIR=~/tfinf/data/process_output
+EXP_DIR=~/tfinf/data/expression
+SEQ_DIR=~/tfinf/data/motifscan_input
