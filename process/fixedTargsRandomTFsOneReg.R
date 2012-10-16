@@ -9,7 +9,7 @@ source(file.path(Sys.getenv("UTILS_DIR"),"analyticODE.R"))
 
 load(file.path(Sys.getenv("EXP_DIR"),"all.ps.list.objects.RData"))
 load(file.path(Sys.getenv("PO_DIR"),"tteMaps.RData"))
-load(file.path(Sys.getenv("AUX_DIR"),"boost.vec.RData"))
+load(file.path(Sys.getenv("PO_DIR"),"boost.vec.RData"))
 load(file.path(Sys.getenv("PO_DIR"),"scaled.mus.objects.RData"))
 load(file.path(Sys.getenv("SEQ_DIR"),"allMouseMappings.RData"))
 load(file.path(Sys.getenv("PO_DIR"),"expressed.scanned.ensembl.RData")) 

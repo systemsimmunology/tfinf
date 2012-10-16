@@ -1,20 +1,17 @@
 ##
 ## load annotations, mappings, probe set lists
 ##
-exp.dir <- file.path(Sys.getenv("TFINF"),"data/expression")
-seq.dir <- file.path(Sys.getenv("TFINF"),"data/motifscan_input")
-out.dir <- file.path(Sys.getenv("TFINF"),"data/process_output")
-
-load(paste(exp.dir,"representativeProbes.RData",sep="/"))
-load(paste(exp.dir,"annotation.objects.RData",sep="/"))
-load(paste(exp.dir,"all.ps.list.objects.RData",sep="/"))
+load(paste(Sys.getenv("EXP_DIR"),"representativeProbes.RData",sep="/"))
+load(paste(Sys.getenv("EXP_DIR"),"annotation.objects.RData",sep="/"))
+load(paste(Sys.getenv("EXP_DIR"),"all.ps.list.objects.RData",sep="/"))
 ## Read Ensembl-Entrez Mappings 
 ## Read entrezIDofEnsemblID, ensemblIDsOfEntrezIDs
-load(paste(seq.dir,"allMouseMappings.RData",sep="/"))
+load(paste(Sys.getenv("SEQ_DIR"),"allMouseMappings.RData",sep="/"))
+load(paste(Sys.getenv("SEQ_DIR"),"Parsed.Scan.Results.dat",sep="/"))
 
-## Some of the scanned genes are not on the array. Remove those.
 eids.on.array <- names(repProbes.ncbiID)
-eids.scanned <- names(ensemblIDsOfEntrezIDs) ## entrezIDs
+ensids.scanned <- names(TRE.OUT)
+eids.scanned <- unique(as.character(entrezIDofEnsemblID[ensids.scanned]))
 eids.on.both <- intersect(eids.on.array,eids.scanned)
 scanned.ps <- as.character(repProbes.ncbiID[eids.on.both])
 ## these last ones are unique: probe sets that are not non-repProbes are not included
@@ -26,13 +23,23 @@ scanned.ps <- as.character(repProbes.ncbiID[eids.on.both])
 ##dashed.genenames.ps <- names(which(sapply(cname.compare[scanned.ps],hasCharacter,"-")))
 ##scanned.ps <- setdiff(scanned.ps,dashed.genenames.ps)
 
+
+## Restrict to differentially expressed genes
 ## June 2008: 4714 of these:
 ## September 2009: 4713 of these:
+## October 2010: 4943 of these 
 expressed.scanned.ps <- scanned.ps[scanned.ps %in% lps.full.ps.sig]
 expressed.scanned.egid <- as.character(ncbiID[expressed.scanned.ps])
+
+
 ## June 2008 :4869 of these
 ## Sep 2009 :4742 of these. Sampled some differences and they are consistent with ensembl website
+## October 2010: 4944 of these 
 expressed.scanned.ensembl <- as.character(unlist(ensemblIDsOfEntrezIDs[expressed.scanned.egid]))
+TRE.OUT.eset <- TRE.OUT[expressed.scanned.ensembl]
 
-save(expressed.scanned.ensembl, file=paste(out.dir,"expressed.scanned.ensembl.RData",sep="/"))
+save(expressed.scanned.ensembl, file=paste(Sys.getenv("OUT_DIR"),"expressed.scanned.ensembl.RData",sep="/"))
+save(TRE.OUT.eset,file=paste(Sys.getenv("OUT_DIR"),"Parsed.Scan.eset.RData",sep="/"))
+
+
 
