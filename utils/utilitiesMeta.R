@@ -251,7 +251,7 @@ expandPairs <- function(set1,set2){
 ## tf.subset.both=FALSE if only one is required ( Not yet implemented )
 ## 2. interactome
 
-createTFsetFromPairs <- function ( pc, interactome=TRUE, tfsubset=transfac.tfs.expressed, tfsubset.both=TRUE, noConnections=NULL ){
+createTFsetFromPairs <- function ( pc, interactome=TRUE, tfsubset=transfac.tfs.expressed, tfsubset.both=TRUE, noConnections=NULL,tf.dist.cn ){
   
   allowed.tfs <- setdiff(as.character(cname.compare[tfsubset]),noConnections)
   
@@ -294,7 +294,7 @@ createTFsetFromPairs <- function ( pc, interactome=TRUE, tfsubset=transfac.tfs.e
       near.tfs <- intersect( near.tfs, allowed.tfs )
       if ( (length(soi.tfs)>0) & (length(near.tfs)>0) ){
         if ( interactome ) {
-          pairs <- grabPairs(soi.tfs,near.tfs) 
+          pairs <- grabPairs(soi.tfs,near.tfs,tf.dist.cn) 
         } else {
           pairs <- expandPairs(soi.tfs,near.tfs) 
         }
@@ -314,7 +314,7 @@ createTFsetFromPairs <- function ( pc, interactome=TRUE, tfsubset=transfac.tfs.e
         near.tfs <- intersect( near.tfs, allowed.tfs ) 
         if ( (length(soi.tfs)>0) & (length(near.tfs)>0) ){
           if ( interactome ) {
-            pairs <- grabPairs(soi.tfs,near.tfs)
+            pairs <- grabPairs(soi.tfs,near.tfs,tf.dist.cn)
           } else {
             pairs <- expandPairs(soi.tfs,near.tfs)
           }

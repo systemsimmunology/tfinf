@@ -1,4 +1,4 @@
-TFINF = ~/tfinf_mockup
+TFINF = ~/tfinf
 PROC_DIR = $(TFINF)/process
 OUT_DIR = $(TFINF)/data/process_output
 
@@ -45,7 +45,7 @@ $(OUT_DIR)/pdnaModels.RData: createTargsAndsCandsBC.R $(OUT_DIR)/sigPairedSitesB
 $(OUT_DIR)/scaled.mus.objects.RData: insertNucLoc.R
 	R --no-restore --no-save < insertNucLoc.R
 
-$(OUT_DIR)/boost.vec.RData: createBoostVec.R $(OUT_DIR)/boost.vec.refit.RData
+$(OUT_DIR)/boost.vec.RData: createBoostVec.R ## Requires boost.vec.refit.RData in AUX_DIR
 	R --no-restore --no-save < createBoostVec.R
 
 $(OUT_DIR)/collection.1reg.RData: fixedTargsRandomTFsOneReg.R $(OUT_DIR)/boost.vec.RData

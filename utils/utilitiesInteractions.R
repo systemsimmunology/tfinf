@@ -1,7 +1,7 @@
 
 
 ## returns pairs
-grabPairs <- function(soi.tfs,near.tfs){
+grabPairs <- function(soi.tfs,near.tfs,tf.dist.cn){
 
   ns <- length(soi.tfs)
   nt <- length(near.tfs)
@@ -107,7 +107,7 @@ grabPairs <- function(soi.tfs,near.tfs){
 
 
 ## Grab pairs, nearest neighbors only
-grabPairsNN <- function(soi.tfs,near.tfs){
+grabPairsNN <- function(soi.tfs,near.tfs,tf.dist.cn){
 
   ns <- length(soi.tfs)
   nt <- length(near.tfs)

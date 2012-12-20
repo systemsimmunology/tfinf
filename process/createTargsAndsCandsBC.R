@@ -9,9 +9,6 @@
 ## Ran only enrp and enrs portions
 ## Saved them as pdna.enrp.01.RData, pdna.enrp.05.RData, pdna.enrs.001.RData
 
-## Outside this code, 
-## Loaded pdnaModels.18June2008.RData, and did a replacement of the above modules, then did the save at the end of this code
-
 source(file.path(Sys.getenv("UTILS_DIR"),"utilitiesMeta.R"))
 source(file.path(Sys.getenv("UTILS_DIR"),"utilitiesInteractions.R"))
 source(file.path(Sys.getenv("UTILS_DIR"),"utilitiesHitMat.R"))
@@ -27,9 +24,7 @@ load(file.path(Sys.getenv("PO_DIR"),"pdna.curated.RData"))
 load(file.path(Sys.getenv("PO_DIR"),"Parsed.Scan.eset.RData"))
 targScans <- TRE.OUT.eset
 
-tfsubset <- setdiff(c(bigUps,midUps,bigDowns,midDowns),repProbes.cname[c("E2f5","Gabpa")])
-## E2f5 comes up only at 24 hrs
-## Gabpa has a moderate, late change . Can be included, but not the cream-of-the-crop predictions
+tfsubset <- c(bigUps,midUps,bigDowns,midDowns)
 
 ### High scoring individual hits
 targScans.et.0.5 <- getScoreFilteredTE( targScans, et.0.5 )
@@ -52,13 +47,15 @@ pc1$metampairs <- metampairs.bc
 pc1$metapvals <- metapvals.bc
 pc1$metams <- metams.bc
 
-### Feb 2007 
 pair.cutoff <- 0.01
 pc2.01 <- filterPCbyPval ( pc1, pair.cutoff )
 pc2.05 <- filterPCbyPval ( pc1, 0.05 )
 
 ##Load TF network distance
 load(file.path(Sys.getenv("AUX_DIR"),"TFNetDist.RData")) ### this loads tf.dist.cn 
+
+
+## noConnections list of tfsubset (see below) gene names with no connections 
 noConnections <- c("Egr3","Mafb","Foxj2","Zfp161") ## TFs for which we have no connection information
 noConnections <- c(noConnections,"Fosl2") ## May 2008. Can't quite figure out: Is this a "new" one?
 noConnections <- c(noConnections,"Stat2") ## Sep 2009. Can't quite figure out: Is this a "new" one? probably from ISRE
@@ -68,12 +65,13 @@ noConnections <- c(noConnections,"Smad2","Bach1") ## Nov 2010
 ## May 2008. Repairs needed, as we indexed by gene symbol and not entrez ID
 tf.names.old <- rownames(tf.dist.cn)
 tf.names.new <- replace(tf.names.old,match(c("Isgf3g","Tgif","Zfpn1a1"),tf.names.old),c("Irf9","Tgif1","Ikzf1"))
+tf.names.new <- replace(tf.names.new,match(c("Bhlhb2","Foxo3a","Tcfe2a","Tcfe3"),tf.names.new),c("Bhlhe40","Foxo3","Tcf3","Tfe3"))
 rownames(tf.dist.cn) <- tf.names.new
 colnames(tf.dist.cn) <- tf.names.new
 
 ## January 2008
-pdna.enrp.01 <- createTFsetFromPairs(pc2.01[1:3],tfsubset=tfsubset,noConnections=noConnections)
-pdna.enrp.05 <- createTFsetFromPairs(pc2.05,tfsubset=tfsubset,noConnections=noConnections)
+pdna.enrp.01 <- createTFsetFromPairs(pc2.01,tfsubset=tfsubset,noConnections=noConnections,tf.dist.cn)
+pdna.enrp.05 <- createTFsetFromPairs(pc2.05,tfsubset=tfsubset,noConnections=noConnections,tf.dist.cn)
 
 ##save(pdna.enrp.01,file="pdna.enrp.01.RData")
 ##save(pdna.enrp.05,file="pdna.enrp.05.RData")

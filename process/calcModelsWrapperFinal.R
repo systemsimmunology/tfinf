@@ -21,9 +21,9 @@ load(file.path(Sys.getenv("PO_DIR"),"pdnaModels.RData"))
 load(file.path(Sys.getenv("PO_DIR"),"scaled.mus.objects.RData"))
 load(file.path(Sys.getenv("EXP_DIR"),"representativeProbes.RData"))
 load(file.path(Sys.getenv("PO_DIR"),"tteMaps.RData"))
-load(file.path(Sys.getenv("AUX_DIR"),"boost.vec.RData"))
+load(file.path(Sys.getenv("PO_DIR"),"boost.vec.RData"))
 load(file.path(Sys.getenv("EXP_DIR"),"annotation.objects.RData"))
-load(file.path(Sys.getenv("EXP_DIR"),"all.mus.objects.RDat"))
+load(file.path(Sys.getenv("EXP_DIR"),"all.mus.objects.RData"))
 load(file.path(Sys.getenv("PO_DIR"),"scaled.mus.objects.RData"))
 load(file.path(Sys.getenv("PO_DIR"),"pdna.curated.RData")) ## not sure why 
 tte <- transfac.tfs.expressed
@@ -37,7 +37,9 @@ load(file.path(Sys.getenv("PO_DIR"),"collection.2regs.RData"))
 long.vec <- as.vector(sort(collection.2regs))
 n.samps <- length(long.vec)
 rands.2regs.0.05 <- long.vec[round(n.samps/20)]
-
+rands.2regs.0.10 <- long.vec[round(n.samps/10)]
+rands.2regs.0.20 <- long.vec[round(n.samps/5)]
+rands.2regs.0.50 <- long.vec[round(n.samps/2)]
 
 ddata.dir <- Sys.getenv("PO_DIR")
 cat ("Starting calcModels runs \n")
@@ -128,7 +130,13 @@ save(list=mods.ode.strings,file=paste(ddata.dir,"models.ode.RData",sep="/"))
 
 cat("Fitering on RMSD\n")
 
-mods.enrp.dubs.01.ode.rmsf <- filterModsByRMSD( mods.enrp.dubs.01.ode, rmsd.threshold=rands.2regs.0.05, rmsd.type="fullode", scale=FALSE,n.cands=2)
+## Slightly confusing, but tolerate for now. First 01 10% false positives in BC calc. Second to randomization scores.
+mods.enrp.dubs.01.05.ode.rmsf <- filterModsByRMSD( mods.enrp.dubs.01.ode, rmsd.threshold=rands.2regs.0.05, rmsd.type="fullode", scale=FALSE,n.cands=2)
+mods.enrp.dubs.01.1.ode.rmsf <- filterModsByRMSD( mods.enrp.dubs.01.ode, rmsd.threshold=rands.2regs.0.10, rmsd.type="fullode", scale=FALSE,n.cands=2)
+mods.enrp.dubs.01.2.ode.rmsf <- filterModsByRMSD( mods.enrp.dubs.01.ode, rmsd.threshold=rands.2regs.0.20, rmsd.type="fullode", scale=FALSE,n.cands=2)
+mods.enrp.dubs.01.5.ode.rmsf <- filterModsByRMSD( mods.enrp.dubs.01.ode, rmsd.threshold=rands.2regs.0.50, rmsd.type="fullode", scale=FALSE,n.cands=2)
+
+
 mods.curated.ode.rmsf <- filterModsByRMSD( mods.curated.ode, rmsd.threshold=rands.1reg.0.05, rmsd.type="fullode", scale=FALSE,n.cands=1)
 mods.hs.et.05.ode.rmsf <- filterModsByRMSD( mods.hs.et.05.ode, rmsd.threshold=rands.1reg.0.05, rmsd.type="fullode", scale=FALSE,n.cands=1)
 mods.hs.et.01.ode.rmsf <- filterModsByRMSD( mods.hs.et.01.ode, rmsd.threshold=rands.1reg.0.05, rmsd.type="fullode", scale=FALSE,n.cands=1)
@@ -137,13 +145,7 @@ mods.enrs.001.ode.rmsf <- filterModsByRMSD( mods.enrs.001.ode, rmsd.threshold=ra
 mods.singles.fromCorTFPairs.01.ode.rmsf <- filterModsByRMSD( mods.singles.fromCorTFPairs.01.ode, rmsd.threshold=rands.1reg.0.05, rmsd.type="fullode", scale=FALSE,n.cands=1)
 mods.enrp.sings.01.ode.rmsf <- filterModsByRMSD( mods.enrp.sings.01.ode, rmsd.threshold=rands.1reg.0.05, rmsd.type="fullode", scale=FALSE,n.cands=1)
 
-##mods.bind.ode.rmsf <- filterModsByRMSD( mods.bind.ode, rmsd.threshold=rands.1reg.0.05, rmsd.type="fullode", scale=FALSE,n.cands=1)
-
-mods.rmsf.strings <- c("mods.curated.ode.rmsf","mods.hs.et.05.ode.rmsf","mods.hs.et.01.ode.rmsf","mods.hs.et.001.ode.rmsf","mods.enrs.001.ode.rmsf","mods.singles.fromCorTFPairs.01.ode.rmsf","mods.enrp.sings.01.ode.rmsf","mods.enrp.dubs.01.ode.rmsf")
+mods.rmsf.strings <- c("mods.curated.ode.rmsf","mods.hs.et.05.ode.rmsf","mods.hs.et.01.ode.rmsf","mods.hs.et.001.ode.rmsf","mods.enrs.001.ode.rmsf","mods.singles.fromCorTFPairs.01.ode.rmsf","mods.enrp.sings.01.ode.rmsf","mods.enrp.dubs.01.05.ode.rmsf","mods.enrp.dubs.01.1.ode.rmsf","mods.enrp.dubs.01.2.ode.rmsf","mods.enrp.dubs.01.5.ode.rmsf")
 
 save(list=mods.rmsf.strings,file=paste(ddata.dir,"models.rmsf.RData",sep="/"))
 
-## This may be confusing. Fisrt 01 applies to .. , second to randomization scores
-##mods.enrp.dubs.01.1.ode.rmsf <- filterModsByRMSD( mods.enrp.dubs.01.ode, rmsd.threshold=rands.2regs.0.10, rmsd.type="fullode", scale=FALSE,n.cands=2)
-##mods.enrp.dubs.01.2.ode.rmsf <- filterModsByRMSD( mods.enrp.dubs.01.ode, rmsd.threshold=rands.2regs.0.20, rmsd.type="fullode", scale=FALSE,n.cands=2)
-##mods.enrp.dubs.01.5.ode.rmsf <- filterModsByRMSD( mods.enrp.dubs.01.ode, rmsd.threshold=rands.2regs.0.50, rmsd.type="fullode", scale=FALSE,n.cands=2)

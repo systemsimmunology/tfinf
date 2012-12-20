@@ -38,8 +38,8 @@ expressed.scanned.egid <- as.character(ncbiID[expressed.scanned.ps])
 expressed.scanned.ensembl <- as.character(unlist(ensemblIDsOfEntrezIDs[expressed.scanned.egid]))
 TRE.OUT.eset <- TRE.OUT[expressed.scanned.ensembl]
 
-save(expressed.scanned.ensembl, file=paste(Sys.getenv("OUT_DIR"),"expressed.scanned.ensembl.RData",sep="/"))
-save(TRE.OUT.eset,file=paste(Sys.getenv("OUT_DIR"),"Parsed.Scan.eset.RData",sep="/"))
+save(expressed.scanned.ensembl, file=paste(Sys.getenv("PO_DIR"),"expressed.scanned.ensembl.RData",sep="/"))
+save(TRE.OUT.eset,file=paste(Sys.getenv("PO_DIR"),"Parsed.Scan.eset.RData",sep="/"))
 
 
 
